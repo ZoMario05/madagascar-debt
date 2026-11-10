@@ -1,30 +1,28 @@
 creditor,outstanding_usd_m_end2024,creditor_type,source
-World Bank-IDA,2650,Multilateral,World Bank International Debt Statistics (DT.DOD.DPPG.CD by counterpart area; updated 2026-11-05)
-African Development Bank (incl. ADF),633,Multilateral,World Bank IDS
-China,317,Bilateral,World Bank IDS
-European Investment Bank,274,Multilateral,World Bank IDS
-France,259,Bilateral,World Bank IDS
-IFAD,208,Multilateral,World Bank IDS
-Japan,187,Bilateral,World Bank IDS
-Algeria,74,Bilateral,World Bank IDS (long-standing arrears per IMF CR 25/60)
-OPEC Fund,61,Multilateral,World Bank IDS
-BADEA,52,Multilateral,World Bank IDS
-Ireland,40,Commercial/other,World Bank IDS (creditor country of residence; likely a private creditor - to verify)
-Korea,36,Bilateral,World Bank IDS
-Saudi Arabia,29,Bilateral,World Bank IDS
-Kuwait,20,Bilateral,World Bank IDS
-Trade & Development Bank (TDB),18,Multilateral,World Bank IDS
-Russian Federation,9,Bilateral,World Bank IDS
-India,7,Bilateral,World Bank IDS
-Netherlands,7,Bilateral,World Bank IDS
-United Arab Emirates,7,Bilateral,World Bank IDS
-Belgium,6,Bilateral,World Bank IDS
-Germany,3,Bilateral,World Bank IDS
-Angola,3,Bilateral,World Bank IDS (arrears per IMF CR 25/60)
-Spain,1,Bilateral,World Bank IDS
-Bahamas,1,Commercial/other,World Bank IDS
-TOTAL external PPG (excl. IMF),4901,,World Bank IDS DT.DOD.DPPG.CD
-of which multilateral,3896,,DT.DOD.MLAT.CD
-of which bilateral,868,,DT.DOD.BLAT.CD
-of which commercial banks,133,,DT.DOD.PCBK.CD
-IMF credit (use of IMF credit incl. SDR allocations),1297,,DT.DOD.DIMF.CD
+World Bank-IDA,3134,Multilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+African Development Bank (incl. ADF),729,Multilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+European Investment Bank,351,Multilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+China,319,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+France,304,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+IFAD,229,Multilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Japan,205,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Algeria,74,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+OPEC Fund,71,Multilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+BADEA,69,Multilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Ireland,40,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Korea,35,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Saudi Arabia,34,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Kuwait,21,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+United Arab Emirates,14,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Trade & Development Bank (TDB),11,Multilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Belgium,9,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Netherlands,8,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+India,6,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Angola,3,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Spain,1,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+Bahamas,1,Bilateral,World Bank IDS DT.DOD.DPPG.CD YR2025
+TOTAL external PPG (excl. IMF),5667,,DT.DOD.DPPG.CD
+of which multilateral,4594,,DT.DOD.MLAT.CD
+of which bilateral,925,,DT.DOD.BLAT.CD
+of which commercial banks,141,,DT.DOD.PCBK.CD
+IMF credit (use of IMF credit incl. SDR allocations),1485,,DT.DOD.DIMF.CD
