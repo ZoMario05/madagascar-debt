@@ -1,25 +1,23 @@
 creditor,"official_total_usd_m (World Bank IDS, latest year)",loans_in_database,outstanding_known_per_loan,status
-World Bank-IDA,2650,108,Yes,Complete (exact outstanding per loan)
-African Development Bank (incl. ADF),633,18,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
-China,317,7,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
-European Investment Bank,274,6,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
-France,259,13,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
-IFAD,208,7,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
-Japan,187,1,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+World Bank-IDA,3134,108,Yes,Complete (exact outstanding per loan)
+African Development Bank (incl. ADF),729,18,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+European Investment Bank,351,6,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+China,319,7,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+France,304,13,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+IFAD,229,7,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+Japan,205,1,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
 Algeria,74,0,No,Old arrears under negotiation (IMF CR 25/60); no active loans
-OPEC Fund,61,5,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
-BADEA,52,6,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+OPEC Fund,71,5,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+BADEA,69,6,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
 Ireland,40,0,No,No active loans in the official list; older loans still to collect
-Korea,36,1,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
-Saudi Arabia,29,2,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
-Kuwait,20,2,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
-Trade & Development Bank (TDB),18,0,No,No active loans in the official list; older loans still to collect
-Russian Federation,9,0,No,No active loans in the official list; older loans still to collect
-India,7,0,No,No active loans in the official list; older loans still to collect
-Netherlands,7,0,No,No active loans in the official list; older loans still to collect
-United Arab Emirates,7,1,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
-Belgium,6,1,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
-Germany,3,0,No,No active loans in the official list; older loans still to collect
+Korea,35,1,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+Saudi Arabia,34,2,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+Kuwait,21,2,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+United Arab Emirates,14,1,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+Trade & Development Bank (TDB),11,0,No,No active loans in the official list; older loans still to collect
+Belgium,9,1,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
+Netherlands,8,0,No,No active loans in the official list; older loans still to collect
+India,6,0,No,No active loans in the official list; older loans still to collect
 Angola,3,0,No,Old arrears under negotiation (IMF CR 25/60); no active loans
 Spain,1,0,No,No active loans in the official list; older loans still to collect
 Bahamas,1,0,No,No active loans in the official list; older loans still to collect

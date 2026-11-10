@@ -11,6 +11,7 @@ QUERIES = [
     ("fr", "Madagascar BAD prêt"), ("fr", "Madagascar Exim Bank Chine prêt"),
     ("en", "Madagascar debt"), ("en", "Madagascar loan World Bank IMF"),
 ]
+MDG = re.compile(r"Madagascar|malgache|malagasy|Antananarivo|Tananarive|Jirama|ariary|Toamasina|Mahajanga", re.I)
 MUST = re.compile(r"dette|prêt|pret|emprunt|financement|FMI|Banque mondiale|BAD|AFD|crédit|debt|loan|IMF|World Bank|AfDB|credit|bond|arrears|arriérés", re.I)
 FEED = "https://news.google.com/rss/search?q={q}+when:30d&hl={hl}&gl=MG&ceid=MG:{hl}"
 
@@ -30,14 +31,15 @@ def main():
             src = it.findtext("source") or ""
             title = re.sub(r"\s+-\s+" + re.escape(src) + r"$", "", title) if src else title
             url = it.findtext("link") or ""
-            if not MUST.search(title) or "Madagascar" not in title + q or url in seen or title in seen:
+            if not MUST.search(title) or not MDG.search(title) or url in seen or title in seen:
                 continue
             d = email.utils.parsedate_to_datetime(it.findtext("pubDate")).date().isoformat()
             seen |= {url, title}
             new.append({"date": d, "source": src, "title_fr": title if lang == "fr" else "", "title_en": title if lang == "en" else "", "url": url})
     for r in new:  # one title per item; the other language falls back to the original
         r["title_fr"] = r["title_fr"] or r["title_en"]; r["title_en"] = r["title_en"] or r["title_fr"]
-    rows = sorted(old + new, key=lambda r: r["date"], reverse=True)[:60]
+    rows = [r for r in old + new if MDG.search(r["title_fr"] + " " + r["title_en"])]  # also cleans older entries
+    rows = sorted(rows, key=lambda r: r["date"], reverse=True)[:60]
     with open(path, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=["date", "source", "title_fr", "title_en", "url"]); w.writeheader(); w.writerows(rows)
     print(f"news: {len(new)} new, {len(rows)} kept")
