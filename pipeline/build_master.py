@@ -69,16 +69,17 @@ for r in csv.DictReader(open(f"{RAW}/wb_ida.csv")):
 # --- IMF (facility level, exact totals) ---
 for r in csv.DictReader(open(f"{RAW}/imf.csv")):
     out = float(r["outstanding_sdr_m"]) * 1e6 * SDR_USD
-    und = (float(r["approved_sdr_m"]) - float(r["drawn_sdr_m"])) * 1e6 * SDR_USD
+    fz = lambda v: float(v) if v not in ("", None) else 0.0
+    und = (fz(r["approved_sdr_m"]) - fz(r["drawn_sdr_m"])) * 1e6 * SDR_USD
     rows.append({
         "loan_id": r["loan_id"], "lender_name": "International Monetary Fund", "lender_country": "Multilateral (Washington)",
         "lender_type": "Multilateral", "project_name": r["facility"], "sector": "Budget support",
         "date_signed": r["date_approved"], "currency": "XDR",
-        "amount_original_usd": round(float(r["approved_sdr_m"]) * 1e6 * SDR_USD), "outstanding_usd": round(out),
+        "amount_original_usd": round(fz(r["approved_sdr_m"]) * 1e6 * SDR_USD) or "", "outstanding_usd": round(out),
         "undisbursed_usd": round(max(0, und)) if "RCF" not in r["loan_id"] else 0,
         "interest_or_charge_rate": r["interest"], "first_repayment": "", "last_repayment": "",
-        "concessional": "Yes", "status": "Disbursing" if "2024" in r["loan_id"] else "Repaying",
-        "source_urls": r["source_url"], "confidence": "High" if r["outstanding_note"].startswith("exact") else "Medium",
+        "concessional": "Yes", "status": "Disbursing" if r["expiry_or_drawn"] and r["expiry_or_drawn"] >= TODAY else "Repaying",
+        "source_urls": r["source_url"], "confidence": "High" if r["outstanding_note"].startswith(("exact", "latest")) else "Medium",
         "notes": f"SDR converted at US$ {SDR_USD} per SDR (10 Nov 2026). Grace {r['grace_years']} yrs, maturity {r['maturity_years']} yrs. {r['outstanding_note']}",
         "last_checked": TODAY})
 # IMF projected principal (official), SDR m -> USD

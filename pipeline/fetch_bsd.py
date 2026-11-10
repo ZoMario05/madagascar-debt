@@ -17,7 +17,7 @@ def num(s):
 
 def main():
     page = get(LIST, insecure=True)
-    found = sorted({int(n) for n in re.findall(r"file=(\d{3})\.pdf", page)})
+    found = sorted({int(n) for n in re.findall(r"statistique/bsd/&(?:amp;)?file=(\d{3})\.pdf", page)})
     latest = found[-1]
     print("BSD issues listed:", found[-5:])
     state = json.load(open(f"{RAW}/asof.json"))
