@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dette extérieure de Madagascar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#f8f4ea; --muted:#d6cfbf; --faint:#a9a190; --hair:rgba(244,239,228,.16); --hair2:rgba(244,239,228,.28);
+  --multi:#efe6d2; --bi:#e3b04b; --com:#fc3d32; --mdg:#3ddc84; --red:#fc3d32; --green:#007e3a;
+  --serif:Fraunces,Georgia,"Times New Roman",serif; --sans:Manrope,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --halo:0 0 1px rgba(0,0,0,1),0 0 3px rgba(0,0,0,.95),0 0 8px rgba(0,0,0,.85),0 0 18px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;background:#030406;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--bi)}
+button{font-family:inherit}
+#space{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;touch-action:pan-y;cursor:grab;display:block}
+#space.dragging{cursor:grabbing}
+.layer{position:relative;z-index:2;pointer-events:none;text-shadow:var(--halo)}
+.layer .on{pointer-events:auto}
+.wrap{padding:0 clamp(22px,4.5vw,96px)}
+header.top{position:fixed;top:0;left:0;right:0;z-index:20;pointer-events:none;text-shadow:var(--halo)}
+header.top .wrap{display:flex;align-items:center;gap:18px;height:68px}
+header.top .on{pointer-events:auto}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.brand svg{width:26px;height:44px;overflow:visible;filter:drop-shadow(0 0 6px rgba(61,220,132,.75)) drop-shadow(0 0 16px rgba(61,220,132,.35))}
+.brand b{display:block;font-family:var(--serif);font-weight:600;font-size:18px}
+.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;margin-top:1px}
+nav.links{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+nav.links a{color:var(--muted);text-decoration:none;font-size:13px;padding:8px 10px;border-radius:8px}
+nav.links a:hover{color:var(--ink)}
+.lang{display:flex;border:1px solid var(--hair2);border-radius:8px;overflow:hidden;background:rgba(0,0,0,.12)}
+.lang button{background:none;border:0;color:var(--muted);padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;letter-spacing:.6px;text-shadow:var(--halo)}
+.lang button.on-l{color:var(--ink);background:rgba(244,239,228,.14)}
+@media (max-width:1100px){nav.links{display:none}.lang{margin-left:auto}}
+@media (max-width:760px){.brand small{display:none}.brand b{font-size:15px}header.top .wrap{gap:10px}}
+.screen{height:100vh;position:relative}
+.corner{position:absolute;left:clamp(16px,2vw,26px);bottom:26px;max-width:min(460px,72vw)}
+.flagline{display:flex;width:56px;height:3px;margin-bottom:12px;border-radius:2px;overflow:hidden}
+.flagline i{flex:1}
+.corner .k{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted)}
+.corner .q{font-family:var(--serif);font-size:clamp(19px,2vw,24px);line-height:1.25;margin:6px 0 12px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:7px}
+.legend i{width:16px;height:2px;border-radius:2px;display:inline-block}
+.hint{font-size:11.5px;color:var(--faint);margin-top:10px}
+.scrollcue{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--faint);text-align:center}
+.scrollcue:after{content:"";display:block;width:1px;height:26px;margin:8px auto 0;background:linear-gradient(var(--faint),transparent)}
+.ctrl{position:fixed;right:22px;bottom:22px;z-index:6;display:flex;flex-direction:column;gap:6px;transition:opacity .3s}
+body.scrolled .ctrl{opacity:.55}.ctrl:hover{opacity:1}
+.ctrl button{width:38px;height:38px;border-radius:10px;border:1px solid var(--hair2);background:rgba(0,0,0,.12);color:var(--ink);font-size:17px;cursor:pointer;text-shadow:var(--halo)}
+@media (max-width:760px){.corner{bottom:18px;max-width:calc(100vw - 80px)}.scrollcue{display:none}.ctrl{right:14px;bottom:18px}}
+#tip{position:fixed;z-index:15;pointer-events:none;padding:8px 11px;border-radius:9px;background:rgba(10,12,16,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--hair);font-size:12.5px;opacity:0;transition:opacity .15s;white-space:nowrap}
+#tip b{display:block;font-size:13px}#tip span{color:var(--muted)}
+/* lender panel — see-through */
+.panel{position:fixed;top:84px;right:22px;bottom:22px;width:min(430px,40vw);z-index:12;background:transparent;border:1px solid var(--hair2);border-radius:16px;
+  transform:translateX(calc(100% + 40px));transition:transform .55s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;text-shadow:var(--halo)}
+.panel.open{transform:none}
+.panel .ph{padding:18px 20px 14px;border-bottom:1px solid var(--hair);position:relative}
+.panel .type{font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700}
+.panel h2{font-family:var(--serif);font-weight:600;margin:6px 0 3px;font-size:23px;line-height:1.18;padding-right:34px}
+.panel .hq{font-size:12.5px;color:var(--muted)}
+.panel .close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:9px;border:1px solid var(--hair2);background:transparent;color:var(--ink);cursor:pointer;font-size:15px;text-shadow:var(--halo)}
+.panel .stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--hair)}
+.panel .stats div{padding:12px 16px;border-right:1px solid var(--hair)}.panel .stats div:last-child{border-right:0}
+.panel .stats b{display:block;font-size:17px;font-variant-numeric:tabular-nums;font-weight:700}
+.panel .stats span{font-size:11px;color:var(--muted)}
+.panel .basis{font-size:11px;color:var(--faint);padding:8px 20px 0}
+.panel .body{overflow:auto;padding:4px 20px 20px;flex:1;scrollbar-width:thin}
+.panel h3{font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);margin:16px 0 10px;font-weight:700}
+.spark{display:flex;align-items:flex-end;gap:2px;height:54px;border-bottom:1px solid var(--hair2)}
+.spark div{flex:1;border-radius:1px 1px 0 0;min-height:1px;box-shadow:0 0 6px rgba(0,0,0,.6)}
+.spark-axis{display:flex;justify-content:space-between;font-size:10.5px;color:var(--faint);margin-top:5px}
+.loan{border-top:1px solid var(--hair);padding:13px 0 12px}.loan:first-of-type{border-top:0;padding-top:2px}
+.loan .t{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.loan .t b{font-size:14px;line-height:1.3;font-weight:700}
+.loan .amt{font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+.loan p{margin:3px 0 9px;color:var(--muted);font-size:12.5px}
+.loan dl{display:grid;grid-template-columns:repeat(3,1fr);gap:7px 10px;margin:0;font-size:12px}
+.loan dt{color:var(--faint);font-size:11px}.loan dd{margin:1px 0 0;font-weight:600;font-variant-numeric:tabular-nums}
+.badge{display:inline-block;margin:9px 6px 0 0;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid;box-shadow:0 0 6px rgba(0,0,0,.6)}
+.badge.conc{color:var(--mdg);border-color:rgba(61,220,132,.5)}.badge.nonconc{color:#ff7a70;border-color:rgba(252,61,50,.55)}.badge.na{color:var(--muted);border-color:var(--hair2)}
+.loan .src{font-size:11px;color:var(--faint);margin-top:8px;word-break:break-word}
+.toplist button{display:flex;width:100%;justify-content:space-between;align-items:center;gap:10px;background:none;border:0;border-top:1px solid var(--hair);color:var(--ink);padding:10px 0;cursor:pointer;font-size:13.5px;text-align:left;text-shadow:inherit}
+.toplist i{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:10px}
+.toplist em{font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
+@media (max-width:760px){.panel{top:auto;left:8px;right:8px;bottom:8px;width:auto;height:62vh;transform:translateY(calc(100% + 20px))}.loan dl{grid-template-columns:repeat(2,1fr)}}
+/* sections */
+section.block{padding:96px 0 10px}
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.eyebrow .flagline{margin:0}
+section.block h2{font-family:var(--serif);font-weight:600;font-size:clamp(28px,3.4vw,44px);margin:0 0 8px;letter-spacing:-.3px}
+section.block .sub{color:var(--muted);margin:0 0 26px;max-width:760px;line-height:1.55;font-size:16px}
+.glass{background:transparent;border:1px solid var(--hair);border-radius:16px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:18px}
+.kpis>div{padding:20px 22px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.kpis>div:nth-child(4n){border-right:0}.kpis>div:nth-last-child(-n+4){border-bottom:0}
+.kpis .v{font-family:var(--serif);font-size:clamp(24px,2.6vw,36px);font-weight:600;font-variant-numeric:tabular-nums}
+.kpis .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+.kpis .s{font-size:11px;color:var(--faint);margin-top:3px}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}.kpis>div{border-right:1px solid var(--hair)!important;border-bottom:1px solid var(--hair)!important;padding:16px}.kpis>div:nth-child(2n){border-right:0!important}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+@media (max-width:1000px){.grid2,.grid3{grid-template-columns:1fr}}
+.card{padding:20px 20px 16px;margin-bottom:18px}
+.grid2 .card,.grid3 .card{margin-bottom:0}
+.grid2>*,.grid3>*{min-width:0}
+.clauses th{white-space:normal}
+.card h4{margin:0 0 3px;font-size:16px;font-weight:700}
+.card .note{color:var(--muted);font-size:12.5px;margin:0 0 14px;line-height:1.5}
+.card svg{width:100%;height:auto;display:block;overflow:visible}
+.card svg text{fill:var(--muted);font-size:11.5px;font-family:var(--sans);paint-order:stroke;stroke:rgba(0,0,0,.9);stroke-width:3.2px;stroke-linejoin:round}
+.card svg text.v{fill:var(--ink);font-weight:700}
+.card svg .bar{filter:drop-shadow(0 0 3px rgba(0,0,0,.7))}
+.keys{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}
+.keys span{display:flex;gap:7px;align-items:center}
+.keys i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.mix{display:flex;height:34px;border-radius:8px;overflow:hidden;box-shadow:0 0 10px rgba(0,0,0,.6);margin:6px 0 10px}
+.mix div{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#0b0b0b;text-shadow:none;white-space:nowrap;overflow:hidden}
+.thr{margin:12px 0 4px}.thr .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
+.thr .track{position:relative;height:10px;border-radius:6px;background:rgba(244,239,228,.12);box-shadow:0 0 8px rgba(0,0,0,.6)}
+.thr .fill{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--mdg)}
+.thr .mark{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--red)}
+.thr small{color:var(--faint);font-size:11px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.filters input,.filters select{background:rgba(0,0,0,.12);border:1px solid var(--hair2);color:var(--ink);border-radius:10px;padding:11px 12px;font-size:14px;font-family:inherit;text-shadow:var(--halo)}
+.filters input::placeholder{color:var(--muted)}.filters select option{background:#14161b}.filters input{flex:1;min-width:220px}
+.tablewrap{overflow:auto;border-radius:16px;max-height:76vh}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:980px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--hair);white-space:nowrap}
+th{color:var(--muted);font-weight:700;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;cursor:pointer;user-select:none;position:sticky;top:0;background:rgba(3,4,6,.35)}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+td.proj{white-space:normal;min-width:260px}
+tbody tr{cursor:pointer}tbody tr:hover{background:rgba(244,239,228,.07)}
+td .tdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:9px}
+.count{color:var(--muted);font-size:13px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn{background:rgba(0,0,0,.12);border:1px solid var(--hair2);color:var(--ink);border-radius:10px;padding:9px 14px;font-size:13px;cursor:pointer;text-shadow:var(--halo)}
+.btn:hover{border-color:rgba(244,239,228,.5)}
+.slider{width:100%;accent-color:var(--bi)}
+.big{font-family:var(--serif);font-size:clamp(26px,3vw,40px);font-weight:600;font-variant-numeric:tabular-nums}
+.news{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.news a{display:block;padding:18px;text-decoration:none;color:var(--ink);border:1px solid var(--hair);border-radius:16px}
+.news a:hover{border-color:var(--hair2)}
+.news .d{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--bi)}
+.news .h{font-size:15px;line-height:1.45;margin:8px 0;font-weight:600}
+.news .s{font-size:12px;color:var(--faint)}
+.method{display:grid;grid-template-columns:repeat(3,1fr)}
+.method>div{padding:20px;font-size:14px;line-height:1.6;color:var(--muted);border-right:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.method>div:nth-child(3n){border-right:0}
+.method b{color:var(--ink);display:block;margin-bottom:6px;font-family:var(--serif);font-size:17px;font-weight:600}
+@media (max-width:1000px){.method{grid-template-columns:1fr}.method>div{border-right:0}}
+.clauses td{white-space:normal}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--hair2);color:var(--muted);box-shadow:0 0 6px rgba(0,0,0,.6)}
+footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--hair);line-height:1.6}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .9s,transform .9s}.reveal.in{opacity:1;transform:none}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:30;padding:10px 16px;border-radius:10px;border:1px solid var(--hair2);background:rgba(10,12,16,.7);font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none}
+@media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<canvas id="space" aria-label="Globe des créanciers de Madagascar"></canvas>
+<div id="tip"></div><div class="toast" id="toast"></div>
+<header class="top"><div class="wrap">
+  <a class="brand on" href="#top"><svg viewBox="0 0 60 104" aria-hidden="true"><defs><radialGradient id="lg" cx="55%" cy="45%" r="70%"><stop offset="0" stop-color="#f2fff7"/><stop offset=".35" stop-color="#8dffbf"/><stop offset=".75" stop-color="#3ddc84"/><stop offset="1" stop-color="#0f8a4a"/></radialGradient></defs><path id="logo-path" fill="url(#lg)" stroke="rgba(214,255,232,.8)" stroke-width="1"/></svg>
+    <div><b data-i18n="brand"></b><small data-i18n="brandSub"></small></div></a>
+  <nav class="links on">
+    <a href="#structure" data-i18n="nav1"></a><a href="#wall" data-i18n="nav2"></a><a href="#cost" data-i18n="nav3"></a>
+    <a href="#transparency" data-i18n="nav4"></a><a href="#explore" data-i18n="nav5"></a><a href="#news" data-i18n="nav6"></a><a href="#method" data-i18n="nav7"></a>
+  </nav>
+  <div class="lang on" role="group"><button id="btn-fr" class="on-l" type="button">FR</button><button id="btn-en" type="button">EN</button></div>
+</div></header>
+<div class="ctrl"><button type="button" id="zin" aria-label="+">+</button><button type="button" id="zout" aria-label="−">−</button><button type="button" id="zreset" aria-label="reset">⟲</button></div>
+<aside class="panel" id="panel" aria-live="polite"></aside>
+
+<main class="layer" id="top">
+  <div class="screen">
+    <div class="corner on">
+      <div class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></div>
+      <div class="k" data-i18n="kicker"></div>
+      <div class="q" data-i18n="question"></div>
+      <div class="legend"><span><i style="background:var(--multi)"></i><span data-i18n="tMulti"></span></span><span><i style="background:var(--bi)"></i><span data-i18n="tBi"></span></span><span><i style="background:var(--com)"></i><span data-i18n="tCom"></span></span></div>
+      <div class="hint" data-i18n="hint"></div>
+    </div>
+    <div class="scrollcue" data-i18n="scroll"></div>
+  </div>
+
+  <section class="block" id="structure"><div class="wrap">
+    <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e1"></span></div>
+    <h2 data-i18n="h1"></h2><p class="sub" data-i18n="s1"></p>
+    <div class="glass kpis on" id="kpis"></div>
+    <div class="grid2">
+      <div class="glass card reveal on"><h4 data-i18n="c_mix"></h4><p class="note" data-i18n="c_mixn"></p><div class="mix" id="mix"></div><div class="keys" id="mixkeys"></div>
+        <h4 style="margin-top:22px" data-i18n="c_fx"></h4><p class="note" data-i18n="c_fxn"></p><div class="mix" id="fx"></div></div>
+      <div class="glass card reveal on"><h4 data-i18n="c_lenders"></h4><p class="note" data-i18n="c_lendersn"></p><div id="ch-lenders"></div></div>
+    </div>
+  </div></section>
+
+  <section class="block" id="wall"><div class="wrap">
+    <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e2"></span></div>
+    <h2 data-i18n="h2"></h2><p class="sub" data-i18n="s2"></p>
+    <div class="grid3">
+      <div class="glass card reveal on"><h4 data-i18n="c_wall"></h4><p class="note" data-i18n="c_walln"></p><div id="ch-wall"></div>
+        <div class="keys"><span><i style="background:repeating-linear-gradient(45deg,#efe6d2 0 3px,rgba(239,230,210,.35) 3px 6px)"></i><span data-i18n="k_ida"></span></span><span><i style="background:#3ddc84"></i><span data-i18n="k_imf"></span></span></div></div>
+      <div class="glass card reveal on"><h4 data-i18n="c_thr"></h4><p class="note" data-i18n="c_thrn"></p><div id="thr"></div></div>
+    </div>
+  </div></section>
+
+  <section class="block" id="cost"><div class="wrap">
+    <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e3"></span></div>
+    <h2 data-i18n="h3"></h2><p class="sub" data-i18n="s3"></p>
+    <div class="grid3">
+      <div class="glass card reveal on"><h4 data-i18n="c_sc"></h4><p class="note" data-i18n="c_scn"></p><div id="ch-scatter"></div>
+        <div class="keys"><span><i style="background:var(--multi)"></i><span data-i18n="tMulti"></span></span><span><i style="background:var(--bi)"></i><span data-i18n="tBi"></span></span><span><i style="background:var(--com)"></i><span data-i18n="tCom"></span></span><span data-i18n="k_bub"></span></div></div>
+      <div class="glass card reveal on"><h4 data-i18n="c_ge"></h4><p class="note" data-i18n="c_gen"></p><div id="ch-ge"></div></div>
+    </div>
+  </div></section>
+
+  <section class="block" id="transparency"><div class="wrap">
+    <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e4"></span></div>
+    <h2 data-i18n="h4"></h2><p class="sub" data-i18n="s4"></p>
+    <div class="grid2">
+      <div class="glass card reveal on"><h4 data-i18n="c_tr"></h4><p class="note" data-i18n="c_trn"></p><div id="ch-tr"></div></div>
+      <div class="glass card reveal on"><h4 data-i18n="c_cl"></h4><p class="note" data-i18n="c_cln"></p><div class="tablewrap" style="max-height:none"><table class="clauses" style="min-width:0"><thead><tr id="clhead"></tr></thead><tbody id="clbody"></tbody></table></div></div>
+    </div>
+  </div></section>
+
+  <section class="block" id="pipeline"><div class="wrap">
+    <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e5"></span></div>
+    <h2 data-i18n="h5"></h2><p class="sub" data-i18n="s5"></p>
+    <div class="grid2">
+      <div class="glass card reveal on"><h4 data-i18n="c_pipe"></h4><p class="note" data-i18n="c_pipen"></p><div id="ch-pipe"></div></div>
+      <div class="glass card reveal on"><h4 data-i18n="c_fxsim"></h4><p class="note" data-i18n="c_fxsimn"></p>
+        <input class="slider on" type="range" min="0" max="50" step="1" value="20" id="dep">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--faint)"><span>0 %</span><span id="deplabel"></span><span>50 %</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px" id="fxsim"></div></div>
+    </div>
+    <div class="glass card reveal on" style="margin-top:18px"><h4 data-i18n="c_years"></h4><p class="note" data-i18n="c_yearsn"></p><div id="ch-years"></div>
+      <div class="keys"><span><i style="background:var(--multi)"></i><span data-i18n="tMulti"></span></span><span><i style="background:var(--bi)"></i><span data-i18n="tBi"></span></span><span><i style="background:var(--com)"></i><span data-i18n="tCom"></span></span></div></div>
+  </div></section>
+
+  <section class="block" id="explore"><div class="wrap">
+    <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e6"></span></div>
+    <h2 data-i18n="h6"></h2><p class="sub" data-i18n="s6"></p>
+    <div class="filters on"><input id="q" type="search"><select id="f-lender"></select><select id="f-type"></select><select id="f-sector"></select><select id="f-status"></select></div>
+    <div class="glass tablewrap on"><table><thead><tr id="thead"></tr></thead><tbody id="tbody"></tbody></table></div>
+    <div class="count on"><span id="count"></span><button class="btn" type="button" id="copycsv" data-i18n="copy"></button></div>
+  </div></section>
+
+  <section class="block" id="news"><div class="wrap">
+    <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e7"></span></div>
+    <h2 data-i18n="h7"></h2><p class="sub" data-i18n="s7"></p>
+    <div class="news on" id="newslist"></div>
+  </div></section>
+
+  <section class="block" id="method"><div class="wrap">
+    <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e8"></span></div>
+    <h2 data-i18n="h8"></h2><p class="sub" data-i18n="s8"></p>
+    <div class="glass method on" id="methodgrid"></div>
+  </div></section>
+  <footer><div class="wrap" id="footer"></div></footer>
+</main>
+
+<script>
+(() => {
+'use strict';
+const DATA = /*__DATA__*/null;
+const O = DATA.official;
+const T = {
+ fr:{brand:"Dette extérieure de Madagascar",brandSub:"Qui prête, pour quoi, à quelles conditions",
+  nav1:"Synthèse",nav2:"Échéances",nav3:"Coût",nav4:"Transparence",nav5:"Explorer",nav6:"Actualités",nav7:"Méthodologie",
+  kicker:"Dette publique extérieure · données réelles",question:"Qui prête à Madagascar, pour quoi, et quand faut-il rembourser.",
+  tMulti:"Multilatéral",tBi:"Bilatéral",tCom:"Commercial",hint:"Faites glisser pour tourner · +/− ou pincer pour zoomer · cliquez sur un prêteur ou sur Madagascar",scroll:"Synthèse",
+  e1:"Synthèse",h1:"Ce que Madagascar doit à l’étranger",s1:"Chiffres officiels du Trésor (fin juin 2026) et prêts recensés un par un, chacun avec sa source. Dettes annulées et prêts entièrement remboursés exclus.",
+  k_ext:"Dette publique extérieure",k_ext_s:"Trésor, fin juin 2026",k_gdp:"de la dette en % du PIB",k_gdp_s:"Trésor, fin juin 2026",k_len:"Créanciers",k_len_s:"sur le globe",k_loans:"Prêts recensés",k_loans_s:"avec source",
+  k_rate:"Taux d’intérêt moyen",k_rate_s:"dette extérieure, Trésor",k_atm:"Durée moyenne restante",k_atm_s:"années, Trésor",k_und:"Reste à décaisser",k_und_s:"prêts déjà signés, Trésor",k_sig:"Signé en 2026",k_sig_s:"17 conventions, janv.–juin",
+  c_mix:"Qui détient la dette",c_mixn:"Part de l’encours extérieur par type de créancier — Trésor, fin juin 2026.",
+  mix_multi:"Multilatéraux",mix_bil:"Bilatéraux",mix_fin:"Institutions financières",mix_com:"Banques commerciales",mix_unc:"Non réclamé / arriérés",
+  c_fx:"Exposition au change",c_fxn:"Une baisse de l’ariary fait grossir la dette en monnaie locale.",fx_usd:"Dollar",fx_eur:"Euro",fx_oth:"Autres (DTS, yen, yuan…)",
+  c_lenders:"Encours par créancier",c_lendersn:"Millions USD. Banque mondiale et FMI au 31 oct. 2026 (prêt par prêt); autres : statistiques Banque mondiale fin 2024. Cliquez pour ouvrir.",
+  e2:"Échéances",h2:"Le mur des remboursements",s2:"Combien Madagascar doit rembourser chaque année, et si cela pèse trop sur le budget au regard des seuils du FMI et de la Banque mondiale.",
+  c_wall:"Principal à rembourser par an",c_walln:"Millions USD. Banque mondiale : estimation (encours réparti jusqu’à l’échéance finale). FMI : projection officielle (jusqu’en 2030). Autres créanciers à ajouter.",
+  k_ida:"Banque mondiale (IDA) — estimé",k_imf:"FMI — officiel",peak:"pic",
+  c_thr:"Seuils de soutenabilité",c_thrn:"Ratios 2025 publiés par le Trésor, comparés aux seuils du cadre FMI–Banque mondiale (trait rouge).",
+  thr1:"Service de la dette / recettes budgétaires",thr2:"Service de la dette / exportations",thr3:"Valeur actuelle de la dette / PIB",thr4:"Valeur actuelle de la dette / exportations",thr_s:"seuil",
+  e3:"Coût",h3:"Combien coûte chaque prêt",s3:"Le taux d’intérêt seul trompe : l’élément-don combine taux, frais, différé et durée. Au-dessus de 35 %, un prêt est concessionnel (définition FMI).",
+  c_sc:"Taux et durée de chaque prêt",c_scn:"Prêts dont les conditions sont publiées. Taux + frais (axe vertical), durée totale en années (axe horizontal).",k_bub:"Taille = montant signé",
+  c_ge:"Élément-don moyen par créancier",c_gen:"Pondéré par le montant. Taux d’actualisation 5 %. Ligne : seuil de 35 %.",
+  e4:"Transparence",h4:"Clauses et garanties",s4:"La plupart des contrats de prêt ne sont pas publics. Plutôt que de supposer, nous mesurons ce qui est publié — et « non publié » est en soi une information.",
+  c_tr:"Indice de données publiques",c_trn:"Part des 5 informations clés publiées par prêt (montant, taux, durée, encours, date), moyenne par créancier.",
+  c_cl:"Clauses contractuelles",c_cln:"Méthode inspirée de l’étude AidData « How China Lends » (2021). Rempli à partir des contrats ou des lois de ratification publiés.",
+  cl_cred:"Créancier",cl1:"Garantie / collatéral",cl2:"Confidentialité",cl3:"Défaut croisé",cl4:"Droit applicable",np:"Non publié",
+  e5:"Engagements",h5:"La dette qui arrive",s5:"Des prêts déjà signés mais pas encore versés : c’est la dette de demain. Et l’effet d’une baisse de l’ariary sur ce qui est déjà dû.",
+  c_pipe:"Reste à décaisser par secteur",c_pipen:"Millions USD, prêts et dons signés non encore versés — Trésor, fin juin 2026. Total : ",
+  c_fxsim:"Simulateur : si l’ariary baisse",c_fxsimn:"Encours extérieur officiel (28 219,6 Md MGA fin juin 2026) et service annuel 2025 (1 033,1 Md MGA), recalculés selon la baisse de l’ariary face aux devises.",
+  dep:"Baisse de l’ariary : ",sim1:"Dette extérieure en ariary",sim2:"Service annuel en ariary",sim_more:"de plus",
+  c_years:"Prêts recensés par année de signature",c_yearsn:"Millions USD signés, prêts encore dus. Banque mondiale complète; autres créanciers : prêts actifs (liste officielle du Trésor).",
+  e6:"Base de données",h6:"Explorer tous les prêts",s6:"Recherchez, filtrez, triez. Cliquez sur une ligne pour ouvrir le créancier sur le globe.",
+  search:"Rechercher projet, créancier, secteur…",allL:"Tous les créanciers",allT:"Tous les types",allS:"Tous les secteurs",allSt:"Tous les statuts",
+  colL:"Créancier",colP:"Projet",colS:"Secteur",colD:"Signé",colA:"Montant (M$)",colO:"Encours (M$)",colR:"Taux+frais",colM:"Durée",colG:"Élément-don",colSt:"Statut",
+  shown:(n,t)=>`${n} prêts affichés sur ${t}`,copy:"Copier en CSV",copied:"Tableau copié — collez-le dans Excel ou Google Sheets",
+  e7:"Actualités",h7:"Dernières nouvelles sur la dette",s7:"Annonces de prêts, revues du FMI, budget — mises à jour automatiquement à partir des flux d’actualités.",
+  e8:"Méthode",h8:"Méthodologie et sources",s8:"Comment la base est construite, vérifiée et mise à jour.",
+  mdgType:"Emprunteur",mdgName:"Madagascar — tous les créanciers",mdgSub:"Dette publique extérieure",topLenders:"Principaux créanciers",
+  pOut:"Encours",pShare:"Part de la dette ext.",pLoans:"Prêts recensés",pRepay:"Remboursements de principal estimés",pList:"Prêts",
+  basis_wb:"Encours exact au 31 oct. 2026 (Banque mondiale).",basis_imf:"Encours au 31 oct. 2026 (FMI).",basis_ids:"Encours fin 2024 (statistiques de la dette, Banque mondiale). Encours par prêt non publié.",basis_sdmt:"Reste dû fin 2025 (Stratégie de la dette 2026-2028).",
+  noloans:"Aucun prêt actif dans la liste officielle; anciens prêts à compléter.",
+  dSigned:"Signé",dRate:"Taux + frais",dGrace:"Différé",dMat:"Durée",dDue:"Échéance",dOut:"Encours",dUnd:"À décaisser",dGE:"Élément-don",yrs:"ans",
+  conc:"Concessionnel",nonconc:"Non concessionnel",unk:"Conditions non publiées",srcl:"Source",tipLoans:n=>`${n} prêt${n>1?'s':''}`,kLenders:"créanciers",
+  types:{Multilateral:"Multilatéral",Bilateral:"Bilatéral",Commercial:"Commercial"}},
+ en:{brand:"Madagascar External Debt",brandSub:"Who lends, for what, on what terms",
+  nav1:"Summary",nav2:"Repayments",nav3:"Cost",nav4:"Transparency",nav5:"Explore",nav6:"News",nav7:"Methodology",
+  kicker:"External public debt · real data",question:"Who lends to Madagascar, for what, and when it comes due.",
+  tMulti:"Multilateral",tBi:"Bilateral",tCom:"Commercial",hint:"Drag to turn the globe · +/− or pinch to zoom · click a lender or Madagascar",scroll:"Summary",
+  e1:"Summary",h1:"What Madagascar owes abroad",s1:"Official Treasury figures (end-June 2026) and loans recorded one by one, each with its source. Forgiven debt and fully repaid loans are excluded.",
+  k_ext:"External public debt",k_ext_s:"Treasury, end-June 2026",k_gdp:"debt as % of GDP",k_gdp_s:"Treasury, end-June 2026",k_len:"Creditors",k_len_s:"on the globe",k_loans:"Loans recorded",k_loans_s:"each with a source",
+  k_rate:"Average interest rate",k_rate_s:"external debt, Treasury",k_atm:"Average time to maturity",k_atm_s:"years, Treasury",k_und:"Still to be disbursed",k_und_s:"loans already signed, Treasury",k_sig:"Signed in 2026",k_sig_s:"17 agreements, Jan–Jun",
+  c_mix:"Who holds the debt",c_mixn:"Share of external debt by creditor type — Treasury, end-June 2026.",
+  mix_multi:"Multilateral",mix_bil:"Bilateral",mix_fin:"Financial institutions",mix_com:"Commercial banks",mix_unc:"Unclaimed / arrears",
+  c_fx:"Currency exposure",c_fxn:"A weaker ariary makes the debt bigger in local currency.",fx_usd:"Dollar",fx_eur:"Euro",fx_oth:"Other (SDR, yen, yuan…)",
+  c_lenders:"Outstanding by creditor",c_lendersn:"US$ millions. World Bank and IMF at 31 Oct 2026 (loan by loan); others: World Bank debt statistics end-2024. Click to open.",
+  e2:"Repayments",h2:"The repayment wall",s2:"How much Madagascar must repay each year, and whether that weighs too much on the budget against the IMF–World Bank thresholds.",
+  c_wall:"Principal due per year",c_walln:"US$ millions. World Bank: estimate (outstanding spread to final maturity). IMF: official projection (to 2030). Other creditors to be added.",
+  k_ida:"World Bank (IDA) — estimated",k_imf:"IMF — official",peak:"peak",
+  c_thr:"Sustainability thresholds",c_thrn:"2025 ratios published by the Treasury, against the IMF–World Bank framework thresholds (red line).",
+  thr1:"Debt service / budget revenue",thr2:"Debt service / exports",thr3:"Present value of debt / GDP",thr4:"Present value of debt / exports",thr_s:"threshold",
+  e3:"Cost",h3:"What each loan costs",s3:"The interest rate alone misleads: the grant element combines rate, fees, grace period and maturity. Above 35%, a loan is concessional (IMF definition).",
+  c_sc:"Rate and length of each loan",c_scn:"Loans whose terms are published. Rate + fees (vertical), total maturity in years (horizontal).",k_bub:"Size = amount signed",
+  c_ge:"Average grant element by creditor",c_gen:"Weighted by amount. 5% discount rate. Line: 35% threshold.",
+  e4:"Transparency",h4:"Clauses and guarantees",s4:"Most loan contracts are not public. Rather than guess, we measure what is published — and “not published” is a finding in itself.",
+  c_tr:"Public data index",c_trn:"Share of 5 key facts published per loan (amount, rate, maturity, outstanding, date), averaged by creditor.",
+  c_cl:"Contract clauses",c_cln:"Method based on AidData’s “How China Lends” (2021). Filled from published contracts or ratification laws.",
+  cl_cred:"Creditor",cl1:"Collateral / security",cl2:"Confidentiality",cl3:"Cross-default",cl4:"Governing law",np:"Not published",
+  e5:"Pipeline",h5:"The debt that is coming",s5:"Loans already signed but not yet paid out are tomorrow’s debt. And what a weaker ariary does to what is already owed.",
+  c_pipe:"Still to be disbursed, by sector",c_pipen:"US$ millions, signed loans and grants not yet paid out — Treasury, end-June 2026. Total: ",
+  c_fxsim:"Simulator: if the ariary falls",c_fxsimn:"Official external debt (MGA 28,219.6bn end-June 2026) and 2025 annual service (MGA 1,033.1bn), recalculated for a fall of the ariary against foreign currencies.",
+  dep:"Ariary depreciation: ",sim1:"External debt in ariary",sim2:"Annual service in ariary",sim_more:"more",
+  c_years:"Loans recorded by year signed",c_yearsn:"US$ millions signed, loans still owed. World Bank complete; other creditors: active loans (official Treasury list).",
+  e6:"Database",h6:"Explore every loan",s6:"Search, filter, sort. Click a row to open the creditor on the globe.",
+  search:"Search project, creditor, sector…",allL:"All creditors",allT:"All types",allS:"All sectors",allSt:"All statuses",
+  colL:"Creditor",colP:"Project",colS:"Sector",colD:"Signed",colA:"Amount ($m)",colO:"Outstanding ($m)",colR:"Rate+fees",colM:"Maturity",colG:"Grant element",colSt:"Status",
+  shown:(n,t)=>`${n} of ${t} loans shown`,copy:"Copy as CSV",copied:"Table copied — paste it into Excel or Google Sheets",
+  e7:"News",h7:"Latest debt news",s7:"Loan announcements, IMF reviews, budget — updated automatically from news feeds.",
+  e8:"Method",h8:"Methodology and sources",s8:"How the database is built, checked and updated.",
+  mdgType:"Borrower",mdgName:"Madagascar — all creditors",mdgSub:"External public debt",topLenders:"Largest creditors",
+  pOut:"Outstanding",pShare:"Share of ext. debt",pLoans:"Loans recorded",pRepay:"Estimated principal repayments",pList:"Loans",
+  basis_wb:"Exact outstanding at 31 Oct 2026 (World Bank).",basis_imf:"Outstanding at 31 Oct 2026 (IMF).",basis_ids:"Outstanding end-2024 (World Bank debt statistics). Outstanding per loan not published.",basis_sdmt:"Owed end-2025 (Debt strategy 2026-2028).",
+  noloans:"No active loans in the official list; older loans still to add.",
+  dSigned:"Signed",dRate:"Rate + fees",dGrace:"Grace",dMat:"Maturity",dDue:"Final due",dOut:"Outstanding",dUnd:"Undisbursed",dGE:"Grant element",yrs:"yrs",
+  conc:"Concessional",nonconc:"Non-concessional",unk:"Terms not published",srcl:"Source",tipLoans:n=>`${n} loan${n>1?'s':''}`,kLenders:"creditors",
+  types:{Multilateral:"Multilateral",Bilateral:"Bilateral",Commercial:"Commercial"}}
+};
+const SECT={"Budget support":"Appui budgétaire","Transport":"Transport","Energy":"Énergie","Social protection":"Protection sociale","Health & nutrition":"Santé et nutrition","Education":"Éducation","Water & urban":"Eau et urbain","Digital":"Numérique","Agriculture & environment":"Agriculture et environnement","Governance & finance":"Gouvernance et finances","Other / to classify":"Autre / à classer"};
+const STAT={"Repaying":"En remboursement","Disbursing & repaying":"Décaissement et remboursement","Disbursing":"En décaissement","Fully disbursed":"Entièrement décaissé","Signed":"Signé","Signed (effective)":"Signé (en vigueur)","Approved":"Approuvé","Disbursing (active project)":"Projet actif","Repaying (assumed)":"En remboursement (supposé)","Fully disbursed (assumed)":"Décaissé (supposé)","Disbursing (assumed)":"En décaissement (supposé)","Signed / disbursing":"Signé / en décaissement"};
+let lang='fr'; try{const s=localStorage.getItem('mdg-lang-live'); if(s==='fr'||s==='en') lang=s;}catch(e){}
+const t=k=>T[lang][k];
+const fmtN=(v,d=0)=>v.toLocaleString(lang==='fr'?'fr-FR':'en-US',{maximumFractionDigits:d,minimumFractionDigits:d});
+function money(m){ if(m==null) return '–'; if(lang==='fr'){ return m>=1000? fmtN(m/1000,2)+' Md$' : fmtN(m,m<10?1:0)+' M$'; } return m>=1000? '$'+fmtN(m/1000,2)+' bn' : '$'+fmtN(m,m<10?1:0)+' m'; }
+const pct=(v,d=1)=>v==null?'–':(lang==='fr'?fmtN(v,d)+' %':fmtN(v,d)+'%');
+function dateFmt(s){ if(!s) return '–'; const d=new Date(s+'T00:00:00Z'); return d.toLocaleDateString(lang==='fr'?'fr-FR':'en-GB',{year:'numeric',month:'short',day:'numeric',timeZone:'UTC'}); }
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sect=s=>lang==='fr'?(SECT[s]||s):s, stat=s=>lang==='fr'?(STAT[s]||s):s;
+const TYPECOL={Multilateral:'#efe6d2',Bilateral:'#e3b04b',Commercial:'#fc3d32'};
+const MDG={lat:-18.88,lng:47.51};
+// lenders in the shape the globe code expects
+const OFFS={IDA:[-8,-10,'right'],IMF:[-8,14,'right'],SG:[-8,10,'right'],FR:[-8,-8,'right'],EIB:[8,-12,'left'],NL:[-8,-6,'right'],BE:[8,6,'left'],DE:[8,-4,'left'],IFAD:[-8,10,'right'],OFID:[8,4,'left'],KW:[8,-8,'left'],SA:[-8,4,'right'],AE:[8,6,'left'],ES:[-8,8,'right'],DZ:[-8,0,'right']};
+const LENDERS=DATA.lenders.map(l=>{const o=OFFS[l.k]||(l.lng<40?[-8,0,'right']:[8,0,'left']);return {...l,id:l.k,total:l.out||0,lx:o[0],ly:o[1],ta:o[2],loans:DATA.loans.filter(x=>x.k===l.k)}});
+const byLender={}; LENDERS.forEach(l=>byLender[l.id]=l);
+const TOTAL=O.ext_usd;
+const lname=l=>l.n[lang==='fr'?1:0];
+const SHORT_FR={IDA:'Banque mondiale',IMF:'FMI',AFDB:'BAD',EIB:'BEI',IFAD:'FIDA',OFID:'Fonds OPEP',CN:'Chine',JP:'Japon',DZ:'Algérie',KR:'Corée',SA:'Fonds saoudien',KW:'Fonds koweïtien',AE:'Fonds Abou Dabi',RU:'Russie',IN:'Inde',NL:'Pays-Bas',BE:'Belgique',DE:'Allemagne',ES:'Espagne'};
+LENDERS.forEach(l=>{l.sEN=l.s;l.sFR=SHORT_FR[l.id]||l.s;});
+function setShort(){LENDERS.forEach(l=>l.s=lang==='fr'?l.sFR:l.sEN);}
+
+/*__GLOBE__*/
+
+// ---------------- panel ----------------
+function loanCard(x){
+  const rate=x.rate==null?null:(x.rate+(x.fee||0));
+  const badge=x.ge==null?`<span class="badge na">${t('unk')}</span>`:(x.ge>=35?`<span class="badge conc">${t('conc')} · ${pct(x.ge,0)}</span>`:`<span class="badge nonconc">${t('nonconc')} · ${pct(x.ge,0)}</span>`);
+  const src=String(x.src).split(' | ').map(s=>{const m=s.match(/https?:\/\/\S+/);if(!m)return esc(s);const host=new URL(m[0]).hostname.replace(/^www\./,'');const rest=s.replace(m[0],'').replace(/\s*[-–]\s*$/,'').trim();return `<a href="${esc(m[0])}" target="_blank" rel="noopener">${esc(host)}</a>${rest?' '+esc(rest):''}`}).join(' · ');
+  return `<div class="loan"><div class="t"><b>${esc(x.p)}</b><span class="amt">${money(x.amt)}</span></div>
+   <p>${esc(sect(x.s))} · ${esc(x.cur)} · ${esc(stat(x.st))}</p>
+   <dl><div><dt>${t('dSigned')}</dt><dd>${dateFmt(x.d)}</dd></div><div><dt>${t('dRate')}</dt><dd>${rate==null?'–':pct(rate,2)}</dd></div><div><dt>${t('dGrace')}</dt><dd>${x.grace==null?'–':fmtN(x.grace,0)+' '+t('yrs')}</dd></div>
+   <div><dt>${t('dMat')}</dt><dd>${x.mat==null?'–':fmtN(x.mat,0)+' '+t('yrs')}</dd></div><div><dt>${t('dOut')}</dt><dd>${money(x.out)}</dd></div><div><dt>${t('dDue')}</dt><dd>${dateFmt(x.lr)}</dd></div></dl>
+   ${badge}<div class="src">${t('srcl')} : ${src}</div></div>`;
+}
+function renderPanel(){
+  const p=document.getElementById('panel'); if(!selected){p.innerHTML='';return;}
+  if(selected==='mdg'){
+    const ranked=[...LENDERS].sort((a,b)=>b.total-a.total);
+    p.innerHTML=`<div class="ph"><div class="type" style="color:var(--mdg)">${t('mdgType')}</div><h2>${t('mdgName')}</h2><div class="hq">${t('mdgSub')}</div><button class="close" type="button">✕</button></div>
+    <div class="stats"><div><b>${money(O.ext_usd)}</b><span>${t('k_ext')}</span></div><div><b>${pct(O.gdp_ratio_ext)}</b><span>${t('k_gdp')}</span></div><div><b>${DATA.loans.length}</b><span>${t('pLoans')}</span></div></div>
+    <div class="body"><h3>${t('topLenders')}</h3><div class="toplist">${ranked.map(l=>`<button type="button" data-id="${l.id}"><span><i style="background:${TYPECOL[l.type]}"></i>${esc(lname(l))}</span><em>${money(l.total)}</em></button>`).join('')}</div></div>`;
+    p.querySelectorAll('.toplist button').forEach(b=>b.onclick=()=>select(b.dataset.id));
+  } else {
+    const l=byLender[selected], col=TYPECOL[l.type];
+    const sch=DATA.schedule, ser=(l.id==='IDA'||l.id==='IMF')?sch[l.id]:null, mx=ser?Math.max(...ser,0.001):1;
+    const loans=[...l.loans].sort((a,b)=>(b.d||'').localeCompare(a.d||''));
+    p.innerHTML=`<div class="ph"><div class="type" style="color:${col}">${esc(T[lang].types[l.type])}</div><h2>${esc(lname(l))}</h2><div class="hq">${esc(l.hq[lang==='fr'?1:0])}</div><button class="close" type="button">✕</button></div>
+    <div class="stats"><div><b>${money(l.total)}</b><span>${t('pOut')}</span></div><div><b>${pct(l.total/O.ext_usd*100)}</b><span>${t('pShare')}</span></div><div><b>${l.loans.length}</b><span>${t('pLoans')}</span></div></div>
+    <div class="basis">${t('basis_'+l.basis)}</div>
+    <div class="body">${ser?`<h3>${t('pRepay')}</h3><div class="spark">${ser.map((v,i)=>`<div title="${sch.years[i]}: ${money(v)}" style="height:${(v/mx*100).toFixed(1)}%;background:${l.id==='IMF'?'#3ddc84':col}"></div>`).join('')}</div><div class="spark-axis"><span>${sch.years[0]}</span><span>${sch.years[sch.years.length-1]}</span></div>`:''}
+    <h3>${t('pList')}</h3>${loans.length?loans.map(loanCard).join(''):`<p style="color:var(--muted);font-size:13px">${t('noloans')}</p>`}</div>`;
+  }
+  p.querySelector('.close').onclick=closePanel;
+}
+
+// ---------------- charts ----------------
+const NS='http://www.w3.org/2000/svg';
+const CW=id=>Math.max(300,Math.min(1400,(document.getElementById(id).clientWidth||560)));
+function svg(w,h){const s=document.createElementNS(NS,'svg');s.setAttribute('viewBox',`0 0 ${w} ${h}`);return s;}
+function el(tag,a,p){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e;}
+function txt(p,x,y,s,a={}){const e=el('text',{x,y,...a},p);e.textContent=s;return e;}
+function nice(mx){const st=[5,10,20,25,50,100,200,250,500,1000].find(x=>mx/x<=5)||1000;return {top:Math.ceil(mx/st)*st,st};}
+function grid(s,x0,W,y0,y1,top,st,fmt=v=>fmtN(v)){for(let v=0;v<=top+1e-9;v+=st){const y=y1-(v/top)*(y1-y0);el('line',{x1:x0,x2:W,y1:y,y2:y,stroke:'rgba(244,239,228,.14)'},s);txt(s,x0-6,y+4,fmt(v),{'text-anchor':'end'});}}
+const anim=[];let shown=false;
+function hbars(id,rows,colorOf,onClick,valFmt=money){
+  const box=document.getElementById(id);box.innerHTML='';const W=CW(id),rh=24,H=rows.length*rh+6,x0=W<500?110:170,mx=Math.max(...rows.map(r=>r[1]),1e-9),s=svg(W,H);box.appendChild(s);
+  rows.forEach((r,i)=>{const y=i*rh+3;txt(s,x0-10,y+rh/2+4,r[0],{'text-anchor':'end'});const w=r[1]/mx*(W-x0-90);
+    const b=el('rect',{x:x0,y:y+6,height:rh-12,width:0,rx:2,fill:colorOf(r,i),class:'bar',style:onClick?'cursor:pointer':''},s); if(onClick) b.addEventListener('click',()=>onClick(r));
+    anim.push(()=>b.setAttribute('width',Math.max(1,w)));txt(s,x0+w+8,y+rh/2+4,valFmt(r[1],r),{class:'v'});});
+}
+function chartLenders(){ hbars('ch-lenders',[...LENDERS].sort((a,b)=>b.total-a.total).map(l=>[l.s,l.total,l]),r=>TYPECOL[r[2].type],r=>selectFromPage(r[2].id),(v,r)=>money(v)+(r[2].basis==='ids'?' ²':'')); }
+function chartWall(){
+  const box=document.getElementById('ch-wall');box.innerHTML='';const S=DATA.schedule,W=CW('ch-wall'),H=W<500?230:280,x0=44,y0=20,y1=H-26,s=svg(W,H);box.appendChild(s);
+  const defs=el('defs',{},s),pat=el('pattern',{id:'hatch',width:6,height:6,patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'},defs);el('rect',{width:6,height:6,fill:'rgba(239,230,210,.35)'},pat);el('rect',{width:3,height:6,fill:'#efe6d2'},pat);
+  const tot=S.years.map((y,i)=>S.IDA[i]+S.IMF[i]),n=nice(Math.max(...tot));grid(s,x0,W,y0,y1,n.top,n.st);
+  const bw=(W-x0)/S.years.length,peak=tot.indexOf(Math.max(...tot));
+  S.years.forEach((y,i)=>{const x=x0+i*bw+2,h1=S.IDA[i]/n.top*(y1-y0),h2=S.IMF[i]/n.top*(y1-y0);
+    const a=el('rect',{x,y:y1,width:bw-4,height:0,fill:'url(#hatch)',class:'bar'},s),b=el('rect',{x,y:y1,width:bw-4,height:0,fill:'#3ddc84',class:'bar'},s);
+    el('title',{},a).textContent=`${y} · IDA: ${money(S.IDA[i])}`;el('title',{},b).textContent=`${y} · IMF: ${money(S.IMF[i])}`;
+    anim.push(()=>{a.setAttribute('y',y1-h1);a.setAttribute('height',h1);b.setAttribute('y',y1-h1-h2);b.setAttribute('height',h2);});
+    if(W>=500||i%2===0) txt(s,x+bw/2-2,H-8,y,{'text-anchor':'middle'});
+    if(i===peak) txt(s,x+bw/2-2,y1-h1-h2-8,`${t('peak')} ${y} · ${money(tot[i])}`,{'text-anchor':'middle',class:'v'});});
+}
+function renderThr(){
+  const rows=[[t('thr1'),O.ds_rev,O.ds_rev_thr],[t('thr2'),O.ds_exp,O.ds_exp_thr],[t('thr3'),O.pv_gdp,O.pv_gdp_thr],[t('thr4'),O.pv_exp,O.pv_exp_thr]];
+  document.getElementById('thr').innerHTML=rows.map(([l,v,th])=>{const max=th*1.4;return `<div class="thr"><div class="row"><span>${l}</span><b>${pct(v)}</b></div><div class="track"><div class="fill" style="width:${Math.min(100,v/max*100)}%;background:${v>th?'var(--red)':v>th*.8?'var(--bi)':'var(--mdg)'}"></div><div class="mark" style="left:${th/max*100}%"></div></div><small>${t('thr_s')} ${pct(th,0)}</small></div>`}).join('');
+}
+function renderMix(){
+  const sh=O.shares,items=[[t('mix_multi'),sh.multi,'#efe6d2'],[t('mix_bil'),sh.bil,'#e3b04b'],[t('mix_fin'),sh.fin,'#8dd6b4'],[t('mix_com'),sh.com,'#fc3d32'],[t('mix_unc'),sh.unclaimed,'#8a8374']];
+  document.getElementById('mix').innerHTML=items.map(([l,v,c])=>`<div style="width:${v}%;background:${c}" title="${l}: ${pct(v)}">${v>8?pct(v,0):''}</div>`).join('');
+  document.getElementById('mixkeys').innerHTML=items.map(([l,v,c])=>`<span><i style="background:${c}"></i>${l} · ${pct(v)}</span>`).join('');
+  const fx=[[t('fx_usd'),O.fx_usd,'#e3b04b'],[t('fx_eur'),O.fx_eur,'#efe6d2'],[t('fx_oth'),100-O.fx_usd-O.fx_eur,'#8a8374']];
+  document.getElementById('fx').innerHTML=fx.map(([l,v,c])=>`<div style="width:${v}%;background:${c}">${l} ${pct(v,0)}</div>`).join('');
+}
+function chartScatter(){
+  const pts=DATA.loans.filter(x=>x.rate!=null&&x.mat!=null&&x.amt);const box=document.getElementById('ch-scatter');box.innerHTML='';
+  const W=CW('ch-scatter'),H=W<500?260:320,x0=46,y0=14,y1=H-30,s=svg(W,H);box.appendChild(s);
+  const mxR=Math.max(3.5,...pts.map(p=>p.rate+(p.fee||0))),mxM=55;
+  for(let v=0;v<=mxR+1e-9;v+=0.5){const y=y1-v/mxR*(y1-y0);el('line',{x1:x0,x2:W,y1:y,y2:y,stroke:'rgba(244,239,228,.1)'},s);if(Math.abs(v%1)<1e-9)txt(s,x0-6,y+4,pct(v,0),{'text-anchor':'end'});}
+  for(let m=0;m<=mxM;m+=10){const x=x0+m/mxM*(W-x0-10);txt(s,x,H-10,m+' '+t('yrs'),{'text-anchor':'middle'});}
+  const mxA=Math.max(...pts.map(p=>p.amt));
+  pts.sort((a,b)=>b.amt-a.amt).forEach(p=>{const x=x0+p.mat/mxM*(W-x0-10),y=y1-(p.rate+(p.fee||0))/mxR*(y1-y0),r=3+12*Math.sqrt(p.amt/mxA);
+    const c=el('circle',{cx:x,cy:y,r:0,fill:TYPECOL[p.type]||'#ccc','fill-opacity':.55,stroke:TYPECOL[p.type]||'#ccc','stroke-width':1.2,style:'cursor:pointer;filter:drop-shadow(0 0 3px rgba(0,0,0,.8))'},s);
+    el('title',{},c).textContent=`${byLender[p.k]?byLender[p.k].s:''} · ${p.p}\n${money(p.amt)} · ${pct(p.rate+(p.fee||0),2)} · ${fmtN(p.mat,0)} ${t('yrs')} · GE ${pct(p.ge,0)}`;
+    c.addEventListener('click',()=>selectFromPage(p.k));anim.push(()=>c.setAttribute('r',r));});
+}
+function chartGE(){
+  const agg={};DATA.loans.forEach(x=>{if(x.ge==null||!x.amt)return;(agg[x.k]=agg[x.k]||{w:0,s:0});agg[x.k].w+=x.amt;agg[x.k].s+=x.ge*x.amt;});
+  const rows=Object.entries(agg).map(([k,v])=>[byLender[k].s,v.s/v.w,byLender[k]]).sort((a,b)=>b[1]-a[1]);
+  hbars('ch-ge',rows,r=>r[1]>=35?'#3ddc84':'#fc3d32',r=>selectFromPage(r[2].id),v=>pct(v,0));
+  const s=document.querySelector('#ch-ge svg');if(!s)return;const W=CW('ch-ge'),x0=W<500?110:170,mx=Math.max(...rows.map(r=>r[1])),x=x0+35/mx*(W-x0-90);
+  el('line',{x1:x,x2:x,y1:0,y2:rows.length*24+6,stroke:'#fc3d32','stroke-dasharray':'4 4'},s);
+}
+function chartTransparency(){
+  const agg={};DATA.loans.forEach(x=>{(agg[x.k]=agg[x.k]||[]).push(x.pub/5*100)});
+  const rows=Object.entries(agg).map(([k,v])=>[byLender[k].s,v.reduce((a,b)=>a+b,0)/v.length,byLender[k]]).sort((a,b)=>b[1]-a[1]);
+  hbars('ch-tr',rows,r=>r[1]>=80?'#3ddc84':r[1]>=60?'#e3b04b':'#fc3d32',r=>selectFromPage(r[2].id),v=>pct(v,0));
+  const heads=[t('cl_cred'),t('cl1'),t('cl2'),t('cl3'),t('cl4')];document.getElementById('clhead').innerHTML=heads.map(h=>`<th style="cursor:default">${h}</th>`).join('');
+  document.getElementById('clbody').innerHTML=rows.map(r=>`<tr><td><span class="tdot" style="background:${TYPECOL[r[2].type]}"></span>${esc(r[0])}</td>${[1,2,3,4].map(()=>`<td><span class="pill">${t('np')}</span></td>`).join('')}</tr>`).join('');
+}
+function chartPipe(){ hbars('ch-pipe',O.undisb_sector.map(r=>[lang==='fr'?r[1]:r[0],r[2]]),()=>'#e3b04b',null); document.querySelector('[data-i18n="c_pipen"]').textContent=t('c_pipen')+money(O.undisb)+'.'; }
+function chartYears(){
+  const box=document.getElementById('ch-years');box.innerHTML='';const ys=[];for(let y=1996;y<=2026;y++)ys.push(y);const types=['Multilateral','Bilateral','Commercial'];
+  const d=ys.map(y=>{const o={y};types.forEach(tp=>o[tp]=DATA.loans.filter(x=>x.d&&+x.d.slice(0,4)===y&&x.type===tp&&x.k!=='IMF').reduce((a,b)=>a+(b.amt||0),0));return o;});
+  const W=CW('ch-years'),H=W<500?220:250,x0=46,y0=16,y1=H-26,s=svg(W,H);box.appendChild(s);const n=nice(Math.max(...d.map(o=>types.reduce((a,tp)=>a+o[tp],0))));grid(s,x0,W,y0,y1,n.top,n.st);
+  const bw=(W-x0)/ys.length;d.forEach((o,i)=>{let acc=0;const x=x0+i*bw+bw*.18,w=bw*.64;types.forEach(tp=>{const h=o[tp]/n.top*(y1-y0);if(h<=0)return;const yt=y1-acc-h,r=el('rect',{x,y:y1,width:w,height:0,fill:TYPECOL[tp],class:'bar'},s);el('title',{},r).textContent=`${o.y} · ${T[lang].types[tp]}: ${money(o[tp])}`;anim.push(()=>{r.setAttribute('y',yt);r.setAttribute('height',h)});acc+=h;});
+    if(o.y%5===0||(W>900&&o.y%2===0))txt(s,x+w/2,H-8,o.y,{'text-anchor':'middle'});});
+}
+function renderSim(){
+  const dep=+document.getElementById('dep').value/100;document.getElementById('deplabel').textContent=t('dep')+pct(dep*100,0);
+  const f=1/(1-dep),debt=O.ext_mga*f,serv=O.service_2025_mga*f;
+  const mg=v=>lang==='fr'?fmtN(v,0)+' Md MGA':'MGA '+fmtN(v,0)+'bn';
+  document.getElementById('fxsim').innerHTML=`<div><div class="big">${mg(debt)}</div><div style="color:var(--muted);font-size:13px">${t('sim1')}</div><div style="color:var(--red);font-size:13px;margin-top:4px">+${mg(debt-O.ext_mga)} ${t('sim_more')}</div></div>
+   <div><div class="big">${mg(serv)}</div><div style="color:var(--muted);font-size:13px">${t('sim2')}</div><div style="color:var(--red);font-size:13px;margin-top:4px">+${mg(serv-O.service_2025_mga)} ${t('sim_more')}</div></div>`;
+}
+function renderKPIs(){
+  const k=[[money(O.ext_usd),'k_ext','k_ext_s'],[pct(O.gdp_ratio_ext),'k_gdp','k_gdp_s'],[LENDERS.length,'k_len','k_len_s'],[DATA.loans.length,'k_loans','k_loans_s'],
+    [pct(O.rate_avg),'k_rate','k_rate_s'],[fmtN(O.atm,1),'k_atm','k_atm_s'],[money(O.undisb),'k_und','k_und_s'],[money(O.signed_2026_usd),'k_sig','k_sig_s']];
+  document.getElementById('kpis').innerHTML=k.map(([v,l,s])=>`<div><div class="v">${v}</div><div class="l">${t(l)}</div><div class="s">${t(s)}</div></div>`).join('');
+}
+function renderNews(){ document.getElementById('newslist').innerHTML=[...DATA.news].sort((a,b)=>b.date.localeCompare(a.date)).map(n=>`<a href="${esc(n.url)}" target="_blank" rel="noopener"><div class="d">${dateFmt(n.date)} · ${esc(n.source)}</div><div class="h">${esc(lang==='fr'?n.title_fr:n.title_en)}</div><div class="s">${esc(new URL(n.url).hostname)} ↗</div></a>`).join(''); }
+const METHOD={fr:[["Périmètre","Dette publique extérieure de l’administration centrale et dette garantie. Exclus : dettes annulées (PPTE/IADM), prêts entièrement remboursés, dons, dette intérieure."],
+ ["Sources","Banque mondiale (relevé des crédits IDA, mensuel, prêt par prêt), FMI (position financière), Trésor public (Bulletin Statistique de la Dette n°41, juin 2026; SDMT 2026-2028), statistiques de la dette Banque mondiale, AidData. Chaque prêt renvoie à sa source."],
+ ["Vérification","Comparaison avec les chiffres officiels du Trésor : multilatéraux à 1,6 % près; toutes les lignes Banque mondiale de la liste du Trésor retrouvées dans les données Banque mondiale. Écarts expliqués dans la base téléchargeable."],
+ ["Estimations","Échéancier Banque mondiale : encours réparti également jusqu’à l’échéance finale (estimé, hachuré). Élément-don calculé à 5 %, remboursement linéaire après différé. Montants des autres créanciers = allocation en USD publiée par le Trésor."],
+ ["Limites","Encours par prêt non publié hors Banque mondiale et FMI. Anciens prêts entièrement décaissés de la BAD, de la France et de la Chine à compléter. Le FMI déclare 1 011 M$; le Trésor en comptabilise environ 608 M$ (prêt rétrocédé par la Banque centrale) — à confirmer."],
+ ["Mise à jour","Automatique : Banque mondiale et FMI chaque mois, statistiques de la dette chaque année, bulletin du Trésor chaque trimestre (vérifié à la main), actualités chaque jour. Chaque mise à jour reçoit un numéro de version et une date."]],
+ en:[["Scope","External public debt of the central government and guaranteed debt. Excluded: forgiven debt (HIPC/MDRI), fully repaid loans, grants, domestic debt."],
+ ["Sources","World Bank (IDA statement of credits, monthly, loan by loan), IMF (financial position), Treasury (Debt Statistical Bulletin no. 41, June 2026; debt strategy 2026-2028), World Bank debt statistics, AidData. Every loan links to its source."],
+ ["Cross-check","Compared with the Treasury’s official figures: multilateral within 1.6%; every World Bank line in the Treasury list found in World Bank data. Differences explained in the downloadable database."],
+ ["Estimates","World Bank schedule: outstanding spread evenly to final maturity (estimated, hatched). Grant element at 5%, straight-line repayment after grace. Other creditors’ amounts = US$ allocation published by the Treasury."],
+ ["Limits","Outstanding per loan not published except World Bank and IMF. Older, fully disbursed AfDB, French and Chinese loans still to add. The IMF reports US$1,011m; the Treasury books about US$608m (on-lent by the central bank) — to be confirmed."],
+ ["Updates","Automatic: World Bank and IMF monthly, debt statistics yearly, Treasury bulletin quarterly (checked by hand), news daily. Every update gets a version number and date."]]};
+function renderMethod(){ document.getElementById('methodgrid').innerHTML=METHOD[lang].map(([h,b])=>`<div><b>${h}</b>${b}</div>`).join('');
+  document.getElementById('footer').innerHTML=lang==='fr'?`Version 0.2 · données au ${dateFmt(DATA.asof.wb)} (Banque mondiale, FMI) et ${dateFmt(DATA.asof.bsd)} (Trésor) · construit le ${dateFmt(DATA.asof.built)}.<br>Sources : <a href="https://financesone.worldbank.org/" target="_blank" rel="noopener">Banque mondiale Finances One</a> · <a href="https://www.imf.org/external/np/fin/tad/exfin2.aspx?memberKey1=620&date1key=2099-12-31" target="_blank" rel="noopener">FMI</a> · <a href="http://www.tresorpublic.mg/?page_id=214&content=temp&type=bsd" target="_blank" rel="noopener">Trésor public de Madagascar</a> · <a href="https://china.aiddata.org" target="_blank" rel="noopener">AidData</a>. Licence CC BY 4.0. ² Encours fin 2024 (statistiques Banque mondiale).`
+   :`Version 0.2 · data at ${dateFmt(DATA.asof.wb)} (World Bank, IMF) and ${dateFmt(DATA.asof.bsd)} (Treasury) · built ${dateFmt(DATA.asof.built)}.<br>Sources: <a href="https://financesone.worldbank.org/" target="_blank" rel="noopener">World Bank Finances One</a> · <a href="https://www.imf.org/external/np/fin/tad/exfin2.aspx?memberKey1=620&date1key=2099-12-31" target="_blank" rel="noopener">IMF</a> · <a href="http://www.tresorpublic.mg/?page_id=214&content=temp&type=bsd" target="_blank" rel="noopener">Madagascar Treasury</a> · <a href="https://china.aiddata.org" target="_blank" rel="noopener">AidData</a>. Licence CC BY 4.0. ² Outstanding end-2024 (World Bank statistics).`; }
+
+// ---------------- table ----------------
+let sortKey='d',sortDir=-1;
+const COLS=[['k','colL'],['p','colP'],['s','colS'],['d','colD'],['amt','colA','num'],['out','colO','num'],['rate','colR','num'],['mat','colM','num'],['ge','colG','num'],['st','colSt']];
+function rowsFiltered(){
+  const q=document.getElementById('q').value.trim().toLowerCase(),fl=document.getElementById('f-lender').value,ft=document.getElementById('f-type').value,fs=document.getElementById('f-sector').value,fst=document.getElementById('f-status').value;
+  return DATA.loans.filter(x=>(!fl||x.k===fl)&&(!ft||x.type===ft)&&(!fs||x.s===fs)&&(!fst||x.st===fst)&&(!q||(x.p+' '+lname(byLender[x.k])+' '+byLender[x.k].s+' '+x.s+' '+sect(x.s)+' '+x.id).toLowerCase().includes(q)));
+}
+function renderFilters(){
+  const keep=['f-lender','f-type','f-sector','f-status'].map(i=>document.getElementById(i).value);
+  document.getElementById('f-lender').innerHTML=`<option value="">${t('allL')}</option>`+LENDERS.filter(l=>l.loans.length).map(l=>`<option value="${l.id}">${esc(l.s)}</option>`).join('');
+  document.getElementById('f-type').innerHTML=`<option value="">${t('allT')}</option>`+['Multilateral','Bilateral','Commercial'].map(x=>`<option value="${x}">${T[lang].types[x]}</option>`).join('');
+  document.getElementById('f-sector').innerHTML=`<option value="">${t('allS')}</option>`+[...new Set(DATA.loans.map(x=>x.s))].sort().map(x=>`<option value="${esc(x)}">${esc(sect(x))}</option>`).join('');
+  document.getElementById('f-status').innerHTML=`<option value="">${t('allSt')}</option>`+[...new Set(DATA.loans.map(x=>x.st))].sort().map(x=>`<option value="${esc(x)}">${esc(stat(x))}</option>`).join('');
+  ['f-lender','f-type','f-sector','f-status'].forEach((i,j)=>document.getElementById(i).value=keep[j]);document.getElementById('q').placeholder=t('search');
+}
+function renderTable(){
+  document.getElementById('thead').innerHTML=COLS.map(([k,l,c])=>`<th data-k="${k}" class="${c||''}">${t(l)}${sortKey===k?(sortDir>0?' ↑':' ↓'):''}</th>`).join('');
+  document.querySelectorAll('#thead th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=['amt','out','d','ge','rate','mat'].includes(k)?-1:1;}renderTable();});
+  const val=(x,k)=>k==='k'?byLender[x.k].s:k==='rate'?(x.rate==null?null:x.rate+(x.fee||0)):x[k];
+  const rows=rowsFiltered().sort((a,b)=>{const x=val(a,sortKey),y=val(b,sortKey);if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;return (x>y?1:x<y?-1:0)*sortDir;});
+  document.getElementById('tbody').innerHTML=rows.map(x=>{const l=byLender[x.k];return `<tr data-id="${x.k}"><td><span class="tdot" style="background:${TYPECOL[x.type]}"></span>${esc(l.s)}</td><td class="proj">${esc(x.p)}</td><td>${esc(sect(x.s))}</td><td>${dateFmt(x.d)}</td><td class="num">${x.amt==null?'–':fmtN(x.amt,1)}</td><td class="num">${x.out==null?'–':fmtN(x.out,1)}</td><td class="num">${x.rate==null?'–':pct(x.rate+(x.fee||0),2)}</td><td class="num">${x.mat==null?'–':fmtN(x.mat,0)}</td><td class="num">${x.ge==null?'–':pct(x.ge,0)}</td><td>${esc(stat(x.st))}</td></tr>`}).join('');
+  document.querySelectorAll('#tbody tr').forEach(tr=>tr.onclick=()=>selectFromPage(tr.dataset.id));
+  document.getElementById('count').textContent=T[lang].shown(rows.length,DATA.loans.length);
+}
+['q','f-lender','f-type','f-sector','f-status'].forEach(i=>document.getElementById(i).addEventListener('input',renderTable));
+document.getElementById('copycsv').onclick=async()=>{
+  const cols=['id','k','p','s','d','cur','amt','out','und','rate','fee','grace','mat','fr','lr','ge','st','conf','src'];
+  const q=v=>v==null?'':(/[",\n]/.test(String(v))?'"'+String(v).replace(/"/g,'""')+'"':String(v));
+  const csv=[cols.join(',')].concat(rowsFiltered().map(x=>cols.map(c=>q(x[c])).join(','))).join('\n');
+  try{await navigator.clipboard.writeText(csv);toast(t('copied'));}catch(e){toast('⚠ '+String(e.message||e));}
+};
+function toast(m){const e=document.getElementById('toast');e.textContent=m;e.style.opacity=1;setTimeout(()=>e.style.opacity=0,2600);}
+
+function renderCharts(){anim.length=0;chartLenders();chartWall();chartScatter();chartGE();chartTransparency();chartPipe();chartYears();requestAnimationFrame(()=>requestAnimationFrame(()=>{if(shown)anim.forEach(f=>f());}));}
+const io=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');if(!shown){shown=true;setTimeout(()=>anim.forEach(f=>f()),150);}}}),{threshold:.08}):null;
+document.querySelectorAll('.reveal').forEach(n=>io?io.observe(n):(n.classList.add('in'),shown=true));
+function applyLang(){document.documentElement.lang=lang;setShort();document.querySelectorAll('[data-i18n]').forEach(n=>{const v=T[lang][n.dataset.i18n];if(typeof v==='string')n.textContent=v;});
+  document.getElementById('btn-en').classList.toggle('on-l',lang==='en');document.getElementById('btn-fr').classList.toggle('on-l',lang==='fr');document.title=t('brand');
+  renderKPIs();renderMix();renderThr();renderFilters();renderTable();renderCharts();renderSim();renderNews();renderMethod();renderPanel();}
+function setLang(l){lang=l;try{localStorage.setItem('mdg-lang-live',l)}catch(e){}applyLang();}
+document.getElementById('btn-en').onclick=()=>setLang('en');document.getElementById('btn-fr').onclick=()=>setLang('fr');
+document.getElementById('dep').addEventListener('input',renderSim);
+function onScroll(){document.body.classList.toggle('scrolled',window.scrollY>40);atTop=window.scrollY<window.innerHeight*0.3;if(!atTop&&selected)closePanel();}
+window.addEventListener('scroll',onScroll,{passive:true});
+let rzT=null,lastW=0;window.addEventListener('resize',()=>{resize();clearTimeout(rzT);rzT=setTimeout(()=>{const c=CW('ch-wall');if(c!==lastW){lastW=c;renderCharts();}},250);});
+resize();applyLang();onScroll();requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

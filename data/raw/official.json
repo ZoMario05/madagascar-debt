@@ -1,0 +1,88 @@
+{
+ "ext_usd": 6642.0,
+ "ext_mga": 28219.6,
+ "multi_usd": 4858.7,
+ "bil_usd": 1045.7,
+ "priv_usd": 712.8,
+ "shares": {
+  "multi": 73.2,
+  "bil": 13.1,
+  "fin": 10.4,
+  "com": 1.3,
+  "unclaimed": 3.3
+ },
+ "total_public_usd": 7648.8,
+ "domestic_usd": 1006.8,
+ "gdp_ratio_ext": 28.0,
+ "rate_avg": 0.9,
+ "atm": 12.6,
+ "service_2025_usd": 228.6,
+ "service_2025_mga": 1033.1,
+ "service_h1_2026_usd": 153.0,
+ "ds_rev": 14.0,
+ "ds_rev_thr": 18,
+ "ds_exp": 7.8,
+ "ds_exp_thr": 15,
+ "pv_gdp": 19.7,
+ "pv_gdp_thr": 40,
+ "pv_exp": 92.5,
+ "pv_exp_thr": 180,
+ "fx_usd": 44.1,
+ "fx_eur": 27.6,
+ "undisb": 2780.6,
+ "undisb_sector": [
+  [
+   "Infrastructure",
+   "Infrastructure",
+   638.8
+  ],
+  [
+   "Multi-sectors",
+   "Multisectoriel",
+   523.1
+  ],
+  [
+   "Governance",
+   "Gouvernance",
+   402.9
+  ],
+  [
+   "Education",
+   "Éducation",
+   277.1
+  ],
+  [
+   "Agriculture",
+   "Agriculture",
+   243.7
+  ],
+  [
+   "Other",
+   "Autres",
+   238.3
+  ],
+  [
+   "Energy",
+   "Énergie",
+   164.9
+  ],
+  [
+   "Sanitation",
+   "Assainissement",
+   133.8
+  ],
+  [
+   "Social",
+   "Social",
+   110.2
+  ],
+  [
+   "Rural",
+   "Rural",
+   47.8
+  ]
+ ],
+ "signed_2026_usd": 1068.79,
+ "signed_2026_n": 17,
+ "mga_per_usd": 4248.7
+}

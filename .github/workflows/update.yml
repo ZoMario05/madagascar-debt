@@ -1,0 +1,49 @@
+name: Update data and site
+
+on:
+  schedule:
+    - cron: "17 4 * * *"      # every day 04:17 UTC (07:17 Antananarivo): news
+    - cron: "37 5 12 * *"     # 12th of each month: World Bank, IMF, Treasury bulletin check
+  workflow_dispatch: {}        # "Run workflow" button for a manual update
+  push:
+    paths: ["data/raw/**", "site/**", "pipeline/**"]   # a hand edit to the data rebuilds the site
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install openpyxl pdfplumber
+      - name: Fetch and rebuild
+        run: |
+          if [ "${{ github.event.schedule }}" = "17 4 * * *" ]; then
+            python pipeline/run_all.py --only news
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            python pipeline/run_all.py --only none
+          else
+            python pipeline/run_all.py
+          fi
+      - name: Save new data (versioned history)
+        run: |
+          git config user.name "debt-bot"; git config user.email "debt-bot@users.noreply.github.com"
+          git add data/raw REVIEW_BSD.md 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "Data update $(date -u +%Y-%m-%d)"
+          git push || true
+      - name: Open an issue when a new Treasury bulletin needs a check
+        if: hashFiles('REVIEW_BSD.md') != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = require('fs').readFileSync('REVIEW_BSD.md','utf8');
+            const open = await github.rest.issues.listForRepo({owner:context.repo.owner, repo:context.repo.repo, state:'open', labels:'bulletin'});
+            if (!open.data.length) await github.rest.issues.create({owner:context.repo.owner, repo:context.repo.repo, title:'Nouveau bulletin du Trésor à vérifier', body, labels:['bulletin']});
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: public }
+      - uses: actions/deploy-pages@v4

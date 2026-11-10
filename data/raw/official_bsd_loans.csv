@@ -1,0 +1,66 @@
+loan_id,lender_name,lender_country,lender_type,project_name,sector,date_signed,currency,amount_usd,interest_rate,fee,maturity_years,grace_years,disbursement_deadline,bsd_page,notes
+MDG-OFID-2015-01,OPEC Fund (OFID),Multilateral,Multilateral,Beboka irrigated perimeter development,Agriculture & environment,2015-06-16,USD,7500000,,,,,2025-12-31,20,
+MDG-IFAD-2015-01,IFAD,Multilateral,Multilateral,Menabe and Melaky development support phase 2 (AD2M-2),Agriculture & environment,2015-10-21,XDR,34400000,,,,,2026-06-30,20,
+MDG-IFAD-2017-01,IFAD,Multilateral,Multilateral,Inclusive agricultural value chains programme (DEFIS),Agriculture & environment,2017-12-13,XDR,26150000,,,,,2028-09-30,20,
+MDG-IFAD-2022-01,IFAD,Multilateral,Multilateral,DEFIS additional financing,Agriculture & environment,2022-06-28,USD,61000000,,,,,2028-09-30,20,
+MDG-IFAD-2023-01,IFAD,Multilateral,Multilateral,Rural youth entrepreneurship programme (PROGRES) - tranche 1,Agriculture & environment,2023-06-20,EUR,8653892,,,,,2031-09-30,20,Three loan lines listed for PROGRES
+MDG-IFAD-2023-02,IFAD,Multilateral,Multilateral,Rural youth entrepreneurship programme (PROGRES) - tranche 2,Agriculture & environment,2023-06-20,EUR,16336541,,,,,2031-09-30,20,
+MDG-IFAD-2023-03,IFAD,Multilateral,Multilateral,Rural youth entrepreneurship programme (PROGRES) - tranche 3,Agriculture & environment,2023-06-20,EUR,65346162,,,,,2031-09-30,20,
+MDG-IFAD-2024-01,IFAD,Multilateral,Multilateral,Climate resilience for smallholders (DEFIS+),Agriculture & environment,2024-07-31,USD,12815705,,,,,2031-09-30,20,
+MDG-AFD-2023-01,Agence Française de Développement,France,Bilateral,Agriculture adaptation and community resilience in Anosy (Talakybe),Agriculture & environment,2023-07-24,EUR,22142000,,,,,2029-07-31,20,
+MDG-AFD-2024-01,Agence Française de Développement,France,Bilateral,Rural livelihoods and food systems adaptation (Riz Plus),Agriculture & environment,2024-03-01,EUR,26850520,,,,,2029-04-29,20,
+MDG-AFD-2025-01,Agence Française de Développement,France,Bilateral,Agricultural productivity project phase 2 (PAPAM 2),Agriculture & environment,2025-04-25,EUR,16831299,1.00%,0.50%,25,7,2030-12-31,20,Terms from BSD n°38 table of 2025 signings (EUR 15m)
+MDG-AFDB-2020-02,African Development Bank Group,Multilateral,Multilateral,South-West agro-industrial processing zone (PTASO),Agriculture & environment,2020-10-15,UA,28000000,,,,,2027-12-31,20,
+MDG-AFDB-2022-01,African Development Bank Group,Multilateral,Multilateral,Southern integrated agricultural growth pole phase 1 (PICAS),Agriculture & environment,2022-06-09,UA,8008000,,,,,2026-12-31,20,
+MDG-EIB-2019-01,European Investment Bank,Multilateral,Multilateral,JIRAMA Water 3 - priority part 1,Water & urban,2019-12-09,EUR,41447368,,,,,2025-12-09,20,
+MDG-AFDB-2023-01,African Development Bank Group,Multilateral,Multilateral,Water resource mobilisation project (PMP VREAU) - preparation advance,Water & urban,2023-01-17,UA,3363075,,,,,2026-05-15,20,
+MDG-EIB-2017-01,European Investment Bank,Multilateral,Multilateral,Andekaleka hydropower expansion,Energy,2017-12-08,EUR,35900000,,,,,2024-08-12,21,
+MDG-AFD-2023-02,Agence Française de Développement,France,Bilateral,Rural electrification Anosy Androy Atsimo-Andrefana Menabe Melaky (Angovo),Energy,2023-07-24,EUR,24355900,,,,,2029-07-31,21,
+MDG-BE-2018-01,FINEXPO (Belgium),Belgium,Bilateral,Hybrid solar-diesel power plants,Energy,2018-05-23,EUR,9378296,,,,,2026-05-23,21,
+MDG-OFID-2021-01,OPEC Fund (OFID),Multilateral,Multilateral,Integrated growth poles PIC2 - energy access and key infrastructure,Energy,2021-03-04,USD,15000000,,,,,2026-06-30,21,
+MDG-AFDB-2020-03,African Development Bank Group,Multilateral,Multilateral,Power transmission reinforcement and interconnection phase 1 (PRIRTEM I) - ADF,Energy,2020-02-06,UA,13500000,,,,,2027-12-31,21,UA 9.65m per BSD n°37; replaces press-based row
+MDG-AFDB-2020-04,African Development Bank Group,Multilateral,Multilateral,Power transmission reinforcement and interconnection phase 1 (PRIRTEM I) - TSF,Energy,2020-02-06,UA,25000000,,,,,2027-12-31,21,
+MDG-EIB-2021-01,European Investment Bank,Multilateral,Multilateral,Power transmission reinforcement and interconnection phase 1 (PRIRTEM I),Energy,2021-11-29,EUR,91686162,,,,,2026-11-29,21,EUR 81.3m per BSD n°37
+MDG-KR-2022-01,Export-Import Bank of Korea (EDCF),Korea,Bilateral,Power transmission reinforcement and interconnection phase 1 (PRIRTEM I),Energy,2022-09-26,USD,55898000,,,,,,21,
+MDG-CN-2023-01,Export-Import Bank of China,China,Bilateral,Ranomafana 64 MW hydropower plant,Energy,2023-08-01,CNY,239337340,,,,,2026-06-30,21,Same loan as AidData project 57569 (RMB 1.795bn)
+MDG-AFDB-2023-02,African Development Bank Group,Multilateral,Multilateral,Africa Disaster Risk Financing programme (ADRIFI) additional financing,Agriculture & environment,2023-02-17,UA,7366479,,,,,2027-12-31,21,
+MDG-BADEA-2023-01,BADEA,Multilateral,Multilateral,Maki fly-over (Route Francophonie / Bd de l'Europe) - loan 1,Transport,2023-10-11,USD,8000000,,,,,2029-03-31,22,
+MDG-BADEA-2023-02,BADEA,Multilateral,Multilateral,Maki fly-over (Route Francophonie / Bd de l'Europe) - loan 2,Transport,2023-10-11,USD,20000000,,,,,2029-03-31,22,
+MDG-BADEA-2022-01,BADEA,Multilateral,Multilateral,Anosizato fly-over (RN1 / RN58A) - loan 1,Transport,2022-05-19,USD,7200000,,,,,2027-12-31,22,
+MDG-BADEA-2022-02,BADEA,Multilateral,Multilateral,Anosizato fly-over (RN1 / RN58A) - loan 2,Transport,2022-05-19,USD,18000000,,,,,2027-12-31,22,
+MDG-CN-2017-01,Export-Import Bank of China,China,Bilateral,Ivato airport - Boulevard de l'Europe expressway,Transport,2017-08-30,USD,105230500,,,,,2025-09-13,22,May overlap with AidData 57866 (Tsarasaotra-Ivato road) - to verify
+MDG-AFD-2018-01,Agence Française de Développement,France,Bilateral,Antananarivo alleyways rehabilitation phase 3 (Lalankely III),Water & urban,2018-05-02,EUR,22797830,,,,,2025-12-31,22,
+MDG-AFDB-2021-01,African Development Bank Group,Multilateral,Multilateral,Corridor development and trade facilitation phase 2 (PACFC II),Transport,2021-12-02,UA,180580000,,,,,2028-12-31,22,UA 125m per BSD n°37
+MDG-OFID-2024-01,OPEC Fund (OFID),Multilateral,Multilateral,Corridor development and trade facilitation phase 2 (PACFC II),Transport,2024-09-19,USD,30000000,,,,,2031-12-31,22,
+MDG-AFDB-2025-01,African Development Bank Group,Multilateral,Multilateral,Corridor development and trade facilitation phase 3 (PACFC III) - southern roads,Transport,2025-05-16,UA,165000000,,,,,2030-06-30,22,Replaces press-based row (US$165m approved Dec 2024)
+MDG-AFD-2016-01,Agence Française de Développement,France,Bilateral,Secondary cities development programme (PADEVE),Water & urban,2016-11-26,EUR,26354607,,,,,2025-11-30,22,
+MDG-AFD-2024-02,Agence Française de Développement,France,Bilateral,Secondary cities development programme phase 2 (PADEVE II),Water & urban,2024-03-01,EUR,45108874,,,,,2030-03-01,22,
+MDG-AFD-2022-01,Agence Française de Développement,France,Bilateral,Antananarivo integrated sanitation programme phase 2 (PIAA 2),Water & urban,2022-12-08,EUR,36560000,,,,,2028-06-30,22,
+MDG-EIB-2017-02,European Investment Bank,Multilateral,Multilateral,Road network modernisation (PMRRM),Transport,2017-12-08,EUR,129075000,,,,,2026-12-08,22,
+MDG-BADEA-2019-01,BADEA,Multilateral,Multilateral,Mangoky river bridge,Transport,2019-06-12,USD,20000000,,,,,2027-12-31,22,
+MDG-KW-2018-01,Kuwait Fund (KFAED),Kuwait,Bilateral,Mangoky river bridge,Transport,2018-12-08,KWD,10000000,,,,,2027-12-31,22,KD 3m per BSD n°37
+MDG-SA-2020-01,Saudi Fund for Development,Saudi Arabia,Bilateral,Mangoky river bridge,Transport,2020-06-05,SAR,20000000,,,,,2025-12-15,22,SAR 75m per BSD n°37
+MDG-OFID-2019-01,OPEC Fund (OFID),Multilateral,Multilateral,Mangoky river bridge,Transport,2019-09-17,USD,10000000,,,,,2025-01-31,22,
+MDG-EIB-2016-01,European Investment Bank,Multilateral,Multilateral,Post-disaster infrastructure reconstruction,Transport,2016-06-23,EUR,45500000,,,,,2024-12-19,22,
+MDG-AE-2014-01,Abu Dhabi Fund for Development,United Arab Emirates,Bilateral,RN5 road Soanierana Ivongo - Vahibe,Transport,2014-11-20,AED,30000000,,,,,2026-12-31,23,
+MDG-BADEA-2015-01,BADEA,Multilateral,Multilateral,RN5 road Soanierana Ivongo - Vahibe,Transport,2015-05-27,USD,10000000,,,,,2027-03-31,23,
+MDG-KW-2013-01,Kuwait Fund (KFAED),Kuwait,Bilateral,RN5 road Soanierana Ivongo - Vahibe,Transport,2013-12-27,KWD,12800000,,,,,2026-12-31,23,
+MDG-SA-2017-01,Saudi Fund for Development,Saudi Arabia,Bilateral,RN5 road Soanierana Ivongo - Vahibe,Transport,2017-05-05,SAR,14000000,,,,,2026-12-31,23,
+MDG-OFID-2016-01,OPEC Fund (OFID),Multilateral,Multilateral,RN5 road Soanierana Ivongo - Vahibe,Transport,2016-04-15,USD,10000000,,,,,2026-06-30,23,
+MDG-AFD-2016-02,Agence Française de Développement,France,Bilateral,Antananarivo ring road east and north-east extension,Transport,2016-06-23,EUR,27245392,,,,,2025-07-31,23,
+MDG-EIB-2016-02,European Investment Bank,Multilateral,Multilateral,Antananarivo ring road east and north-east extension,Transport,2016-06-23,EUR,32000000,,,,,2023-06-30,23,
+MDG-CN-2018-02,Export-Import Bank of China,China,Bilateral,Toamasina port - RN2 expressway,Transport,2018-09-03,CNY,59840000,,,,,2027-08-11,23,Same loan as AidData 57757 (RMB 408m)
+MDG-JP-2017-01,Japan International Cooperation Agency (JICA),Japan,Bilateral,Toamasina port extension (SPAT),Transport,2017-03-23,JPY,411000000,0.01%,,,,2029-02-08,23,JPY 45 214 000 000 at 0.01% per BSD n°38 p17
+MDG-FR-2021-01,French Treasury (Trésor français),France,Bilateral,Antananarivo cable car (Téléphérique),Transport,2021-09-20,EUR,38390496,,,,,2025-12-31,23,Semi-concessional fixed
+MDG-COM-2021-01,Société Générale,France,Commercial,Antananarivo cable car (Téléphérique),Transport,2021-12-15,EUR,115028576,,,,,2025-12-31,23,Only commercial bank loan; EUR 102.4m (US$100m) still owed end-2025 per SDMT 2026-2028
+MDG-AFDB-2024-03,African Development Bank Group,Multilateral,Multilateral,Financial management and economic resilience programme phase 1 (PAGFRE I) - loan 1,Budget support,2024-10-03,UA,26000000,,,,,2025-12-31,24,Replaces press-based row (US$67.3m)
+MDG-AFDB-2024-04,African Development Bank Group,Multilateral,Multilateral,Financial management and economic resilience programme phase 1 (PAGFRE I) - loan 2,Budget support,2024-10-03,UA,39000000,,,,,2025-12-31,24,
+MDG-AFDB-2020-05,African Development Bank Group,Multilateral,Multilateral,Industrialisation and financial sector support (PAISF),Governance & finance,2020-11-12,UA,16912000,,,,,2027-06-30,24,
+MDG-AFD-2026-01,Agence Française de Développement,France,Bilateral,Antananarivo priority neighbourhoods access and sanitation phase 4 (Lalankely IV),Water & urban,2026-06-19,EUR,28110000,2.80%,0.50%,25,7,,17,EUR 26m; Loi n° 2026-028
+MDG-AFD-2026-02,Agence Française de Développement,France,Bilateral,Justice support project phase 2 (PAJMA II),Governance & finance,2026-06-19,EUR,23780000,2.80%,0.50%,25,7,,17,EUR 22m; Loi n° 2026-027
+MDG-AFDB-2026-01,African Development Bank Group (TSF),Multilateral,Multilateral,Lower Mangoky irrigated perimeter extension phase 2 (PEPBM II) - TSF,Agriculture & environment,2026-05-06,UA,15490000,0.00%,0.75%,50,10,,17,UA 11 333 324; Loi n° 2026-023
+MDG-AFDB-2026-02,African Development Fund,Multilateral,Multilateral,Lower Mangoky irrigated perimeter extension phase 2 (PEPBM II) - ADF,Agriculture & environment,2026-05-06,UA,32100000,0.00%,0.75%,50,10,,17,UA 23 495 363
+MDG-AFDB-2026-03,African Development Bank Group,Multilateral,Multilateral,Financial governance support project (PAGFI),Governance & finance,2026-05-22,UA,13660000,0.00%,0.75%,50,10,,17,UA 10m; Loi n° 2026-018
+MDG-AFDB-2026-04,African Development Bank Group (TSF),Multilateral,Multilateral,Financial management and economic resilience programme phase 2 (PAGFRE II) - TSF,Budget support,2026-05-27,UA,40990000,0.00%,0.75%,50,10,,17,UA 30m; Loi n° 2026-019/020
+MDG-AFDB-2026-05,African Development Fund,Multilateral,Multilateral,Financial management and economic resilience programme phase 2 (PAGFRE II) - ADF,Budget support,2026-05-27,UA,27330000,0.00%,0.75%,50,10,,17,UA 20m
+MDG-AFDB-2026-06,African Development Fund,Multilateral,Multilateral,Power grid resilience project (PRRE),Energy,2026-06-15,UA,27320000,0.00%,0.75%,50,10,,17,UA 20.6m; Loi n° 2026-021/022
