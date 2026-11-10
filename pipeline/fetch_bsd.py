@@ -15,6 +15,31 @@ def num(s):
     return float(s.replace(" ", "").replace(" ", "").replace(",", "."))
 
 
+def composition(txt, ext_mga, rate):
+    """Stock by creditor group from the Treasury's main stock table ("Dette extérieure, dont" ...
+    "Dette intérieure, dont"), last column = end of quarter, in bn MGA. Arrears are a separate line there,
+    which is the basis of the bulletin's headline shares. Every US$ figure is converted from MGA at the
+    single rate implied by the bulletin's own total, so the parts always add up to the total."""
+    a = txt.index("Dette extérieure, dont")
+    sec = txt[a:txt.index("Dette intérieure, dont", a)]
+    def last(label):
+        for l in sec.split("\n"):
+            if l.strip().startswith(label):
+                return num(re.findall(r"-?\d[\d ]*,\d", l)[-1])
+        raise ValueError(label)
+    mga = {"multi": last("Organismes multilatéraux"), "bil": last("Bilatéral"), "com": last("Banques commerciales"),
+           "fin": last("Institutions financières"), "unclaimed": last("Arriérés")}
+    priv = mga["com"] + mga["fin"]
+    parts = mga["multi"] + mga["bil"] + priv + mga["unclaimed"]
+    if abs(parts - ext_mga) > 1:
+        raise ValueError(f"parts {parts} != total {ext_mga}")
+    usd = lambda v: round(v * 1e3 / rate, 1)
+    return {"basis": "Treasury stock table, arrears shown separately; US$ converted from MGA at the bulletin's implied rate",
+            "multi_mga": mga["multi"], "bil_mga": mga["bil"], "priv_mga": round(priv, 1), "arrears_mga": mga["unclaimed"],
+            "multi_usd": usd(mga["multi"]), "bil_usd": usd(mga["bil"]), "priv_usd": usd(priv), "arrears_usd": usd(mga["unclaimed"]),
+            "shares": {k: round(v / ext_mga * 100, 2) for k, v in mga.items()}}
+
+
 def main():
     page = get(LIST, insecure=True)
     found = sorted({int(n) for n in re.findall(r"statistique/bsd/&(?:amp;)?file=(\d{3})\.pdf", page)})
@@ -42,31 +67,20 @@ def main():
     txt = "\n\n=== PAGE ===\n".join(pages)
     open(f"{RAW}/bsd/{latest:03d}.txt", "w").write(txt)
 
-    # Table 7: outstanding by creditor group, end of quarter (last column) + US$ lines
+    # Table 7: external debt total in MGA and US$ (end of quarter = last column)
     t7 = txt[txt.index("Tableau 7"):txt.index("Tableau 8")]
-    def last_two(label):
-        m = re.search(label + r"[^\n]*", t7)
-        nums = re.findall(r"-?\d[\d ]*,\d", m.group(0)) if m else []
-        return [num(x) for x in nums]
-    multi, multi_usd = last_two(r"Créanciers multilatéraux"), None
     lines = t7.split("\n")
-    def usd_after(label):
-        for i, l in enumerate(lines):
-            if l.startswith(label):
-                for k in lines[i + 1:i + 3]:
-                    if "Millions USD" in k:
-                        return num(re.findall(r"-?\d[\d ]*,\d", k)[-1])
     off = json.load(open(f"{RAW}/official.json"))
-    total = re.findall(r"TOTAL\s+([\d ,]+)", t7)
-    off["multi_usd"] = usd_after("Créanciers multilatéraux") or off["multi_usd"]
-    off["bil_usd"] = usd_after("Créanciers bilatéraux") or off["bil_usd"]
-    off["priv_usd"] = usd_after("Créditeurs privés") or off["priv_usd"]
     tot_usd = [l for l in lines if "Millions USD" in l][-1]
     off["ext_usd"] = num(re.findall(r"-?\d[\d ]*,\d", tot_usd)[-1])
     m = re.search(r"TOTAL\s+([\d ]+,\d)\s+.*?([\d ]+,\d)\s*$", t7, re.M)
     if m:
         off["ext_mga"] = num(m.group(2))
     off["mga_per_usd"] = round(off["ext_mga"] * 1e9 / (off["ext_usd"] * 1e6), 1)
+    try:
+        off.update(composition(txt, off["ext_mga"], off["mga_per_usd"]))
+    except Exception as e:  # keep previous composition, flag it for review
+        print("composition table not parsed:", e)
     json.dump(off, open(f"{RAW}/official.json", "w"), ensure_ascii=False, indent=1)
     period = re.search(r"à fin (\w+) (\d{4})", txt)
     months = {"Mars": "03-31", "Juin": "06-30", "Septembre": "09-30", "Décembre": "12-31"}
@@ -74,7 +88,7 @@ def main():
     update_asof(bsd=asof, bsd_number=latest)
     open(os.path.join(os.path.dirname(RAW), "..", "REVIEW_BSD.md"), "w").write(
         f"# New Treasury bulletin n°{latest} ({asof})\n\nTotals were updated automatically in data/raw/official.json: "
-        f"external debt US${off['ext_usd']:,}m, multilateral {off['multi_usd']}, bilateral {off['bil_usd']}, private {off['priv_usd']}.\n\n"
+        f"external debt US${off['ext_usd']:,}m, multilateral {off['multi_usd']}, bilateral {off['bil_usd']}, private {off['priv_usd']}, arrears {off.get('arrears_usd')}.\n\n"
         "To do by hand (15 minutes):\n1. Open data/raw/bsd/%03d.txt, tables 1-3 (ratios, cost and risk) and update the other numbers in official.json.\n"
         "2. Table 10 (loans signed this year) and tables 13-14 (project list): add new loans to data/raw/official_bsd_loans.csv.\n"
         "3. Commit: the site rebuilds automatically.\n" % latest)

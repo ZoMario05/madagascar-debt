@@ -185,6 +185,6 @@ with open(f"{OUT}/reconciliation.csv", "w", newline="") as f:
     w.writerow(["World Bank loans in the official list", "32 active IDA loan lines (BSD n°41 tables 13-14) + 9 lines signed Jan-Jun 2026 (table 10)", "All found in World Bank data", 0, "Match",
                 "Each IDA line matches a World Bank credit by signing date and amount net of cancellations (e.g. Digital & Energy Connectivity 400 - 25 cancelled = 375; SADC statistics 44.6 vs 45.0). One split differs: ASCENT is 125 + 125 in the Treasury table vs 150 + 100 in World Bank data (same 250 total)."])
     w.writerow(["Total external public debt", float(off["External public debt (central government)"]["usd_m_end_jun_2026"]), "", "", "Reference",
-                "Official total end-June 2026: US$6 642.0m (multilateral 73.2%, bilateral 13.1%, financial institutions 10.4%, commercial banks 1.3%, unclaimed/arrears 3.3%)."])
+                "Official total end-June 2026: US$6 642.0m = multilateral 73.2% + bilateral 13.1% + private 10.4% (financial institutions 9.2%, commercial banks 1.3%) + arrears/unclaimed 3.3% (BSD n°41 stock table, from MGA). Note: the bulletin's text lists financial institutions at 10.4% AND commercial banks at 1.3%, which double-counts banks (sum 101.3%); 10.4% is the whole private line."])
 
 print(len(rows), "loans;", "IDA $m", round(ida), "; IMF $m", round(imf), "; official non-IDA loans", len(official))
