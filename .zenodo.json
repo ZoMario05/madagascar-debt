@@ -1,0 +1,9 @@
+{
+  "title": "Trosa — Madagascar External Debt Database",
+  "upload_type": "dataset",
+  "description": "Loan-level database of Madagascar's external public debt (who lends, for what, on what terms, when it is due), built from World Bank, IMF and Madagascar Treasury sources and checked against the Treasury's official debt bulletin. Base de données prêt par prêt de la dette publique extérieure de Madagascar.",
+  "creators": [{"name": "ZO MAMINIAINA, Andriamiarantsoa Mario"}],
+  "license": "cc-by-4.0",
+  "keywords": ["Madagascar", "external debt", "sovereign debt", "public debt", "open data", "dette extérieure"],
+  "language": "fra"
+}

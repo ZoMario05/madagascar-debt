@@ -94,6 +94,8 @@ function resize(){ DPR=Math.min(window.devicePixelRatio||1,2); W=window.innerWid
 // ---------------- state ----------------
 // touched: once the visitor has turned the globe, it stays exactly where they left it (no auto-spin, no moving on scroll)
 let selected=null, hover=null, lastInteract=0, touched=false, atTop=true;
+// FADE: globe opacity. 1 at the top of the page, eases down to GLOBE_DIM while reading the sections below
+const GLOBE_DIM=0.45; let FADE=1;
 let LY=null;
 function layout(){
   const mobile=W<760, panelOpen=!!selected&&!mobile;
@@ -114,18 +116,22 @@ function frame(now){
   else if(!dragging&&(Math.abs(vel.x)>1e-5||Math.abs(vel.y)>1e-5)){ spin(vel.x*dt,vel.y*dt); const f=Math.pow(0.94,dt/16); vel.x*=f; vel.y*=f; }
   else if(!touched&&atTop&&!dragging&&!selected&&!reduce&&now-lastInteract>2200){ Q=qnorm(qmul(Q,qaxis(0,0,1,dt*0.00009))); skyA+=dt*0.000012; }
   M=qmat(Q);
+  { const sy=window.scrollY, h=window.innerHeight, p=Math.max(0,Math.min(1,(sy-h*0.15)/(h*0.6)));
+    const want=selected?1:1-(1-GLOBE_DIM)*p; FADE+=(want-FADE)*(1-Math.pow(0.86,dt/16)); }
   draw(); requestAnimationFrame(frame);
 }
 function spin(ax,ay){ Q=qnorm(qmul(qmul(qaxis(1,0,0,ay),qaxis(0,1,0,ax)),Q)); skyA+=ax*0.05; skyB+=ay*0.05; }
 
 function hexA(hex,a){ const n=parseInt(hex.slice(1),16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; }
 function draw(){
+  ctx.globalAlpha=1;
   const {cx,cy,r}=LY;
   const ox=-(sky.PW-W)/2+Math.sin(skyA)*(sky.PW-W)*0.45, oy=-(sky.PH-H)/2+Math.sin(skyB)*(sky.PH-H)*0.45;
   ctx.drawImage(sky,ox,oy,sky.PW,sky.PH);
   for(const s of stars){ const a=0.35+0.65*(0.5+0.5*Math.sin(time*0.001*s.sp+s.p)); const x=s.x+ox*s.d+(sky.PW-W)/2*(s.d-1), y=s.y+oy*s.d+(sky.PH-H)/2*(s.d-1);
     if(x<-4||y<-4||x>W+4||y>H+4) continue; ctx.fillStyle=`rgba(255,248,235,${(a*0.9).toFixed(2)})`; ctx.fillRect(x,y,s.s*0.6,s.s*0.6);
     if(s.s>2.2){ ctx.fillStyle=`rgba(255,248,235,${(a*0.25).toFixed(2)})`; ctx.fillRect(x-s.s,y+s.s*0.3-0.3,s.s*2.6,0.6); ctx.fillRect(x+s.s*0.3-0.3,y-s.s,0.6,s.s*2.6); } }
+  ctx.globalAlpha=FADE; const LBL=Math.max(0,Math.min(1,(FADE-GLOBE_DIM)/(1-GLOBE_DIM)*1.6-0.6));
   let g=ctx.createRadialGradient(cx,cy,r*0.96,cx,cy,r*1.28);
   g.addColorStop(0,'rgba(61,220,132,0.30)'); g.addColorStop(0.35,'rgba(61,180,140,0.10)'); g.addColorStop(1,'rgba(61,220,132,0)');
   ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r*1.28,0,7); ctx.fill();
@@ -169,16 +175,17 @@ function draw(){
     const q=proj(l.v); l.sx=q[0]; l.sy=q[1]; l.vis=q[2]>0.04; if(!l.vis) continue;
     const isSel=selected===l.id,isHov=hover===l.id,dim=selected&&selected!=='mdg'&&!isSel,col=TYPECOL[l.type];
     const rad=(2.6+4.6*Math.sqrt(l.total/maxT))*(isSel?1.4:1)*Math.min(1.3,Math.max(0.8,r/300));
-    ctx.globalAlpha=dim?0.35:Math.min(1,0.4+q[2]);
+    ctx.globalAlpha=(dim?0.35:Math.min(1,0.4+q[2]))*FADE;
     ctx.fillStyle=col; ctx.shadowColor=col; ctx.shadowBlur=isSel||isHov?18:8; ctx.beginPath(); ctx.arc(q[0],q[1],rad,0,7); ctx.fill(); ctx.shadowBlur=0;
     ctx.strokeStyle='rgba(3,6,6,.85)'; ctx.lineWidth=1.4; ctx.stroke();
-    if(isSel||isHov||(!dim&&(showAll||ranked.includes(l.id)))){
+    if(LBL>0.01&&(isSel||isHov||(!dim&&(showAll||ranked.includes(l.id))))){
+      ctx.globalAlpha*=LBL;
       ctx.font=`${isSel||isHov?700:600} ${isSel?13:12}px Manrope,system-ui,sans-serif`; ctx.textAlign=l.ta;
       const tx=q[0]+l.lx+(l.ta==='right'?-rad+2:l.ta==='left'?rad-2:0), ty=q[1]+l.ly;
       ctx.lineWidth=3.2; ctx.strokeStyle='rgba(2,4,4,.8)'; ctx.strokeText(l.s,tx,ty); ctx.fillStyle=isSel||isHov?'#ffffff':'rgba(244,239,228,.88)'; ctx.fillText(l.s,tx,ty); }
-    ctx.globalAlpha=1;
+    ctx.globalAlpha=FADE;
   }
-  if(mq[2]>0.05){ const px=cx+mq[0]*r,py=cy-mq[1]*r; ctx.font='700 13px Fraunces,Georgia,serif'; ctx.textAlign='left';
+  if(mq[2]>0.05&&LBL>0.01){ ctx.globalAlpha=FADE*LBL; const px=cx+mq[0]*r,py=cy-mq[1]*r; ctx.font='700 13px Fraunces,Georgia,serif'; ctx.textAlign='left';
     ctx.lineWidth=3.2; ctx.strokeStyle='rgba(2,4,4,.8)'; ctx.strokeText('Madagascar',px+r*0.06+6,py+r*0.03); ctx.fillStyle='#bfffd8'; ctx.fillText('Madagascar',px+r*0.06+6,py+r*0.03); }
 }
 

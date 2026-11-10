@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dette extérieure de Madagascar</title>
+<title>Trosa — Dette extérieure de Madagascar</title>
+<meta name="description" content="Trosa : qui prête à Madagascar, pour quoi, à quelles conditions, et quand il faut rembourser. Données ouvertes, sources officielles.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -154,6 +155,15 @@ td .tdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-righ
 .method b{color:var(--ink);display:block;margin-bottom:6px;font-family:var(--serif);font-size:17px;font-weight:600}
 @media (max-width:1000px){.method{grid-template-columns:1fr}.method>div{border-right:0}}
 .clauses td{white-space:normal}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.dl a{display:flex;flex-direction:column;gap:6px;padding:18px;border:1px solid var(--hair);border-radius:16px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--hair2)}
+.dl .fmt{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1px;padding:3px 8px;border-radius:6px;border:1px solid var(--bi);color:var(--bi);box-shadow:0 0 6px rgba(0,0,0,.6)}
+.dl b{font-size:15px}.dl span{font-size:12.5px;color:var(--muted);line-height:1.45}
+.cite{font-family:var(--serif);font-size:16px;line-height:1.55;margin:4px 0 14px;padding:14px 16px;border-left:3px solid var(--mdg)}
+footer .fl{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:baseline}
+footer .fb{font-family:var(--serif);font-size:16px;color:var(--ink)}
+footer .wrap{padding-right:clamp(70px,7vw,110px)}
 .pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--hair2);color:var(--muted);box-shadow:0 0 6px rgba(0,0,0,.6)}
 footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--hair);line-height:1.6}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .9s,transform .9s}.reveal.in{opacity:1;transform:none}
@@ -162,14 +172,14 @@ footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;b
 </style>
 </head>
 <body>
-<canvas id="space" aria-label="Globe des créanciers de Madagascar"></canvas>
+<canvas id="space" aria-label="Globe des créanciers de Madagascar — Trosa"></canvas>
 <div id="tip"></div><div class="toast" id="toast"></div>
 <header class="top"><div class="wrap">
   <a class="brand on" href="#top"><svg viewBox="0 0 60 104" aria-hidden="true"><defs><radialGradient id="lg" cx="55%" cy="45%" r="70%"><stop offset="0" stop-color="#f2fff7"/><stop offset=".35" stop-color="#8dffbf"/><stop offset=".75" stop-color="#3ddc84"/><stop offset="1" stop-color="#0f8a4a"/></radialGradient></defs><path id="logo-path" fill="url(#lg)" stroke="rgba(214,255,232,.8)" stroke-width="1"/></svg>
     <div><b data-i18n="brand"></b><small data-i18n="brandSub"></small></div></a>
   <nav class="links on">
     <a href="#structure" data-i18n="nav1"></a><a href="#wall" data-i18n="nav2"></a><a href="#cost" data-i18n="nav3"></a>
-    <a href="#transparency" data-i18n="nav4"></a><a href="#explore" data-i18n="nav5"></a><a href="#news" data-i18n="nav6"></a><a href="#method" data-i18n="nav7"></a>
+    <a href="#transparency" data-i18n="nav4"></a><a href="#explore" data-i18n="nav5"></a><a href="#news" data-i18n="nav6"></a><a href="#data" data-i18n="nav8"></a><a href="#method" data-i18n="nav7"></a>
   </nav>
   <div class="lang on" role="group"><button id="btn-fr" class="on-l" type="button">FR</button><button id="btn-en" type="button">EN</button></div>
 </div></header>
@@ -256,6 +266,14 @@ footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;b
     <div class="news on" id="newslist"></div>
   </div></section>
 
+  <section class="block" id="data"><div class="wrap">
+    <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e9"></span></div>
+    <h2 data-i18n="h9"></h2><p class="sub" id="datasub"></p>
+    <div class="dl on" id="dllist"></div>
+    <div class="glass card on" style="margin-top:18px"><h4 data-i18n="cite_h"></h4><p class="note" data-i18n="cite_n"></p>
+      <div class="cite" id="citetext"></div><button class="btn" type="button" id="copycite" data-i18n="cite_copy"></button></div>
+  </div></section>
+
   <section class="block" id="method"><div class="wrap">
     <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e8"></span></div>
     <h2 data-i18n="h8"></h2><p class="sub" data-i18n="s8"></p>
@@ -270,8 +288,8 @@ footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;b
 const DATA = /*__DATA__*/null;
 const O = DATA.official;
 const T = {
- fr:{brand:"Dette extérieure de Madagascar",brandSub:"Qui prête, pour quoi, à quelles conditions",
-  nav1:"Synthèse",nav2:"Échéances",nav3:"Coût",nav4:"Transparence",nav5:"Explorer",nav6:"Actualités",nav7:"Méthodologie",
+ fr:{brand:"Trosa",brandSub:"Observatoire de la dette extérieure de Madagascar",
+  nav1:"Synthèse",nav2:"Échéances",nav3:"Coût",nav4:"Transparence",nav5:"Explorer",nav6:"Actualités",nav7:"Méthodologie",nav8:"Données",
   kicker:"Dette publique extérieure · données réelles",question:"Qui prête à Madagascar, pour quoi, et quand faut-il rembourser.",
   tMulti:"Multilatéral",tBi:"Bilatéral",tCom:"Commercial",hint:"Faites glisser pour tourner · +/− ou pincer pour zoomer · cliquez sur un prêteur ou sur Madagascar",scroll:"Synthèse",
   e1:"Synthèse",h1:"Ce que Madagascar doit à l’étranger",s1:"Chiffres officiels du Trésor (fin juin 2026) et prêts recensés un par un, chacun avec sa source. Dettes annulées et prêts entièrement remboursés exclus.",
@@ -280,7 +298,7 @@ const T = {
   c_mix:"Qui détient la dette",c_mixn:"Part de l’encours extérieur par type de créancier — Trésor, fin juin 2026.",
   mix_multi:"Multilatéraux",mix_bil:"Bilatéraux",mix_fin:"Institutions financières",mix_com:"Banques commerciales",mix_unc:"Non réclamé / arriérés",
   c_fx:"Exposition au change",c_fxn:"Une baisse de l’ariary fait grossir la dette en monnaie locale.",fx_usd:"Dollar",fx_eur:"Euro",fx_oth:"Autres (DTS, yen, yuan…)",
-  c_lenders:"Encours par créancier",c_lendersn:"Millions USD. Banque mondiale et FMI au 31 oct. 2026 (prêt par prêt); autres : statistiques Banque mondiale fin {ids}. Cliquez pour ouvrir.",
+  c_lenders:"Encours par créancier",c_lendersn:"Millions USD. Banque mondiale et FMI au 31 oct. 2026 (prêt par prêt); ² autres : statistiques Banque mondiale fin {ids}. Cliquez pour ouvrir.",
   e2:"Échéances",h2:"Le mur des remboursements",s2:"Combien Madagascar doit rembourser chaque année, et si cela pèse trop sur le budget au regard des seuils du FMI et de la Banque mondiale.",
   c_wall:"Principal à rembourser par an",c_walln:"Millions USD. Banque mondiale : estimation (encours réparti jusqu’à l’échéance finale). FMI : projection officielle (jusqu’en 2030). Autres créanciers à ajouter.",
   k_ida:"Banque mondiale (IDA) — estimé",k_imf:"FMI — officiel",peak:"pic",
@@ -303,6 +321,11 @@ const T = {
   colL:"Créancier",colP:"Projet",colS:"Secteur",colD:"Signé",colA:"Montant (M$)",colO:"Encours (M$)",colR:"Taux+frais",colM:"Durée",colG:"Élément-don",colSt:"Statut",
   shown:(n,t)=>`${n} prêts affichés sur ${t}`,copy:"Copier en CSV",copied:"Tableau copié — collez-le dans Excel ou Google Sheets",
   e7:"Actualités",h7:"Dernières nouvelles sur la dette",s7:"Annonces de prêts, revues du FMI, budget — mises à jour automatiquement à partir des flux d’actualités.",
+  e9:"Données ouvertes",h9:"Télécharger les données",datasub:d=>`Toute la base, libre de réutilisation. Données mises à jour le ${d}.`,
+  cite_h:"Comment citer",cite_n:"Merci de citer Trosa lorsque vous utilisez ces données dans un article, un rapport ou une thèse.",cite_copy:"Copier la citation",cite_done:"Citation copiée",
+  cite:(d,u)=>`ZO MAMINIAINA Andriamiarantsoa Mario (2026). <i>Trosa — Base de données de la dette extérieure de Madagascar</i> [jeu de données], mise à jour du ${d}. ${u}`,
+  dl:[["CSV","Tous les prêts","182 prêts, une ligne par prêt, avec montants, conditions, statut et source.","trosa_prets.csv"],["XLSX","Classeur Excel","Prêts, échéancier, couverture et contrôle officiel, en onglets.","trosa_base.xlsx"],["CSV","Échéancier","Principal à rembourser par an et par créancier (estimé / officiel).","trosa_echeancier.csv"],["CSV","Contrôle officiel","Comparaison avec les chiffres du Trésor public et écarts expliqués.","trosa_controle_officiel.csv"],["JSON","Données du site","Le fichier complet qui alimente ce site, pour les développeurs.","trosa_donnees.json"],["CSV","Dictionnaire des données","Signification de chaque colonne, en français et en anglais.","trosa_dictionnaire.csv"]],
+  foot_sub:"Observatoire de la dette extérieure de Madagascar",foot_lic:"Données sous licence Creative Commons CC BY 4.0 — réutilisation libre, avec mention de la source.",
   e8:"Méthode",h8:"Méthodologie et sources",s8:"Comment la base est construite, vérifiée et mise à jour.",
   mdgType:"Emprunteur",mdgName:"Madagascar — tous les créanciers",mdgSub:"Dette publique extérieure",topLenders:"Principaux créanciers",
   pOut:"Encours",pShare:"Part de la dette ext.",pLoans:"Prêts recensés",pRepay:"Remboursements de principal estimés",pList:"Prêts",
@@ -311,8 +334,8 @@ const T = {
   dSigned:"Signé",dRate:"Taux + frais",dGrace:"Différé",dMat:"Durée",dDue:"Échéance",dOut:"Encours",dUnd:"À décaisser",dGE:"Élément-don",yrs:"ans",
   conc:"Concessionnel",nonconc:"Non concessionnel",unk:"Conditions non publiées",srcl:"Source",tipLoans:n=>`${n} prêt${n>1?'s':''}`,kLenders:"créanciers",
   types:{Multilateral:"Multilatéral",Bilateral:"Bilatéral",Commercial:"Commercial"}},
- en:{brand:"Madagascar External Debt",brandSub:"Who lends, for what, on what terms",
-  nav1:"Summary",nav2:"Repayments",nav3:"Cost",nav4:"Transparency",nav5:"Explore",nav6:"News",nav7:"Methodology",
+ en:{brand:"Trosa",brandSub:"Madagascar external debt observatory",
+  nav1:"Summary",nav2:"Repayments",nav3:"Cost",nav4:"Transparency",nav5:"Explore",nav6:"News",nav7:"Methodology",nav8:"Data",
   kicker:"External public debt · real data",question:"Who lends to Madagascar, for what, and when it comes due.",
   tMulti:"Multilateral",tBi:"Bilateral",tCom:"Commercial",hint:"Drag to turn the globe · +/− or pinch to zoom · click a lender or Madagascar",scroll:"Summary",
   e1:"Summary",h1:"What Madagascar owes abroad",s1:"Official Treasury figures (end-June 2026) and loans recorded one by one, each with its source. Forgiven debt and fully repaid loans are excluded.",
@@ -321,7 +344,7 @@ const T = {
   c_mix:"Who holds the debt",c_mixn:"Share of external debt by creditor type — Treasury, end-June 2026.",
   mix_multi:"Multilateral",mix_bil:"Bilateral",mix_fin:"Financial institutions",mix_com:"Commercial banks",mix_unc:"Unclaimed / arrears",
   c_fx:"Currency exposure",c_fxn:"A weaker ariary makes the debt bigger in local currency.",fx_usd:"Dollar",fx_eur:"Euro",fx_oth:"Other (SDR, yen, yuan…)",
-  c_lenders:"Outstanding by creditor",c_lendersn:"US$ millions. World Bank and IMF at 31 Oct 2026 (loan by loan); others: World Bank debt statistics end-{ids}. Click to open.",
+  c_lenders:"Outstanding by creditor",c_lendersn:"US$ millions. World Bank and IMF at 31 Oct 2026 (loan by loan); ² others: World Bank debt statistics end-{ids}. Click to open.",
   e2:"Repayments",h2:"The repayment wall",s2:"How much Madagascar must repay each year, and whether that weighs too much on the budget against the IMF–World Bank thresholds.",
   c_wall:"Principal due per year",c_walln:"US$ millions. World Bank: estimate (outstanding spread to final maturity). IMF: official projection (to 2030). Other creditors to be added.",
   k_ida:"World Bank (IDA) — estimated",k_imf:"IMF — official",peak:"peak",
@@ -344,6 +367,11 @@ const T = {
   colL:"Creditor",colP:"Project",colS:"Sector",colD:"Signed",colA:"Amount ($m)",colO:"Outstanding ($m)",colR:"Rate+fees",colM:"Maturity",colG:"Grant element",colSt:"Status",
   shown:(n,t)=>`${n} of ${t} loans shown`,copy:"Copy as CSV",copied:"Table copied — paste it into Excel or Google Sheets",
   e7:"News",h7:"Latest debt news",s7:"Loan announcements, IMF reviews, budget — updated automatically from news feeds.",
+  e9:"Open data",h9:"Download the data",datasub:d=>`The whole database, free to reuse. Data updated ${d}.`,
+  cite_h:"How to cite",cite_n:"Please cite Trosa when you use these data in an article, a report or a thesis.",cite_copy:"Copy citation",cite_done:"Citation copied",
+  cite:(d,u)=>`ZO MAMINIAINA Andriamiarantsoa Mario (2026). <i>Trosa — Madagascar External Debt Database</i> [data set], updated ${d}. ${u}`,
+  dl:[["CSV","All loans","182 loans, one row per loan, with amounts, terms, status and source.","trosa_prets.csv"],["XLSX","Excel workbook","Loans, repayment schedule, coverage and official check, in tabs.","trosa_base.xlsx"],["CSV","Repayment schedule","Principal due per year and creditor (estimated / official).","trosa_echeancier.csv"],["CSV","Official check","Comparison with the Treasury's figures, differences explained.","trosa_controle_officiel.csv"],["JSON","Site data","The complete file behind this site, for developers.","trosa_donnees.json"],["CSV","Data dictionary","What each column means, in French and English.","trosa_dictionnaire.csv"]],
+  foot_sub:"Madagascar external debt observatory",foot_lic:"Data licensed under Creative Commons CC BY 4.0 — free to reuse with attribution.",
   e8:"Method",h8:"Methodology and sources",s8:"How the database is built, checked and updated.",
   mdgType:"Borrower",mdgName:"Madagascar — all creditors",mdgSub:"External public debt",topLenders:"Largest creditors",
   pOut:"Outstanding",pShare:"Share of ext. debt",pLoans:"Loans recorded",pRepay:"Estimated principal repayments",pList:"Loans",
@@ -509,8 +537,17 @@ const METHOD={fr:[["Périmètre","Dette publique extérieure de l’administrati
  ["Limits","Outstanding per loan not published except World Bank and IMF. Older, fully disbursed AfDB, French and Chinese loans still to add. The IMF reports US$1,011m; the Treasury books about US$608m (on-lent by the central bank) — to be confirmed."],
  ["Updates","Automatic: World Bank and IMF monthly, debt statistics yearly, Treasury bulletin quarterly (checked by hand), news daily. Every update gets a version number and date."]]};
 function renderMethod(){ document.getElementById('methodgrid').innerHTML=METHOD[lang].map(([h,b])=>`<div><b>${h}</b>${b}</div>`).join('');
-  document.getElementById('footer').innerHTML=lang==='fr'?`Version 0.2 · données au ${dateFmt(DATA.asof.wb)} (Banque mondiale, FMI) et ${dateFmt(DATA.asof.bsd)} (Trésor) · construit le ${dateFmt(DATA.asof.built)}.<br>Sources : <a href="https://financesone.worldbank.org/" target="_blank" rel="noopener">Banque mondiale Finances One</a> · <a href="https://www.imf.org/external/np/fin/tad/exfin2.aspx?memberKey1=620&date1key=2099-12-31" target="_blank" rel="noopener">FMI</a> · <a href="http://www.tresorpublic.mg/?page_id=214&content=temp&type=bsd" target="_blank" rel="noopener">Trésor public de Madagascar</a> · <a href="https://china.aiddata.org" target="_blank" rel="noopener">AidData</a>. Licence CC BY 4.0. ² Encours fin ${IDSY} (statistiques Banque mondiale).`
-   :`Version 0.2 · data at ${dateFmt(DATA.asof.wb)} (World Bank, IMF) and ${dateFmt(DATA.asof.bsd)} (Treasury) · built ${dateFmt(DATA.asof.built)}.<br>Sources: <a href="https://financesone.worldbank.org/" target="_blank" rel="noopener">World Bank Finances One</a> · <a href="https://www.imf.org/external/np/fin/tad/exfin2.aspx?memberKey1=620&date1key=2099-12-31" target="_blank" rel="noopener">IMF</a> · <a href="http://www.tresorpublic.mg/?page_id=214&content=temp&type=bsd" target="_blank" rel="noopener">Madagascar Treasury</a> · <a href="https://china.aiddata.org" target="_blank" rel="noopener">AidData</a>. Licence CC BY 4.0. ² Outstanding end-${IDSY} (World Bank statistics).`; }
+  const Y=new Date().getFullYear();
+  document.getElementById('footer').innerHTML=`<div class="fl"><span class="fb">© ${Y} Trosa</span><span>${t('foot_sub')}</span></div><div style="margin-top:8px">${t('foot_lic')}</div>`;
+  renderData();
+}
+const SITE_URL='https://zomario05.github.io/madagascar-debt/';   // switch to https://trosa.mg/ once the domain is live
+function renderData(){
+  const d=dateFmt(DATA.asof.built);
+  document.getElementById('datasub').textContent=T[lang].datasub(d);
+  document.getElementById('dllist').innerHTML=T[lang].dl.map(([f,h,b,file])=>`<a href="${file}" download><span class="fmt">${f}</span><b>${h}</b><span>${b}</span></a>`).join('');
+  document.getElementById('citetext').innerHTML=T[lang].cite(d,SITE_URL);
+}
 
 // ---------------- table ----------------
 let sortKey='d',sortDir=-1;
@@ -537,6 +574,7 @@ function renderTable(){
   document.getElementById('count').textContent=T[lang].shown(rows.length,DATA.loans.length);
 }
 ['q','f-lender','f-type','f-sector','f-status'].forEach(i=>document.getElementById(i).addEventListener('input',renderTable));
+document.getElementById('copycite').onclick=async()=>{try{await navigator.clipboard.writeText(document.getElementById('citetext').textContent);toast(t('cite_done'));}catch(e){toast('⚠ '+String(e.message||e));}};
 document.getElementById('copycsv').onclick=async()=>{
   const cols=['id','k','p','s','d','cur','amt','out','und','rate','fee','grace','mat','fr','lr','ge','st','conf','src'];
   const q=v=>v==null?'':(/[",\n]/.test(String(v))?'"'+String(v).replace(/"/g,'""')+'"':String(v));
@@ -549,7 +587,7 @@ function renderCharts(){anim.length=0;chartLenders();chartWall();chartScatter();
 const io=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');if(!shown){shown=true;setTimeout(()=>anim.forEach(f=>f()),150);}}}),{threshold:.08}):null;
 document.querySelectorAll('.reveal').forEach(n=>io?io.observe(n):(n.classList.add('in'),shown=true));
 function applyLang(){document.documentElement.lang=lang;setShort();document.querySelectorAll('[data-i18n]').forEach(n=>{const v=t(n.dataset.i18n);if(typeof v==='string')n.textContent=v;});
-  document.getElementById('btn-en').classList.toggle('on-l',lang==='en');document.getElementById('btn-fr').classList.toggle('on-l',lang==='fr');document.title=t('brand');
+  document.getElementById('btn-en').classList.toggle('on-l',lang==='en');document.getElementById('btn-fr').classList.toggle('on-l',lang==='fr');document.title='Trosa — '+(lang==='fr'?'Dette extérieure de Madagascar':'Madagascar external debt');
   renderKPIs();renderMix();renderThr();renderFilters();renderTable();renderCharts();renderSim();renderNews();renderMethod();renderPanel();}
 function setLang(l){lang=l;try{localStorage.setItem('mdg-lang-live',l)}catch(e){}applyLang();}
 document.getElementById('btn-en').onclick=()=>setLang('en');document.getElementById('btn-fr').onclick=()=>setLang('fr');

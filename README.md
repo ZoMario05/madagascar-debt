@@ -1,9 +1,9 @@
-# Dette extérieure de Madagascar — base de données et site
+# Trosa — Observatoire de la dette extérieure de Madagascar
 
 Qui prête à Madagascar, pour quoi, à quelles conditions, et quand il faut rembourser.
 *Who lends to Madagascar, for what, on what terms, and when it comes due.*
 
-Version 0.2 · 182 prêts · données au 31 oct. 2026 (Banque mondiale, FMI) et 30 juin 2026 (Trésor).
+Auteur : ZO MAMINIAINA Andriamiarantsoa Mario · Site : https://zomario05.github.io/madagascar-debt/ (bientôt trosa.mg) · 182 prêts · données au 31 oct. 2026 (Banque mondiale, FMI) et 30 juin 2026 (Trésor).
 
 ## Ce qui se met à jour tout seul
 
@@ -37,7 +37,7 @@ python pipeline/run_all.py --only news  # seulement les actualités
 python pipeline/run_all.py --only none  # reconstruire sans rien télécharger (après une modification à la main)
 ```
 
-Résultats dans `public/` : `index.html` (le site), `Madagascar_External_Debt_Database.xlsx`, et les CSV en données ouvertes.
+Résultats dans `public/` : `index.html` (le site) et les fichiers téléchargeables (`trosa_prets.csv`, `trosa_base.xlsx`, `trosa_donnees.json`…).
 
 ## Organisation
 
@@ -62,3 +62,13 @@ Pas de source, pas de ligne. Les estimations sont signalées (barres hachurées)
 ## Note technique
 
 Les scripts de récupération ont été écrits et testés sur les formats publiés en novembre 2026 ; la reconstruction hors ligne (`--only none`) est testée. Faites un premier « Run workflow » et vérifiez le journal : si un site a changé son format, seul ce script est à ajuster.
+
+## Citer
+
+ZO MAMINIAINA Andriamiarantsoa Mario (2026). *Trosa — Base de données de la dette extérieure de Madagascar* [jeu de données]. https://zomario05.github.io/madagascar-debt/
+
+Le fichier `CITATION.cff` affiche un bouton « Cite this repository » sur GitHub ; `.zenodo.json` est prêt pour l'attribution d'un DOI via Zenodo.
+
+## Nom de domaine
+
+Quand trosa.mg sera actif : Settings → Pages → Custom domain, puis remplacer `SITE_URL` dans `site/template.html` et l'URL dans `CITATION.cff`.

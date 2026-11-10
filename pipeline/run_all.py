@@ -18,14 +18,20 @@ for name, script in FETCH.items():
 
 steps = [["build_master.py", "data/raw", "data/out"],
          ["build_site_data.py", "data/raw", "data/out"],
-         ["build_xlsx.py", "data/out", "public/Madagascar_External_Debt_Database.xlsx", "data/raw/official_bsd_totals.csv"],
+         ["build_xlsx.py", "data/out", "public/trosa_base.xlsx", "data/raw/official_bsd_totals.csv"],
          ["assemble_site.py"]]
 os.makedirs(os.path.join(ROOT, "public"), exist_ok=True)
 for s in steps:
     subprocess.run([sys.executable, os.path.join("pipeline", s[0])] + s[1:], cwd=ROOT, check=True)
-for f in ("master_loans.csv", "repayment_schedule_estimated.csv", "coverage_check.csv", "reconciliation.csv", "site_data.json"):
-    src = os.path.join(ROOT, "data", "out", f)
-    if os.path.exists(src):
-        open(os.path.join(ROOT, "public", f), "wb").write(open(src, "rb").read())
+# public download files (names are linked from the site's "Données" section)
+PUBLISH = {"data/out/master_loans.csv": "trosa_prets.csv", "data/out/repayment_schedule_estimated.csv": "trosa_echeancier.csv",
+           "data/out/reconciliation.csv": "trosa_controle_officiel.csv", "data/out/coverage_check.csv": "trosa_couverture.csv",
+           "data/out/site_data.json": "trosa_donnees.json", "site/data_dictionary.csv": "trosa_dictionnaire.csv"}
+for f in os.listdir(os.path.join(ROOT, "public")):
+    if f.endswith((".csv", ".json", ".xlsx")) and f not in PUBLISH.values() and f != "trosa_base.xlsx":
+        os.remove(os.path.join(ROOT, "public", f))   # remove old file names
+for src, dst in PUBLISH.items():
+    if os.path.exists(os.path.join(ROOT, src)):
+        open(os.path.join(ROOT, "public", dst), "wb").write(open(os.path.join(ROOT, src), "rb").read())
 print("done; failed sources:", failed or "none")
 sys.exit(1 if failed and len(failed) == len(only or FETCH) else 0)

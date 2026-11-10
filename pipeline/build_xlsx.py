@@ -18,8 +18,8 @@ def header(ws, cols, row=1):
 # README
 ws = wb.active; ws.title = "README"
 lines = [
-    ("Madagascar External Debt Database — master dataset v0.2", True),
-    ("Data as of 31 Oct 2026 (World Bank IDA, IMF); creditor totals as of end-2024 (World Bank International Debt Statistics). Built 10 Nov 2026.", False),
+    ("Trosa — Madagascar External Debt Database", True),
+    ("Author: ZO MAMINIAINA Andriamiarantsoa Mario. Licence: CC BY 4.0. Cite as: ZO MAMINIAINA Andriamiarantsoa Mario (2026). Trosa — Madagascar External Debt Database [data set].", False),
     ("Scope: external public debt still owed. Grants, forgiven debt (HIPC/MDRI) and fully repaid or fully cancelled loans are excluded.", False),
     ("", False),
     ("Tabs", True),
