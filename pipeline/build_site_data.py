@@ -100,8 +100,15 @@ for r in loans:
         "ge": ge, "st": r["status"], "conf": r["confidence"], "src": r["source_urls"], "note": r["notes"], "pub": known,
         "type": r["lender_type"]})
 
+IDS_NAME = {"AFDB": "African Development Bank (incl. ADF)", "EIB": "European Investment Bank", "IFAD": "IFAD", "OFID": "OPEC Fund",
+            "BADEA": "BADEA", "TDB": "Trade & Development Bank (TDB)", "CN": "China", "FR": "France", "JP": "Japan", "DZ": "Algeria",
+            "KR": "Korea", "SA": "Saudi Arabia", "KW": "Kuwait", "AE": "United Arab Emirates", "RU": "Russian Federation", "IN": "India",
+            "NL": "Netherlands", "BE": "Belgium", "DE": "Germany", "AO": "Angola", "ES": "Spain"}
 lenders = []
 for (k, en, fr_, short, typ, hen, hfr, lat, lng, outv, basis) in L:
+    if basis == "ids":  # always the latest World Bank debt statistics, never a typed-in number
+        row = ids.get(IDS_NAME.get(k, ""))
+        outv = float(row["outstanding_usd_m_end2024"]) if row else None
     my = [x for x in out_loans if x["k"] == k]
     if k == "IDA": outv = round(sum(x["out"] or 0 for x in my), 1)
     if k == "IMF": outv = round(sum(x["out"] or 0 for x in my), 1)
@@ -109,6 +116,7 @@ for (k, en, fr_, short, typ, hen, hfr, lat, lng, outv, basis) in L:
                     "out": outv, "basis": basis, "nloans": len(my),
                     "signed": round(sum(x["amt"] or 0 for x in my), 1)})
 
+lenders = [l for l in lenders if l["out"] or l["nloans"]]  # creditors no longer owed anything drop off the globe
 years = list(range(2027, 2041))
 sch = {"years": years, "IDA": [0] * len(years), "IMF": [0] * len(years)}
 for r in sched:
