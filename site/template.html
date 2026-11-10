@@ -280,7 +280,7 @@ const T = {
   c_mix:"Qui détient la dette",c_mixn:"Part de l’encours extérieur par type de créancier — Trésor, fin juin 2026.",
   mix_multi:"Multilatéraux",mix_bil:"Bilatéraux",mix_fin:"Institutions financières",mix_com:"Banques commerciales",mix_unc:"Non réclamé / arriérés",
   c_fx:"Exposition au change",c_fxn:"Une baisse de l’ariary fait grossir la dette en monnaie locale.",fx_usd:"Dollar",fx_eur:"Euro",fx_oth:"Autres (DTS, yen, yuan…)",
-  c_lenders:"Encours par créancier",c_lendersn:"Millions USD. Banque mondiale et FMI au 31 oct. 2026 (prêt par prêt); autres : statistiques Banque mondiale fin 2024. Cliquez pour ouvrir.",
+  c_lenders:"Encours par créancier",c_lendersn:"Millions USD. Banque mondiale et FMI au 31 oct. 2026 (prêt par prêt); autres : statistiques Banque mondiale fin {ids}. Cliquez pour ouvrir.",
   e2:"Échéances",h2:"Le mur des remboursements",s2:"Combien Madagascar doit rembourser chaque année, et si cela pèse trop sur le budget au regard des seuils du FMI et de la Banque mondiale.",
   c_wall:"Principal à rembourser par an",c_walln:"Millions USD. Banque mondiale : estimation (encours réparti jusqu’à l’échéance finale). FMI : projection officielle (jusqu’en 2030). Autres créanciers à ajouter.",
   k_ida:"Banque mondiale (IDA) — estimé",k_imf:"FMI — officiel",peak:"pic",
@@ -306,7 +306,7 @@ const T = {
   e8:"Méthode",h8:"Méthodologie et sources",s8:"Comment la base est construite, vérifiée et mise à jour.",
   mdgType:"Emprunteur",mdgName:"Madagascar — tous les créanciers",mdgSub:"Dette publique extérieure",topLenders:"Principaux créanciers",
   pOut:"Encours",pShare:"Part de la dette ext.",pLoans:"Prêts recensés",pRepay:"Remboursements de principal estimés",pList:"Prêts",
-  basis_wb:"Encours exact au 31 oct. 2026 (Banque mondiale).",basis_imf:"Encours au 31 oct. 2026 (FMI).",basis_ids:"Encours fin 2024 (statistiques de la dette, Banque mondiale). Encours par prêt non publié.",basis_sdmt:"Reste dû fin 2025 (Stratégie de la dette 2026-2028).",
+  basis_wb:"Encours exact au 31 oct. 2026 (Banque mondiale).",basis_imf:"Encours au 31 oct. 2026 (FMI).",basis_ids:"Encours fin {ids} (statistiques de la dette, Banque mondiale). Encours par prêt non publié.",basis_sdmt:"Reste dû fin 2025 (Stratégie de la dette 2026-2028).",
   noloans:"Aucun prêt actif dans la liste officielle; anciens prêts à compléter.",
   dSigned:"Signé",dRate:"Taux + frais",dGrace:"Différé",dMat:"Durée",dDue:"Échéance",dOut:"Encours",dUnd:"À décaisser",dGE:"Élément-don",yrs:"ans",
   conc:"Concessionnel",nonconc:"Non concessionnel",unk:"Conditions non publiées",srcl:"Source",tipLoans:n=>`${n} prêt${n>1?'s':''}`,kLenders:"créanciers",
@@ -321,7 +321,7 @@ const T = {
   c_mix:"Who holds the debt",c_mixn:"Share of external debt by creditor type — Treasury, end-June 2026.",
   mix_multi:"Multilateral",mix_bil:"Bilateral",mix_fin:"Financial institutions",mix_com:"Commercial banks",mix_unc:"Unclaimed / arrears",
   c_fx:"Currency exposure",c_fxn:"A weaker ariary makes the debt bigger in local currency.",fx_usd:"Dollar",fx_eur:"Euro",fx_oth:"Other (SDR, yen, yuan…)",
-  c_lenders:"Outstanding by creditor",c_lendersn:"US$ millions. World Bank and IMF at 31 Oct 2026 (loan by loan); others: World Bank debt statistics end-2024. Click to open.",
+  c_lenders:"Outstanding by creditor",c_lendersn:"US$ millions. World Bank and IMF at 31 Oct 2026 (loan by loan); others: World Bank debt statistics end-{ids}. Click to open.",
   e2:"Repayments",h2:"The repayment wall",s2:"How much Madagascar must repay each year, and whether that weighs too much on the budget against the IMF–World Bank thresholds.",
   c_wall:"Principal due per year",c_walln:"US$ millions. World Bank: estimate (outstanding spread to final maturity). IMF: official projection (to 2030). Other creditors to be added.",
   k_ida:"World Bank (IDA) — estimated",k_imf:"IMF — official",peak:"peak",
@@ -347,7 +347,7 @@ const T = {
   e8:"Method",h8:"Methodology and sources",s8:"How the database is built, checked and updated.",
   mdgType:"Borrower",mdgName:"Madagascar — all creditors",mdgSub:"External public debt",topLenders:"Largest creditors",
   pOut:"Outstanding",pShare:"Share of ext. debt",pLoans:"Loans recorded",pRepay:"Estimated principal repayments",pList:"Loans",
-  basis_wb:"Exact outstanding at 31 Oct 2026 (World Bank).",basis_imf:"Outstanding at 31 Oct 2026 (IMF).",basis_ids:"Outstanding end-2024 (World Bank debt statistics). Outstanding per loan not published.",basis_sdmt:"Owed end-2025 (Debt strategy 2026-2028).",
+  basis_wb:"Exact outstanding at 31 Oct 2026 (World Bank).",basis_imf:"Outstanding at 31 Oct 2026 (IMF).",basis_ids:"Outstanding end-{ids} (World Bank debt statistics). Outstanding per loan not published.",basis_sdmt:"Owed end-2025 (Debt strategy 2026-2028).",
   noloans:"No active loans in the official list; older loans still to add.",
   dSigned:"Signed",dRate:"Rate + fees",dGrace:"Grace",dMat:"Maturity",dDue:"Final due",dOut:"Outstanding",dUnd:"Undisbursed",dGE:"Grant element",yrs:"yrs",
   conc:"Concessional",nonconc:"Non-concessional",unk:"Terms not published",srcl:"Source",tipLoans:n=>`${n} loan${n>1?'s':''}`,kLenders:"creditors",
@@ -356,7 +356,8 @@ const T = {
 const SECT={"Budget support":"Appui budgétaire","Transport":"Transport","Energy":"Énergie","Social protection":"Protection sociale","Health & nutrition":"Santé et nutrition","Education":"Éducation","Water & urban":"Eau et urbain","Digital":"Numérique","Agriculture & environment":"Agriculture et environnement","Governance & finance":"Gouvernance et finances","Other / to classify":"Autre / à classer"};
 const STAT={"Repaying":"En remboursement","Disbursing & repaying":"Décaissement et remboursement","Disbursing":"En décaissement","Fully disbursed":"Entièrement décaissé","Signed":"Signé","Signed (effective)":"Signé (en vigueur)","Approved":"Approuvé","Disbursing (active project)":"Projet actif","Repaying (assumed)":"En remboursement (supposé)","Fully disbursed (assumed)":"Décaissé (supposé)","Disbursing (assumed)":"En décaissement (supposé)","Signed / disbursing":"Signé / en décaissement"};
 let lang='fr'; try{const s=localStorage.getItem('mdg-lang-live'); if(s==='fr'||s==='en') lang=s;}catch(e){}
-const t=k=>T[lang][k];
+const IDSY=(DATA.asof.ids||'2024').slice(0,4);
+const t=k=>{const v=T[lang][k];return typeof v==='string'?v.split('{ids}').join(IDSY):v;};
 const fmtN=(v,d=0)=>v.toLocaleString(lang==='fr'?'fr-FR':'en-US',{maximumFractionDigits:d,minimumFractionDigits:d});
 function money(m){ if(m==null) return '–'; if(lang==='fr'){ return m>=1000? fmtN(m/1000,2)+' Md$' : fmtN(m,m<10?1:0)+' M$'; } return m>=1000? '$'+fmtN(m/1000,2)+' bn' : '$'+fmtN(m,m<10?1:0)+' m'; }
 const pct=(v,d=1)=>v==null?'–':(lang==='fr'?fmtN(v,d)+' %':fmtN(v,d)+'%');
@@ -508,8 +509,8 @@ const METHOD={fr:[["Périmètre","Dette publique extérieure de l’administrati
  ["Limits","Outstanding per loan not published except World Bank and IMF. Older, fully disbursed AfDB, French and Chinese loans still to add. The IMF reports US$1,011m; the Treasury books about US$608m (on-lent by the central bank) — to be confirmed."],
  ["Updates","Automatic: World Bank and IMF monthly, debt statistics yearly, Treasury bulletin quarterly (checked by hand), news daily. Every update gets a version number and date."]]};
 function renderMethod(){ document.getElementById('methodgrid').innerHTML=METHOD[lang].map(([h,b])=>`<div><b>${h}</b>${b}</div>`).join('');
-  document.getElementById('footer').innerHTML=lang==='fr'?`Version 0.2 · données au ${dateFmt(DATA.asof.wb)} (Banque mondiale, FMI) et ${dateFmt(DATA.asof.bsd)} (Trésor) · construit le ${dateFmt(DATA.asof.built)}.<br>Sources : <a href="https://financesone.worldbank.org/" target="_blank" rel="noopener">Banque mondiale Finances One</a> · <a href="https://www.imf.org/external/np/fin/tad/exfin2.aspx?memberKey1=620&date1key=2099-12-31" target="_blank" rel="noopener">FMI</a> · <a href="http://www.tresorpublic.mg/?page_id=214&content=temp&type=bsd" target="_blank" rel="noopener">Trésor public de Madagascar</a> · <a href="https://china.aiddata.org" target="_blank" rel="noopener">AidData</a>. Licence CC BY 4.0. ² Encours fin 2024 (statistiques Banque mondiale).`
-   :`Version 0.2 · data at ${dateFmt(DATA.asof.wb)} (World Bank, IMF) and ${dateFmt(DATA.asof.bsd)} (Treasury) · built ${dateFmt(DATA.asof.built)}.<br>Sources: <a href="https://financesone.worldbank.org/" target="_blank" rel="noopener">World Bank Finances One</a> · <a href="https://www.imf.org/external/np/fin/tad/exfin2.aspx?memberKey1=620&date1key=2099-12-31" target="_blank" rel="noopener">IMF</a> · <a href="http://www.tresorpublic.mg/?page_id=214&content=temp&type=bsd" target="_blank" rel="noopener">Madagascar Treasury</a> · <a href="https://china.aiddata.org" target="_blank" rel="noopener">AidData</a>. Licence CC BY 4.0. ² Outstanding end-2024 (World Bank statistics).`; }
+  document.getElementById('footer').innerHTML=lang==='fr'?`Version 0.2 · données au ${dateFmt(DATA.asof.wb)} (Banque mondiale, FMI) et ${dateFmt(DATA.asof.bsd)} (Trésor) · construit le ${dateFmt(DATA.asof.built)}.<br>Sources : <a href="https://financesone.worldbank.org/" target="_blank" rel="noopener">Banque mondiale Finances One</a> · <a href="https://www.imf.org/external/np/fin/tad/exfin2.aspx?memberKey1=620&date1key=2099-12-31" target="_blank" rel="noopener">FMI</a> · <a href="http://www.tresorpublic.mg/?page_id=214&content=temp&type=bsd" target="_blank" rel="noopener">Trésor public de Madagascar</a> · <a href="https://china.aiddata.org" target="_blank" rel="noopener">AidData</a>. Licence CC BY 4.0. ² Encours fin ${IDSY} (statistiques Banque mondiale).`
+   :`Version 0.2 · data at ${dateFmt(DATA.asof.wb)} (World Bank, IMF) and ${dateFmt(DATA.asof.bsd)} (Treasury) · built ${dateFmt(DATA.asof.built)}.<br>Sources: <a href="https://financesone.worldbank.org/" target="_blank" rel="noopener">World Bank Finances One</a> · <a href="https://www.imf.org/external/np/fin/tad/exfin2.aspx?memberKey1=620&date1key=2099-12-31" target="_blank" rel="noopener">IMF</a> · <a href="http://www.tresorpublic.mg/?page_id=214&content=temp&type=bsd" target="_blank" rel="noopener">Madagascar Treasury</a> · <a href="https://china.aiddata.org" target="_blank" rel="noopener">AidData</a>. Licence CC BY 4.0. ² Outstanding end-${IDSY} (World Bank statistics).`; }
 
 // ---------------- table ----------------
 let sortKey='d',sortDir=-1;
@@ -547,7 +548,7 @@ function toast(m){const e=document.getElementById('toast');e.textContent=m;e.sty
 function renderCharts(){anim.length=0;chartLenders();chartWall();chartScatter();chartGE();chartTransparency();chartPipe();chartYears();requestAnimationFrame(()=>requestAnimationFrame(()=>{if(shown)anim.forEach(f=>f());}));}
 const io=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');if(!shown){shown=true;setTimeout(()=>anim.forEach(f=>f()),150);}}}),{threshold:.08}):null;
 document.querySelectorAll('.reveal').forEach(n=>io?io.observe(n):(n.classList.add('in'),shown=true));
-function applyLang(){document.documentElement.lang=lang;setShort();document.querySelectorAll('[data-i18n]').forEach(n=>{const v=T[lang][n.dataset.i18n];if(typeof v==='string')n.textContent=v;});
+function applyLang(){document.documentElement.lang=lang;setShort();document.querySelectorAll('[data-i18n]').forEach(n=>{const v=t(n.dataset.i18n);if(typeof v==='string')n.textContent=v;});
   document.getElementById('btn-en').classList.toggle('on-l',lang==='en');document.getElementById('btn-fr').classList.toggle('on-l',lang==='fr');document.title=t('brand');
   renderKPIs();renderMix();renderThr();renderFilters();renderTable();renderCharts();renderSim();renderNews();renderMethod();renderPanel();}
 function setLang(l){lang=l;try{localStorage.setItem('mdg-lang-live',l)}catch(e){}applyLang();}

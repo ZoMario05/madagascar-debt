@@ -1,4 +1,4 @@
-creditor,official_total_usd_m_end2024 (World Bank IDS),loans_in_database,outstanding_known_per_loan,status
+creditor,"official_total_usd_m (World Bank IDS, latest year)",loans_in_database,outstanding_known_per_loan,status
 World Bank-IDA,2650,108,Yes,Complete (exact outstanding per loan)
 African Development Bank (incl. ADF),633,18,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add
 China,317,7,No (amount signed only),Active loans from the official Treasury list; older fully disbursed loans still to add

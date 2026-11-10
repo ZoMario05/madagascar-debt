@@ -142,7 +142,7 @@ MAP = {  # IDS creditor name -> test on database rows
 }
 with open(f"{OUT}/coverage_check.csv", "w", newline="") as f:
     w = csv.writer(f)
-    w.writerow(["creditor", "official_total_usd_m_end2024 (World Bank IDS)", "loans_in_database", "outstanding_known_per_loan", "status"])
+    w.writerow(["creditor", "official_total_usd_m (World Bank IDS, latest year)", "loans_in_database", "outstanding_known_per_loan", "status"])
     for name, r in ids.items():
         if name.startswith(("TOTAL", "of which", "IMF")):
             continue

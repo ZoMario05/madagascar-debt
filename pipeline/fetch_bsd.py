@@ -19,11 +19,22 @@ def main():
     page = get(LIST, insecure=True)
     found = sorted({int(n) for n in re.findall(r"file=(\d{3})\.pdf", page)})
     latest = found[-1]
+    print("BSD issues listed:", found[-5:])
     state = json.load(open(f"{RAW}/asof.json"))
     if latest <= state.get("bsd_number", 0):
         print(f"BSD: no new bulletin (latest n°{latest})"); return
     os.makedirs(f"{RAW}/bsd", exist_ok=True)
-    pdf = get(PDF.format(n=latest), binary=True, insecure=True)
+    pdf = get(PDF.format(n=latest), binary=True, insecure=True, referer=LIST)
+    if not pdf.startswith(b"%PDF"):
+        # the server sometimes answers with an HTML page (redirect or protection); keep the previous data
+        print(f"BSD n°{latest}: server did not return a PDF ({pdf[:120]!r}); keeping previous figures")
+        open(os.path.join(os.path.dirname(RAW), "..", "REVIEW_BSD.md"), "w").write(
+            f"# Nouveau bulletin du Trésor n°{latest} disponible\n\nLe téléchargement automatique a échoué. "
+            f"Téléchargez-le à la main : {PDF.format(n=latest)}\npuis déposez-le dans data/raw/bsd/{latest:03d}.pdf et relancez le workflow.\n")
+        local = f"{RAW}/bsd/{latest:03d}.pdf"
+        if not os.path.exists(local):
+            return
+        pdf = open(local, "rb").read()
     open(f"{RAW}/bsd/{latest:03d}.pdf", "wb").write(pdf)
     import pdfplumber, io
     with pdfplumber.open(io.BytesIO(pdf)) as doc:
