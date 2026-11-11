@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<meta name="author" content="ZO MAMINIAINA Andriamiarantsoa Mario">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Trosa — Madagascar External Debt Database","url":"https://trosamg.org/","inLanguage":["fr","en"],"license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Person","name":"ZO MAMINIAINA Andriamiarantsoa Mario","jobTitle":"Founder of Trosa"},"spatialCoverage":"Madagascar"}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23070a0d%22/%3E%3Cpath d=%22M44 6 50 18 46 30 40 46 30 58 20 56 17 46 21 34 18 26 30 18 38 14Z%22 fill=%22%233ddc84%22/%3E%3C/svg%3E">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -184,6 +186,14 @@ footer .fl{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;al
 footer .fb{font-family:var(--serif);font-size:16px;color:var(--ink)}
 footer .wrap{padding-right:clamp(70px,7vw,110px)}
 .pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--hair2);color:var(--muted);box-shadow:0 0 6px rgba(0,0,0,.6)}
+.about{padding:26px 28px;max-width:860px}
+.about .who{display:flex;gap:16px;align-items:center;margin-bottom:16px}
+.about .mono{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-size:20px;font-weight:600;color:#06120c;background:linear-gradient(135deg,#bfffd8,var(--mdg));flex:none}
+.about .nm{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--ink);letter-spacing:.01em}
+.about .rl{font-size:13.5px;color:var(--muted);margin-top:3px}
+.about p{color:var(--muted);font-size:15px;line-height:1.7;margin:0 0 12px}
+.ablinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.ablinks .btn{text-decoration:none}
+footer .by a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--hair2)}footer .by a:hover{color:var(--ink)}
 footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--hair);line-height:1.6}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .9s,transform .9s}.reveal.in{opacity:1;transform:none}
 .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:30;padding:10px 16px;border-radius:10px;border:1px solid var(--hair2);background:rgba(10,12,16,.7);font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none}
@@ -198,7 +208,7 @@ footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;b
     <div><b data-i18n="brand"></b><small data-i18n="brandSub"></small></div></a>
   <nav class="links on">
     <a href="#structure" data-i18n="nav1"></a><a href="#wall" data-i18n="nav2"></a><a href="#cost" data-i18n="nav3"></a>
-    <a href="#transparency" data-i18n="nav4"></a><a href="#explore" data-i18n="nav5"></a><a href="#news" data-i18n="nav6"></a><a href="#data" data-i18n="nav8"></a><a href="#method" data-i18n="nav7"></a>
+    <a href="#transparency" data-i18n="nav4"></a><a href="#explore" data-i18n="nav5"></a><a href="#news" data-i18n="nav6"></a><a href="#data" data-i18n="nav8"></a><a href="#method" data-i18n="nav7"></a><a href="#about" data-i18n="nav9"></a>
   </nav>
   <div class="lang on" role="group"><button id="btn-fr" class="on-l" type="button">FR</button><button id="btn-en" type="button">EN</button></div>
 </div></header>
@@ -298,6 +308,15 @@ footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;b
     <h2 data-i18n="h8"></h2><p class="sub" data-i18n="s8"></p>
     <div class="glass method on" id="methodgrid"></div>
   </div></section>
+  <section class="block" id="about"><div class="wrap">
+    <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e10"></span></div>
+    <h2 data-i18n="h10"></h2>
+    <div class="glass card on about">
+      <div class="who"><div class="mono">ZM</div><div><div class="nm">ZO MAMINIAINA Andriamiarantsoa Mario</div><div class="rl" data-i18n="ab_role"></div></div></div>
+      <p data-i18n="ab_p1"></p><p data-i18n="ab_p2"></p>
+      <div class="ablinks"><a class="btn" href="https://github.com/ZoMario05/madagascar-debt" target="_blank" rel="noopener" data-i18n="ab_code"></a><a class="btn" href="https://github.com/ZoMario05/madagascar-debt/issues/new" target="_blank" rel="noopener" data-i18n="ab_fix"></a><a class="btn" href="#data" data-i18n="ab_cite"></a></div>
+    </div>
+  </div></section>
   <footer><div class="wrap" id="footer"></div></footer>
 </main>
 
@@ -308,7 +327,13 @@ const DATA = {"asof":{"wb":"2026-10-31","imf":"2026-10-31","ids":"2025-12-31","b
 const O = DATA.official;
 const T = {
  fr:{brand:"Trosa",brandSub:"Observatoire de la dette extérieure de Madagascar",
-  nav1:"Synthèse",nav2:"Échéances",nav3:"Coût",nav4:"Transparence",nav5:"Explorer",nav6:"Actualités",nav7:"Méthodologie",nav8:"Données",
+  nav1:"Synthèse",nav2:"Échéances",nav3:"Coût",nav4:"Transparence",nav5:"Explorer",nav6:"Actualités",nav7:"Méthodologie",nav8:"Données",nav9:"À propos",
+  e10:"À propos",h10:"Qui est derrière Trosa",
+  ab_role:"MPA (UIBE, Pékin) · Chercheur indépendant en économie politique internationale · Fondateur de Trosa",
+  ab_p1:"Trosa est un projet indépendant, conçu, construit et maintenu par ZO MAMINIAINA Andriamiarantsoa Mario. Son but : rendre lisible, pour tous les Malgaches, ce que Madagascar doit à l'étranger — à qui, pour quoi, à quelles conditions et quand il faut rembourser.",
+  ab_p2:"Chaque chiffre provient d'une source publique citée (Banque mondiale, FMI, Trésor public). Rien n'est modifié sur la base de rumeurs. Une erreur ? Signalez-la : elle sera vérifiée et corrigée publiquement.",
+  ab_code:"Code et données (GitHub)",ab_fix:"Signaler une erreur",ab_cite:"Citer Trosa",
+  foot_by:"Conçu et réalisé par",
   kicker:"Dette publique extérieure · données réelles",question:"Qui prête à Madagascar, pour quoi, et quand faut-il rembourser.",
   tMulti:"Multilatéral",tBi:"Bilatéral",tCom:"Commercial",hint:"Faites glisser pour tourner · +/− ou pincer pour zoomer · cliquez sur un prêteur ou sur Madagascar",scroll:"Synthèse",
   e1:"Synthèse",h1:"Ce que Madagascar doit à l’étranger",s1:"Chiffres officiels du Trésor (fin juin 2026) et prêts recensés un par un, chacun avec sa source. Dettes annulées et prêts entièrement remboursés exclus.",
@@ -354,7 +379,13 @@ const T = {
   conc:"Concessionnel",nonconc:"Non concessionnel",unk:"Conditions non publiées",srcl:"Source",tipLoans:n=>`${n} prêt${n>1?'s':''}`,kLenders:"créanciers",
   types:{Multilateral:"Multilatéral",Bilateral:"Bilatéral",Commercial:"Commercial"}},
  en:{brand:"Trosa",brandSub:"Madagascar external debt observatory",
-  nav1:"Summary",nav2:"Repayments",nav3:"Cost",nav4:"Transparency",nav5:"Explore",nav6:"News",nav7:"Methodology",nav8:"Data",
+  nav1:"Summary",nav2:"Repayments",nav3:"Cost",nav4:"Transparency",nav5:"Explore",nav6:"News",nav7:"Methodology",nav8:"Data",nav9:"About",
+  e10:"About",h10:"Who is behind Trosa",
+  ab_role:"MPA (UIBE, Beijing) · Independent researcher in international political economy · Founder of Trosa",
+  ab_p1:"Trosa is an independent project, designed, built and maintained by ZO MAMINIAINA Andriamiarantsoa Mario. Its aim: to make it clear, for every Malagasy citizen, what Madagascar owes abroad — to whom, for what, on what terms and when it must be repaid.",
+  ab_p2:"Every figure comes from a cited public source (World Bank, IMF, Treasury). Nothing is changed on the basis of rumours. Found an error? Report it: it will be checked and corrected publicly.",
+  ab_code:"Code and data (GitHub)",ab_fix:"Report an error",ab_cite:"Cite Trosa",
+  foot_by:"Designed and built by",
   kicker:"External public debt · real data",question:"Who lends to Madagascar, for what, and when it comes due.",
   tMulti:"Multilateral",tBi:"Bilateral",tCom:"Commercial",hint:"Drag to turn the globe · +/− or pinch to zoom · click a lender or Madagascar",scroll:"Summary",
   e1:"Summary",h1:"What Madagascar owes abroad",s1:"Official Treasury figures (end-June 2026) and loans recorded one by one, each with its source. Forgiven debt and fully repaid loans are excluded.",
@@ -789,7 +820,7 @@ const METHOD={fr:[["Périmètre","Dette publique extérieure de l’administrati
  ["Updates","Automatic: World Bank and IMF monthly, debt statistics yearly, Treasury bulletin quarterly (checked by hand), news daily. Every update gets a version number and date."]]};
 function renderMethod(){ document.getElementById('methodgrid').innerHTML=METHOD[lang].map(([h,b])=>`<div><b>${h}</b>${b}</div>`).join('');
   const Y=new Date().getFullYear();
-  document.getElementById('footer').innerHTML=`<div class="fl"><span class="fb">© ${Y} Trosa</span><span>${t('foot_sub')}</span></div><div style="margin-top:8px">${t('foot_lic')}</div>`;
+  document.getElementById('footer').innerHTML=`<div class="fl"><span class="fb">© ${Y} Trosa</span><span>${t('foot_sub')}</span></div><div class="by" style="margin-top:8px">${t('foot_by')} <a href="#about">ZO MAMINIAINA Andriamiarantsoa Mario</a></div><div style="margin-top:6px">${t('foot_lic')}</div>`;
   renderData();
 }
 const SITE_URL='https://trosamg.org/';
