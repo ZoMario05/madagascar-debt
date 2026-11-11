@@ -147,23 +147,35 @@ function draw(){
       ctx.stroke(); ctx.shadowBlur=0; }
   }
   ctx.setLineDash([]);
-  const showAll=r>230;
-  const ranked=[...LENDERS].sort((a,b)=>b.total-a.total).slice(0,7).map(l=>l.id);
   ctx.textBaseline='middle';
+  const cands=[];
   for(const l of LENDERS){
     const q=proj(l.v), sp=7*Math.min(1.3,Math.max(0.8,r/300)); q[0]+=l.ox*sp; q[1]+=l.oy*sp; l.sx=q[0]; l.sy=q[1]; l.vis=q[2]>0.04; if(!l.vis) continue;
     const isSel=selected===l.id,isHov=hover===l.id,dim=selected&&selected!=='mdg'&&!isSel,col=TYPECOL[l.type];
     const rad=(2.6+4.6*Math.sqrt(l.total/maxT))*(isSel?1.4:1)*Math.min(1.3,Math.max(0.8,r/300));
-    ctx.globalAlpha=(dim?0.35:Math.min(1,0.4+q[2]))*FADE;
+    const a=(dim?0.35:Math.min(1,0.4+q[2]))*FADE;
+    ctx.globalAlpha=a;
     ctx.fillStyle=col; ctx.shadowColor=col; ctx.shadowBlur=isSel||isHov?18:8; ctx.beginPath(); ctx.arc(q[0],q[1],rad,0,7); ctx.fill(); ctx.shadowBlur=0;
     ctx.strokeStyle='rgba(3,6,6,.85)'; ctx.lineWidth=1.4; ctx.stroke();
-    if(LBL>0.01&&(isSel||isHov||(!dim&&(showAll||ranked.includes(l.id))))){
-      ctx.globalAlpha*=LBL;
-      ctx.font=`${isSel||isHov?700:600} ${isSel?13:12}px Manrope,system-ui,sans-serif`; ctx.textAlign=l.ta;
-      const tx=q[0]+l.lx+(l.ta==='right'?-rad+2:l.ta==='left'?rad-2:0), ty=q[1]+l.ly;
-      ctx.lineWidth=3.2; ctx.strokeStyle='rgba(2,4,4,.8)'; ctx.strokeText(l.s,tx,ty); ctx.fillStyle=isSel||isHov?'#ffffff':'rgba(244,239,228,.88)'; ctx.fillText(l.s,tx,ty); }
-    ctx.globalAlpha=FADE;
+    if(LBL>0.01&&(isSel||isHov||!dim)) cands.push({l,x:q[0],y:q[1],rad,a,isSel,isHov,pr:isSel?1e9:isHov?1e8:l.total});
   }
+  // Labels: most important first; each tries a few spots around its dot and is skipped if every spot
+  // would overlap a label already placed. Zooming in spreads the dots, so more names appear.
+  const placed=[];
+  if(mq[2]>0.05){ const px=cx+mq[0]*r+r*0.06+6,py=cy-mq[1]*r+r*0.03; placed.push([px-4,py-10,px+96,py+10]); }
+  const hitBox=b=>placed.some(p=>b[0]<p[2]&&b[2]>p[0]&&b[1]<p[3]&&b[3]>p[1]);
+  cands.sort((m,n)=>n.pr-m.pr);
+  for(const c of cands){ const l=c.l;
+    ctx.font=`${c.isSel||c.isHov?700:600} ${c.isSel?13:12}px Manrope,system-ui,sans-serif`;
+    const w=ctx.measureText(l.s).width, h=15, g=c.rad+4;
+    const spots=[[l.lx+(l.ta==='right'?-c.rad+2:l.ta==='left'?c.rad-2:0),l.ly,l.ta],[g,0,'left'],[-g,0,'right'],[0,-g-6,'center'],[0,g+6,'center']];
+    for(const [dx,dy,ta] of spots){ const x=c.x+dx,y=c.y+dy, x0=ta==='right'?x-w:ta==='center'?x-w/2:x;
+      const box=[x0-3,y-h/2,x0+w+3,y+h/2];
+      if(hitBox(box)&&!(c.isSel||c.isHov)) continue;
+      placed.push(box); ctx.globalAlpha=c.a*LBL; ctx.textAlign=ta;
+      ctx.lineWidth=3.2; ctx.strokeStyle='rgba(2,4,4,.8)'; ctx.strokeText(l.s,x,y); ctx.fillStyle=c.isSel||c.isHov?'#ffffff':'rgba(244,239,228,.88)'; ctx.fillText(l.s,x,y);
+      break; } }
+  ctx.globalAlpha=FADE;
   if(mq[2]>0.05&&LBL>0.01){ ctx.globalAlpha=FADE*LBL; const px=cx+mq[0]*r,py=cy-mq[1]*r; ctx.font='700 13px Fraunces,Georgia,serif'; ctx.textAlign='left';
     ctx.lineWidth=3.2; ctx.strokeStyle='rgba(2,4,4,.8)'; ctx.strokeText('Madagascar',px+r*0.06+6,py+r*0.03); ctx.fillStyle='#bfffd8'; ctx.fillText('Madagascar',px+r*0.06+6,py+r*0.03); }
 }

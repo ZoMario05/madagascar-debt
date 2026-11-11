@@ -25,8 +25,14 @@ button{font-family:inherit}
 .layer{position:relative;z-index:2;pointer-events:none;text-shadow:var(--halo)}
 .layer .on{pointer-events:auto}
 .wrap{padding:0 clamp(22px,4.5vw,96px)}
-header.top{position:fixed;top:0;left:0;right:0;z-index:20;pointer-events:none;text-shadow:var(--halo);
-  background:linear-gradient(180deg,rgba(7,9,13,.92),rgba(9,11,16,.86));backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);border-bottom:1px solid var(--hair)}
+/* smart header: see-through over the globe; a soft fade appears once you are reading;
+   slides away while scrolling down, comes back on the first scroll up */
+header.top{position:fixed;top:0;left:0;right:0;z-index:20;pointer-events:none;text-shadow:var(--halo);transition:transform .38s cubic-bezier(.2,.8,.2,1)}
+header.top::before{content:"";position:absolute;left:0;right:0;top:0;height:calc(100% + 44px);z-index:-1;pointer-events:none;opacity:0;transition:opacity .4s;
+  background:linear-gradient(180deg,rgba(6,8,11,.9) 0%,rgba(6,8,11,.72) 52%,rgba(6,8,11,0) 100%);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
+body.reading header.top::before{opacity:1}
+body.head-away header.top{transform:translateY(-120%)}
 header.top .wrap{display:flex;align-items:center;gap:18px;height:68px}
 header.top .on{pointer-events:auto}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
@@ -606,7 +612,11 @@ function applyLang(){document.documentElement.lang=lang;setShort();document.quer
 function setLang(l){lang=l;try{localStorage.setItem('mdg-lang-live',l)}catch(e){}applyLang();}
 document.getElementById('btn-en').onclick=()=>setLang('en');document.getElementById('btn-fr').onclick=()=>setLang('fr');
 document.getElementById('dep').addEventListener('input',renderSim);
-function onScroll(){document.body.classList.toggle('scrolled',window.scrollY>40);atTop=window.scrollY<window.innerHeight*0.3;if(!atTop&&selected)closePanel();}
+let lastY=window.scrollY;
+function onScroll(){const y=window.scrollY,B=document.body;B.classList.toggle('scrolled',y>40);atTop=y<window.innerHeight*0.3;if(!atTop&&selected)closePanel();
+  const reading=y>window.innerHeight*0.55;B.classList.toggle('reading',reading);
+  if(!reading||y<lastY-6)B.classList.remove('head-away');else if(y>lastY+6)B.classList.add('head-away');
+  if(Math.abs(y-lastY)>6)lastY=y;}
 window.addEventListener('scroll',onScroll,{passive:true});
 let rzT=null,lastW=0;window.addEventListener('resize',()=>{resize();clearTimeout(rzT);rzT=setTimeout(()=>{const c=CW('ch-wall');if(c!==lastW){lastW=c;renderCharts();}},250);});
 resize();applyLang();onScroll();requestAnimationFrame(frame);
