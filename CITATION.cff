@@ -5,6 +5,7 @@ type: dataset
 authors:
   - family-names: "ZO MAMINIAINA"
     given-names: "Andriamiarantsoa Mario"
+doi: "10.5281/zenodo.24133293"
 license: CC-BY-4.0
 url: "https://trosamg.org/"
 repository-code: "https://github.com/ZoMario05/madagascar-debt"

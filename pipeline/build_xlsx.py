@@ -19,7 +19,7 @@ def header(ws, cols, row=1):
 ws = wb.active; ws.title = "README"
 lines = [
     ("Trosa — Madagascar External Debt Database", True),
-    ("Author: ZO MAMINIAINA Andriamiarantsoa Mario. Licence: CC BY 4.0. Cite as: ZO MAMINIAINA Andriamiarantsoa Mario (2026). Trosa — Madagascar External Debt Database [data set].", False),
+    ("Licence: CC BY 4.0. Cite as: ZO MAMINIAINA, Andriamiarantsoa Mario (2026). Trosa — Madagascar External Debt Database [data set]. Zenodo. https://doi.org/10.5281/zenodo.24133293", False),
     ("Scope: external public debt still owed. Grants, forgiven debt (HIPC/MDRI) and fully repaid or fully cancelled loans are excluded.", False),
     ("", False),
     ("Tabs", True),

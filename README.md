@@ -1,5 +1,7 @@
 # Trosa — Observatoire de la dette extérieure de Madagascar
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24133293.svg)](https://doi.org/10.5281/zenodo.24133293)
+
 Qui prête à Madagascar, pour quoi, à quelles conditions, et quand il faut rembourser.
 *Who lends to Madagascar, for what, on what terms, and when it comes due.*
 
@@ -65,7 +67,7 @@ Les scripts de récupération ont été écrits et testés sur les formats publi
 
 ## Citer
 
-ZO MAMINIAINA Andriamiarantsoa Mario (2026). *Trosa — Base de données de la dette extérieure de Madagascar* [jeu de données]. https://trosamg.org
+ZO MAMINIAINA Andriamiarantsoa Mario (2026). *Trosa — Base de données de la dette extérieure de Madagascar* [jeu de données]. Zenodo. https://doi.org/10.5281/zenodo.24133293
 
 Le fichier `CITATION.cff` affiche un bouton « Cite this repository » sur GitHub ; `.zenodo.json` est prêt pour l'attribution d'un DOI via Zenodo.
 
