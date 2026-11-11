@@ -849,6 +849,7 @@ function onScroll(){const y=window.scrollY,B=document.body;B.classList.toggle('s
   if(!reading||y<lastY-6)B.classList.remove('head-away');else if(y>lastY+6)B.classList.add('head-away');
   if(Math.abs(y-lastY)>6)lastY=y;}
 window.addEventListener('scroll',onScroll,{passive:true});
+onScroll();window.addEventListener('load',()=>{lastY=window.scrollY;onScroll();});window.addEventListener('pageshow',onScroll);
 let rzT=null,lastW=0;window.addEventListener('resize',()=>{resize();clearTimeout(rzT);rzT=setTimeout(()=>{const c=CW('ch-wall');if(c!==lastW){lastW=c;renderCharts();}},250);});
 resize();applyLang();onScroll();requestAnimationFrame(frame);
 })();
