@@ -208,7 +208,7 @@ footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;b
     <div><b data-i18n="brand"></b><small data-i18n="brandSub"></small></div></a>
   <nav class="links on">
     <a href="#structure" data-i18n="nav1"></a><a href="#wall" data-i18n="nav2"></a><a href="#cost" data-i18n="nav3"></a>
-    <a href="#transparency" data-i18n="nav4"></a><a href="#explore" data-i18n="nav5"></a><a href="#news" data-i18n="nav6"></a><a href="#data" data-i18n="nav8"></a><a href="#method" data-i18n="nav7"></a><a href="#about" data-i18n="nav9"></a>
+    <a href="#transparency" data-i18n="nav4"></a><a href="#explore" data-i18n="nav5"></a><a href="#news" data-i18n="nav6"></a><a href="#data" data-i18n="nav8"></a><a href="#method" data-i18n="nav7"></a>
   </nav>
   <div class="lang on" role="group"><button id="btn-fr" class="on-l" type="button">FR</button><button id="btn-en" type="button">EN</button></div>
 </div></header>
@@ -300,7 +300,7 @@ footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;b
     <h2 data-i18n="h9"></h2><p class="sub" id="datasub"></p>
     <div class="dl on" id="dllist"></div>
     <div class="glass card on" style="margin-top:18px"><h4 data-i18n="cite_h"></h4><p class="note" data-i18n="cite_n"></p>
-      <div class="cite" id="citetext"></div><button class="btn" type="button" id="copycite" data-i18n="cite_copy"></button></div>
+      <div class="cite" id="citetext"></div><button class="btn" type="button" id="copycite" data-i18n="cite_copy"></button><p class="note" style="margin-top:14px" data-i18n="foot_lic"></p></div>
   </div></section>
 
   <section class="block" id="method"><div class="wrap">
@@ -308,15 +308,7 @@ footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;b
     <h2 data-i18n="h8"></h2><p class="sub" data-i18n="s8"></p>
     <div class="glass method on" id="methodgrid"></div>
   </div></section>
-  <section class="block" id="about"><div class="wrap">
-    <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e10"></span></div>
-    <h2 data-i18n="h10"></h2>
-    <div class="glass card on about">
-      <p data-i18n="ab_p1"></p><p data-i18n="ab_p2"></p><p data-i18n="ab_p3"></p>
-      <div class="ablinks"><a class="btn" href="https://github.com/ZoMario05/madagascar-debt" target="_blank" rel="noopener" data-i18n="ab_code"></a><a class="btn" href="https://github.com/ZoMario05/madagascar-debt/issues/new" target="_blank" rel="noopener" data-i18n="ab_fix"></a><a class="btn" href="#data" data-i18n="ab_cite"></a></div>
-    </div>
-  </div></section>
-  <footer><div class="wrap" id="footer"></div></footer>
+  <div style="height:90px"></div>
 </main>
 
 <script>
@@ -588,7 +580,6 @@ const METHOD={fr:[["Périmètre","Dette publique extérieure de l’administrati
  ["Updates","Automatic: World Bank and IMF monthly, debt statistics yearly, Treasury bulletin quarterly (checked by hand), news daily. Every update gets a version number and date."]]};
 function renderMethod(){ document.getElementById('methodgrid').innerHTML=METHOD[lang].map(([h,b])=>`<div><b>${h}</b>${b}</div>`).join('');
   const Y=new Date().getFullYear();
-  document.getElementById('footer').innerHTML=`<div class="fl"><span class="fb">© ${Y} Trosa</span><span>${t('foot_sub')}</span></div><div style="margin-top:8px">${t('foot_lic')}</div>`;
   renderData();
 }
 const SITE_URL='https://trosamg.org/';
