@@ -24,7 +24,8 @@ button{font-family:inherit}
 .layer{position:relative;z-index:2;pointer-events:none;text-shadow:var(--halo)}
 .layer .on{pointer-events:auto}
 .wrap{padding:0 clamp(22px,4.5vw,96px)}
-header.top{position:fixed;top:0;left:0;right:0;z-index:20;pointer-events:none;text-shadow:var(--halo)}
+header.top{position:fixed;top:0;left:0;right:0;z-index:20;pointer-events:none;text-shadow:var(--halo);
+  background:linear-gradient(180deg,rgba(7,9,13,.92),rgba(9,11,16,.86));backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);border-bottom:1px solid var(--hair)}
 header.top .wrap{display:flex;align-items:center;gap:18px;height:68px}
 header.top .on{pointer-events:auto}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
@@ -89,7 +90,15 @@ body.scrolled .ctrl{opacity:.55}.ctrl:hover{opacity:1}
 .toplist button{display:flex;width:100%;justify-content:space-between;align-items:center;gap:10px;background:none;border:0;border-top:1px solid var(--hair);color:var(--ink);padding:10px 0;cursor:pointer;font-size:13.5px;text-align:left;text-shadow:inherit}
 .toplist i{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:10px}
 .toplist em{font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
-@media (max-width:760px){.panel{top:auto;left:8px;right:8px;bottom:8px;width:auto;height:62vh;transform:translateY(calc(100% + 20px))}.loan dl{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:760px){
+  .panel{top:auto;left:0;right:0;bottom:0;width:auto;height:min(78vh,calc(100vh - 80px));border-radius:18px 18px 0 0;border-bottom:0;
+    background:rgba(9,11,16,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 -12px 40px rgba(0,0,0,.55);
+    transform:translateY(calc(100% + 20px));padding-bottom:env(safe-area-inset-bottom)}
+  .panel .ph::before{content:"";display:block;width:40px;height:4px;border-radius:2px;background:var(--hair2);margin:-8px auto 12px}
+  .loan dl{grid-template-columns:repeat(2,1fr)}
+  body.panel-open main.layer,body.panel-open .corner,body.panel-open .ctrl{opacity:0;pointer-events:none}
+  main.layer,.corner{transition:opacity .3s}
+}
 /* sections */
 section.block{padding:96px 0 10px}
 .eyebrow{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
