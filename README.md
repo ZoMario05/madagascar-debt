@@ -3,7 +3,7 @@
 Qui prête à Madagascar, pour quoi, à quelles conditions, et quand il faut rembourser.
 *Who lends to Madagascar, for what, on what terms, and when it comes due.*
 
-Auteur : ZO MAMINIAINA Andriamiarantsoa Mario · Site : https://zomario05.github.io/madagascar-debt/ (bientôt trosa.mg) · 182 prêts · données au 31 oct. 2026 (Banque mondiale, FMI) et 30 juin 2026 (Trésor).
+Auteur : ZO MAMINIAINA Andriamiarantsoa Mario · Site : https://trosamg.org · 182 prêts · données au 31 oct. 2026 (Banque mondiale, FMI) et 30 juin 2026 (Trésor).
 
 ## Ce qui se met à jour tout seul
 
@@ -24,7 +24,7 @@ Si une source ne répond pas, le dernier fichier valide est gardé : le site ne 
 1. Créez un dépôt GitHub (public ou privé) et envoyez-y ce dossier.
 2. Dans le dépôt : **Settings → Pages → Source : GitHub Actions**.
 3. **Actions → Update data and site → Run workflow** pour la première mise à jour.
-4. Le site est publié à `https://<votre-compte>.github.io/<dépôt>/`. Un nom de domaine (ex. `trosa.mg`) se branche dans Settings → Pages → Custom domain.
+4. Le site est publié à `https://<votre-compte>.github.io/<dépôt>/`. Un nom de domaine (ici `trosamg.org`) se branche dans Settings → Pages → Custom domain.
 
 Alternative : Cloudflare Pages (gratuit, rapide en Afrique) en pointant sur le dossier `public/` généré.
 
@@ -65,10 +65,10 @@ Les scripts de récupération ont été écrits et testés sur les formats publi
 
 ## Citer
 
-ZO MAMINIAINA Andriamiarantsoa Mario (2026). *Trosa — Base de données de la dette extérieure de Madagascar* [jeu de données]. https://zomario05.github.io/madagascar-debt/
+ZO MAMINIAINA Andriamiarantsoa Mario (2026). *Trosa — Base de données de la dette extérieure de Madagascar* [jeu de données]. https://trosamg.org
 
 Le fichier `CITATION.cff` affiche un bouton « Cite this repository » sur GitHub ; `.zenodo.json` est prêt pour l'attribution d'un DOI via Zenodo.
 
 ## Nom de domaine
 
-Quand trosa.mg sera actif : Settings → Pages → Custom domain, puis remplacer `SITE_URL` dans `site/template.html` et l'URL dans `CITATION.cff`.
+Domaine : trosamg.org (Porkbun), relié dans Settings → Pages → Custom domain.
