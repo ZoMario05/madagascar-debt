@@ -12,8 +12,8 @@ ASOF = json.load(open(f"{RAW}/asof.json")) if __import__("os").path.exists(f"{RA
 
 # ---- lenders: key, names, type, HQ coordinates, outstanding (best source) ----
 L = [  # key, EN, FR, short, type, hq EN, hq FR, lat, lng, outstanding $m, basis
- ("IDA","World Bank (IDA)","Banque mondiale (IDA)","World Bank","Multilateral","Washington, DC","Washington",38.9,-77.0,None,"wb"),
- ("IMF","International Monetary Fund","Fonds monétaire international","IMF","Multilateral","Washington, DC","Washington",35.8,-80.5,None,"imf"),
+ ("IDA","World Bank (IDA)","Banque mondiale (IDA)","World Bank","Multilateral","Washington, DC","Washington",38.899,-77.043,None,"wb"),
+ ("IMF","International Monetary Fund","Fonds monétaire international","IMF","Multilateral","Washington, DC","Washington",38.899,-77.043,None,"imf"),
  ("AFDB","African Development Bank Group","Groupe de la Banque africaine de développement","AfDB","Multilateral","Abidjan","Abidjan",5.36,-4.0,633,"ids"),
  ("EIB","European Investment Bank","Banque européenne d'investissement","EIB","Multilateral","Luxembourg","Luxembourg",49.6,6.1,274,"ids"),
  ("IFAD","IFAD","FIDA","IFAD","Multilateral","Rome","Rome",41.9,12.5,208,"ids"),
@@ -35,7 +35,7 @@ L = [  # key, EN, FR, short, type, hq EN, hq FR, lat, lng, outstanding $m, basis
  ("DE","Germany","Allemagne","Germany","Bilateral","Berlin","Berlin",52.5,13.4,3,"ids"),
  ("AO","Angola","Angola","Angola","Bilateral","Luanda","Luanda",-8.8,13.2,3,"ids"),
  ("ES","Spain","Espagne","Spain","Bilateral","Madrid","Madrid",40.4,-3.7,1,"ids"),
- ("SG","Société Générale","Société Générale","Société Générale","Commercial","Paris","Paris",46.2,-1.5,100,"sdmt"),
+ ("SG","Société Générale","Société Générale","Société Générale","Commercial","Paris (La Défense)","Paris (La Défense)",48.892,2.239,100,"sdmt"),
 ]
 def key_of(r):
     i = r["loan_id"]

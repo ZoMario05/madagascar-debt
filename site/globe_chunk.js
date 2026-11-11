@@ -17,7 +17,12 @@ const MADA_V=MADA.map(([x,y])=>vec(y,x));
 const MDG_V=vec(MDG.lat,MDG.lng);
 function slerpV(a,b,tt){ const d=Math.acos(Math.max(-1,Math.min(1,a[0]*b[0]+a[1]*b[1]+a[2]*b[2]))); if(d<1e-6) return a; const s=Math.sin(d),w1=Math.sin((1-tt)*d)/s,w2=Math.sin(tt*d)/s; return [a[0]*w1+b[0]*w2,a[1]*w1+b[1]*w2,a[2]*w1+b[2]*w2]; }
 function arcPoints(a,b){ const d=Math.acos(a[0]*b[0]+a[1]*b[1]+a[2]*b[2]), h=0.06+0.34*d/Math.PI, N=90, pts=[]; for(let i=0;i<=N;i++){ const tt=i/N,p=slerpV(a,b,tt),k=1+h*Math.sin(Math.PI*tt); pts.push([p[0]*k,p[1]*k,p[2]*k]); } return pts; }
-LENDERS.forEach(l=>{ l.v=vec(l.lat,l.lng); l.arc=arcPoints(l.v,MDG_V); });
+LENDERS.forEach(l=>{ l.v=vec(l.lat,l.lng); l.arc=arcPoints(l.v,MDG_V); l.ox=0; l.oy=0; });
+// Lenders at the same city (e.g. World Bank and IMF in Washington) keep their true coordinates;
+// only their dots are spread a few pixels apart on screen so both stay clickable.
+(function(){ const done=new Set(); LENDERS.forEach(a=>{ if(done.has(a)) return;
+  const g=LENDERS.filter(b=>!done.has(b)&&Math.acos(Math.min(1,a.v[0]*b.v[0]+a.v[1]*b.v[1]+a.v[2]*b.v[2]))<0.012);
+  g.forEach(b=>done.add(b)); if(g.length<2) return; g.forEach((b,i)=>{ const t=Math.PI*2*i/g.length+Math.PI/4; b.ox=Math.cos(t); b.oy=Math.sin(t); }); }); })();
 
 // ---------------- quaternion orientation ----------------
 const qmul=(a,b)=>[a[0]*b[0]-a[1]*b[1]-a[2]*b[2]-a[3]*b[3], a[0]*b[1]+a[1]*b[0]+a[2]*b[3]-a[3]*b[2], a[0]*b[2]-a[1]*b[3]+a[2]*b[0]+a[3]*b[1], a[0]*b[3]+a[1]*b[2]-a[2]*b[1]+a[3]*b[0]];
@@ -145,7 +150,7 @@ function draw(){
   const ranked=[...LENDERS].sort((a,b)=>b.total-a.total).slice(0,7).map(l=>l.id);
   ctx.textBaseline='middle';
   for(const l of LENDERS){
-    const q=proj(l.v); l.sx=q[0]; l.sy=q[1]; l.vis=q[2]>0.04; if(!l.vis) continue;
+    const q=proj(l.v), sp=7*Math.min(1.3,Math.max(0.8,r/300)); q[0]+=l.ox*sp; q[1]+=l.oy*sp; l.sx=q[0]; l.sy=q[1]; l.vis=q[2]>0.04; if(!l.vis) continue;
     const isSel=selected===l.id,isHov=hover===l.id,dim=selected&&selected!=='mdg'&&!isSel,col=TYPECOL[l.type];
     const rad=(2.6+4.6*Math.sqrt(l.total/maxT))*(isSel?1.4:1)*Math.min(1.3,Math.max(0.8,r/300));
     ctx.globalAlpha=(dim?0.35:Math.min(1,0.4+q[2]))*FADE;
