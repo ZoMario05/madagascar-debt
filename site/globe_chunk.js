@@ -161,7 +161,7 @@ function draw(){
   }
   // Labels: most important first; each tries a few spots around its dot and is skipped if every spot
   // would overlap a label already placed. Zooming in spreads the dots, so more names appear.
-  const placed=[];
+  const placed=[[0,0,innerWidth,document.body.classList.contains('head-away')?0:74]]; // keep names clear of the header
   if(mq[2]>0.05){ const px=cx+mq[0]*r+r*0.06+6,py=cy-mq[1]*r+r*0.03; placed.push([px-4,py-10,px+96,py+10]); }
   const hitBox=b=>placed.some(p=>b[0]<p[2]&&b[2]>p[0]&&b[1]<p[3]&&b[3]>p[1]);
   cands.sort((m,n)=>n.pr-m.pr);
