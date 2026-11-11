@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Si vous utilisez ces données, merci de les citer ainsi. / If you use these data, please cite them as below."
+title: "Trosa — Madagascar External Debt Database"
+type: dataset
+authors:
+  - family-names: "ZO MAMINIAINA"
+    given-names: "Andriamiarantsoa Mario"
+license: CC-BY-4.0
+url: "https://trosamg.org/"
+repository-code: "https://github.com/ZoMario05/madagascar-debt"
+keywords: [Madagascar, external debt, public debt, sovereign debt, open data, dette extérieure]
+abstract: "Loan-level database of Madagascar's external public debt: lenders, amounts, terms, repayment dates and sources, checked against the Treasury's official debt bulletin."
