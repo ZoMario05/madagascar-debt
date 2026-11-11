@@ -312,8 +312,7 @@ footer{margin-top:80px;padding:26px 0 46px;color:var(--faint);font-size:12.5px;b
     <div class="eyebrow"><span class="flagline"><i style="background:#fff"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i></span><span data-i18n="e10"></span></div>
     <h2 data-i18n="h10"></h2>
     <div class="glass card on about">
-      <div class="who"><div class="mono">ZM</div><div><div class="nm">ZO MAMINIAINA Andriamiarantsoa Mario</div><div class="rl" data-i18n="ab_role"></div></div></div>
-      <p data-i18n="ab_p1"></p><p data-i18n="ab_p2"></p>
+      <p data-i18n="ab_p1"></p><p data-i18n="ab_p2"></p><p data-i18n="ab_p3"></p>
       <div class="ablinks"><a class="btn" href="https://github.com/ZoMario05/madagascar-debt" target="_blank" rel="noopener" data-i18n="ab_code"></a><a class="btn" href="https://github.com/ZoMario05/madagascar-debt/issues/new" target="_blank" rel="noopener" data-i18n="ab_fix"></a><a class="btn" href="#data" data-i18n="ab_cite"></a></div>
     </div>
   </div></section>
@@ -328,10 +327,10 @@ const O = DATA.official;
 const T = {
  fr:{brand:"Trosa",brandSub:"Observatoire de la dette extérieure de Madagascar",
   nav1:"Synthèse",nav2:"Échéances",nav3:"Coût",nav4:"Transparence",nav5:"Explorer",nav6:"Actualités",nav7:"Méthodologie",nav8:"Données",nav9:"À propos",
-  e10:"À propos",h10:"Qui est derrière Trosa",
-  ab_role:"MPA (UIBE, Pékin) · Chercheur indépendant en économie politique internationale · Fondateur de Trosa",
-  ab_p1:"Trosa est un projet indépendant, conçu, construit et maintenu par ZO MAMINIAINA Andriamiarantsoa Mario. Son but : rendre lisible, pour tous les Malgaches, ce que Madagascar doit à l'étranger — à qui, pour quoi, à quelles conditions et quand il faut rembourser.",
-  ab_p2:"Chaque chiffre provient d'une source publique citée (Banque mondiale, FMI, Trésor public). Rien n'est modifié sur la base de rumeurs. Une erreur ? Signalez-la : elle sera vérifiée et corrigée publiquement.",
+  e10:"À propos",h10:"Pourquoi Trosa",
+  ab_p1:"Trosa (« la dette » en malgache) rend lisible, pour tous, ce que Madagascar doit à l'étranger : à qui, pour quoi, à quelles conditions et quand il faut rembourser. Ces informations existent, mais elles sont dispersées entre bulletins du Trésor, bases de la Banque mondiale et rapports du FMI. Trosa les rassemble en un seul endroit.",
+  ab_p2:"Le projet est indépendant et ouvert. Chaque chiffre provient d'une source publique citée ; rien n'est modifié sur la base de rumeurs. Les données se mettent à jour automatiquement et peuvent être téléchargées et réutilisées librement.",
+  ab_p3:"Une erreur ou une source à ajouter ? Signalez-la : elle sera vérifiée et corrigée publiquement.",
   ab_code:"Code et données (GitHub)",ab_fix:"Signaler une erreur",ab_cite:"Citer Trosa",
   foot_by:"Conçu et réalisé par",
   kicker:"Dette publique extérieure · données réelles",question:"Qui prête à Madagascar, pour quoi, et quand faut-il rembourser.",
@@ -380,10 +379,10 @@ const T = {
   types:{Multilateral:"Multilatéral",Bilateral:"Bilatéral",Commercial:"Commercial"}},
  en:{brand:"Trosa",brandSub:"Madagascar external debt observatory",
   nav1:"Summary",nav2:"Repayments",nav3:"Cost",nav4:"Transparency",nav5:"Explore",nav6:"News",nav7:"Methodology",nav8:"Data",nav9:"About",
-  e10:"About",h10:"Who is behind Trosa",
-  ab_role:"MPA (UIBE, Beijing) · Independent researcher in international political economy · Founder of Trosa",
-  ab_p1:"Trosa is an independent project, designed, built and maintained by ZO MAMINIAINA Andriamiarantsoa Mario. Its aim: to make it clear, for every Malagasy citizen, what Madagascar owes abroad — to whom, for what, on what terms and when it must be repaid.",
-  ab_p2:"Every figure comes from a cited public source (World Bank, IMF, Treasury). Nothing is changed on the basis of rumours. Found an error? Report it: it will be checked and corrected publicly.",
+  e10:"About",h10:"Why Trosa",
+  ab_p1:"Trosa (“debt” in Malagasy) makes it clear, for everyone, what Madagascar owes abroad: to whom, for what, on what terms and when it must be repaid. This information exists, but it is scattered across Treasury bulletins, World Bank databases and IMF reports. Trosa brings it together in one place.",
+  ab_p2:"The project is independent and open. Every figure comes from a cited public source; nothing is changed on the basis of rumours. The data updates automatically and can be downloaded and reused freely.",
+  ab_p3:"Found an error or a source to add? Report it: it will be checked and corrected publicly.",
   ab_code:"Code and data (GitHub)",ab_fix:"Report an error",ab_cite:"Cite Trosa",
   foot_by:"Designed and built by",
   kicker:"External public debt · real data",question:"Who lends to Madagascar, for what, and when it comes due.",
@@ -820,7 +819,7 @@ const METHOD={fr:[["Périmètre","Dette publique extérieure de l’administrati
  ["Updates","Automatic: World Bank and IMF monthly, debt statistics yearly, Treasury bulletin quarterly (checked by hand), news daily. Every update gets a version number and date."]]};
 function renderMethod(){ document.getElementById('methodgrid').innerHTML=METHOD[lang].map(([h,b])=>`<div><b>${h}</b>${b}</div>`).join('');
   const Y=new Date().getFullYear();
-  document.getElementById('footer').innerHTML=`<div class="fl"><span class="fb">© ${Y} Trosa</span><span>${t('foot_sub')}</span></div><div class="by" style="margin-top:8px">${t('foot_by')} <a href="#about">ZO MAMINIAINA Andriamiarantsoa Mario</a></div><div style="margin-top:6px">${t('foot_lic')}</div>`;
+  document.getElementById('footer').innerHTML=`<div class="fl"><span class="fb">© ${Y} Trosa</span><span>${t('foot_sub')}</span></div><div style="margin-top:8px">${t('foot_lic')}</div>`;
   renderData();
 }
 const SITE_URL='https://trosamg.org/';
