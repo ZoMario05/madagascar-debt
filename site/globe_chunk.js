@@ -73,7 +73,8 @@ function resize(){ DPR=Math.min(window.devicePixelRatio||1,2); W=window.innerWid
 // touched: once the visitor has turned the globe, it stays exactly where they left it (no auto-spin, no moving on scroll)
 let selected=null, hover=null, lastInteract=0, touched=false, atTop=true;
 // FADE: globe opacity. 1 at the top of the page, eases down to GLOBE_DIM while reading the sections below
-const GLOBE_DIM=0.45; let FADE=1;
+let GLOBE_DIM=innerWidth<760?0.25:0.45; let FADE=1; // phones: text sits right on the globe, so dim more
+addEventListener('resize',()=>{ GLOBE_DIM=innerWidth<760?0.25:0.45; });
 let LY=null;
 function layout(){
   const mobile=W<760, panelOpen=!!selected&&!mobile;
