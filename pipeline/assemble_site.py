@@ -11,3 +11,10 @@ out = t.replace('/*__GLOBE__*/', g).replace('/*__DATA__*/null', d)
 if len(out) < 100_000 or '<title>' not in out:
     sys.exit(f'build stopped: page too small ({len(out)} bytes)')
 os.makedirs('public', exist_ok=True); open('public/index.html', 'w').write(out)
+# help search engines find the site and the open-data files
+import datetime
+today = datetime.date.today().isoformat()
+open('public/robots.txt', 'w').write('User-agent: *\nAllow: /\nSitemap: https://trosamg.org/sitemap.xml\n')
+urls = ['', 'trosa_prets.csv', 'trosa_echeancier.csv', 'trosa_donnees.json', 'trosa_base.xlsx']
+open('public/sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    + ''.join(f'  <url><loc>https://trosamg.org/{u}</loc><lastmod>{today}</lastmod></url>\n' for u in urls) + '</urlset>\n')
