@@ -11,6 +11,10 @@ out = t.replace('/*__GLOBE__*/', g).replace('/*__DATA__*/null', d)
 if len(out) < 100_000 or '<title>' not in out:
     sys.exit(f'build stopped: page too small ({len(out)} bytes)')
 os.makedirs('public', exist_ok=True); open('public/index.html', 'w').write(out)
+# logo files (favicon, phone icon): made once by make_icons.py, copied as they are
+import shutil
+for f in os.listdir('site/static'):
+    shutil.copy(os.path.join('site/static', f), os.path.join('public', f))
 # help search engines find the site and the open-data files
 import datetime
 today = datetime.date.today().isoformat()

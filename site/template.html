@@ -3,17 +3,24 @@
 <head>
 <meta name="author" content="ZO MAMINIAINA Andriamiarantsoa Mario">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Trosa — Madagascar External Debt Database", "alternateName": "Trosa — Base de données de la dette extérieure de Madagascar", "description": "Loan-level database of Madagascar's external public debt: who lends to Madagascar, for what, on what terms (interest, grace period, maturity) and when repayments fall due. Built from World Bank, IMF and Madagascar Treasury (Bulletin Statistique de la Dette) sources and checked against the Treasury's official totals. Updated automatically. Base de données prêt par prêt de la dette publique extérieure de Madagascar.", "url": "https://trosamg.org/", "sameAs": "https://doi.org/10.5281/zenodo.24133293", "identifier": "https://doi.org/10.5281/zenodo.24133293", "inLanguage": ["fr", "en"], "license": "https://creativecommons.org/licenses/by/4.0/", "isAccessibleForFree": true, "keywords": ["Madagascar", "external debt", "public debt", "sovereign debt", "dette extérieure", "World Bank", "IMF", "open data"], "creator": {"@type": "Person", "name": "ZO MAMINIAINA, Andriamiarantsoa Mario"}, "spatialCoverage": {"@type": "Place", "name": "Madagascar"}, "temporalCoverage": "1996/2026", "distribution": [{"@type": "DataDownload", "name": "Loans (CSV)", "encodingFormat": "text/csv", "contentUrl": "https://trosamg.org/trosa_prets.csv"}, {"@type": "DataDownload", "name": "Repayment schedule (CSV)", "encodingFormat": "text/csv", "contentUrl": "https://trosamg.org/trosa_echeancier.csv"}, {"@type": "DataDownload", "name": "Full dataset (JSON)", "encodingFormat": "application/json", "contentUrl": "https://trosamg.org/trosa_donnees.json"}, {"@type": "DataDownload", "name": "Workbook (Excel)", "encodingFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "contentUrl": "https://trosamg.org/trosa_base.xlsx"}]}</script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23070a0d%22/%3E%3Cpath d=%22M44 6 50 18 46 30 40 46 30 58 20 56 17 46 21 34 18 26 30 18 38 14Z%22 fill=%22%233ddc84%22/%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#070a0d">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Trosa — Dette extérieure de Madagascar</title>
+<title>Trosa - Dette extérieure de Madagascar</title>
 <meta name="description" content="Trosa : qui prête à Madagascar, pour quoi, à quelles conditions, et quand il faut rembourser. Données ouvertes, sources officielles.">
 <link rel="canonical" href="https://trosamg.org/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://trosamg.org/">
-<meta property="og:title" content="Trosa — Dette extérieure de Madagascar">
+<meta property="og:title" content="Trosa - Dette extérieure de Madagascar">
 <meta property="og:description" content="Qui prête à Madagascar, pour quoi, à quelles conditions, et quand il faut rembourser. Données ouvertes, sources officielles.">
 <meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Trosa">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Trosa", "alternateName": "Trosa MG", "url": "https://trosamg.org/"}</script>
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -636,7 +643,7 @@ function renderCharts(){anim.length=0;chartLenders();chartWall();chartScatter();
 const io=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');if(!shown){shown=true;setTimeout(()=>anim.forEach(f=>f()),150);}}}),{threshold:.08}):null;
 document.querySelectorAll('.reveal').forEach(n=>io?io.observe(n):(n.classList.add('in'),shown=true));
 function applyLang(){document.documentElement.lang=lang;setShort();document.querySelectorAll('[data-i18n]').forEach(n=>{const v=t(n.dataset.i18n);if(typeof v==='string')n.textContent=v;});
-  document.getElementById('btn-en').classList.toggle('on-l',lang==='en');document.getElementById('btn-fr').classList.toggle('on-l',lang==='fr');document.title='Trosa — '+(lang==='fr'?'Dette extérieure de Madagascar':'Madagascar external debt');
+  document.getElementById('btn-en').classList.toggle('on-l',lang==='en');document.getElementById('btn-fr').classList.toggle('on-l',lang==='fr');document.title='Trosa - '+(lang==='fr'?'Dette extérieure de Madagascar':'Madagascar external debt');
   renderKPIs();renderMix();renderThr();renderFilters();renderTable();renderCharts();renderSim();renderNews();renderMethod();renderPanel();}
 function setLang(l){lang=l;try{localStorage.setItem('mdg-lang-live',l)}catch(e){}applyLang();}
 document.getElementById('btn-en').onclick=()=>setLang('en');document.getElementById('btn-fr').onclick=()=>setLang('fr');
