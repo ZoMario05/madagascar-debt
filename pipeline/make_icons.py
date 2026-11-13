@@ -19,23 +19,23 @@ def path(S, fill_r):
     k = fill_r * S / rmax
     return ''.join(f"{'L' if i else 'M'}{S/2 + (x-cx)*k:.2f} {S/2 + (y-cy)*k:.2f}" for i, (x, y) in enumerate(P)) + 'Z'
 
-def svg(S=512, fill_r=0.40, glow=1.0, bold=False, rx=0.22):
+def svg(S=512, fill_r=0.40, glow=1.0, bold=False, bg=False):
+    """bg=False: the island and its glow only, on a transparent background"""
     d = path(S, fill_r)
-    b1, b2 = S * 0.016 * glow, S * 0.055 * glow
-    stops = ('<stop offset="0" stop-color="#f4fff8"/><stop offset=".45" stop-color="#a6ffcc"/><stop offset="1" stop-color="#3ddc84"/>'
+    b1, b2 = S * 0.014 * glow, S * 0.045 * glow
+    stops = ('<stop offset="0" stop-color="#d9ffe9"/><stop offset=".4" stop-color="#7df7b3"/><stop offset="1" stop-color="#2fd07a"/>'
              if bold else
-             '<stop offset="0" stop-color="#f2fff7"/><stop offset=".35" stop-color="#8dffbf"/><stop offset=".75" stop-color="#3ddc84"/><stop offset="1" stop-color="#17a35a"/>')
+             '<stop offset="0" stop-color="#eafff3"/><stop offset=".35" stop-color="#8dffbf"/><stop offset=".75" stop-color="#3ddc84"/><stop offset="1" stop-color="#17a35a"/>')
+    back = f'<rect width="{S}" height="{S}" fill="#070a0d"/>' if bg else ''
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {S} {S}" width="{S}" height="{S}">
 <defs>
-<radialGradient id="bg" cx="50%" cy="50%" r="72%"><stop offset="0" stop-color="#0e1a15"/><stop offset=".6" stop-color="#080d0c"/><stop offset="1" stop-color="#05080a"/></radialGradient>
 <radialGradient id="lg" cx="56%" cy="42%" r="62%">{stops}</radialGradient>
 <filter id="g1" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="{b1:.2f}"/></filter>
 <filter id="g2" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="{b2:.2f}"/></filter>
 </defs>
-<rect width="{S}" height="{S}" rx="{S*rx:.1f}" fill="url(#bg)"/>
-<path d="{d}" fill="#3ddc84" opacity=".55" filter="url(#g2)"/>
-<path d="{d}" fill="#5cf0a0" opacity=".9" filter="url(#g1)"/>
-<path d="{d}" fill="url(#lg)" stroke="#d6ffe8" stroke-opacity=".85" stroke-width="{S*0.004:.2f}" stroke-linejoin="round"/>
+{back}<path d="{d}" fill="#3ddc84" opacity=".6" filter="url(#g2)"/>
+<path d="{d}" fill="#3ddc84" opacity=".9" filter="url(#g1)"/>
+<path d="{d}" fill="url(#lg)" stroke="#2bbf70" stroke-width="{S*0.004:.2f}" stroke-linejoin="round"/>
 </svg>'''
 
 def png(s, size):
@@ -43,12 +43,12 @@ def png(s, size):
     return Image.open(io.BytesIO(out)).convert('RGBA')
 
 out = 'site/static'; os.makedirs(out, exist_ok=True)
-big = svg()                                              # glow version, for 96 px and up
-small = svg(fill_r=0.45, glow=0.75, bold=True)           # larger, brighter island for tiny sizes
-open(f'{out}/favicon.svg', 'w').write(svg(S=64, fill_r=0.44, glow=0.8, bold=True))
+big = svg(fill_r=0.43)                                   # glow version, for 96 px and up
+small = svg(fill_r=0.49, glow=0.6, bold=True)            # island fills the square at tiny sizes
+open(f'{out}/favicon.svg', 'w').write(svg(S=64, fill_r=0.49, glow=0.6, bold=True))
 for n, s in [(48, small), (96, big), (144, big)]: png(s, n).save(f'{out}/favicon-{n}x{n}.png')
 for n in (192, 512): png(big, n).save(f'{out}/icon-{n}.png')
-png(svg(rx=0), 180).save(f'{out}/apple-touch-icon.png')  # iOS rounds the corners itself
+png(svg(bg=True), 180).save(f'{out}/apple-touch-icon.png')  # phones need a solid background here
 ico = [png(small, n) for n in (48, 32, 16)]
 ico[0].save(f'{out}/favicon.ico', sizes=[(48, 48), (32, 32), (16, 16)], append_images=ico[1:])
 json.dump({"name": "Trosa", "short_name": "Trosa", "start_url": "/", "display": "browser",
