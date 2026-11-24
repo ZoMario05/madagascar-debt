@@ -3,6 +3,8 @@ from the raw source files. Run: python3 build_master.py <raw_dir> <out_dir>"""
 import csv, sys, datetime as dt, re, collections
 
 RAW, OUT = sys.argv[1], sys.argv[2]
+import json
+IDSY = json.load(open(f"{RAW}/asof.json")).get("ids", "2024-12-31")[:4]  # year of the World Bank IDS figures in use
 SDR_USD = float(open(f"{RAW}/sdr_usd.txt").read().strip())  # written by fetch_imf.py
 TODAY = dt.date.today().isoformat()
 WB_SRC = "https://financesone.worldbank.org/ida-statement-of-credits,-grants-and-guarantees-latest-available-snapshot/DS00001"
@@ -171,15 +173,17 @@ with open(f"{OUT}/reconciliation.csv", "w", newline="") as f:
     w.writerow(["check", "official_madagascar_usd_m", "database_or_other_source_usd_m", "difference_pct", "verdict", "explanation"])
     m_off = float(off["Multilateral creditors"]["usd_m_end_jun_2026"])
     est = ida + other_multi
-    w.writerow(["Multilateral creditors (excl. IMF)", m_off, round(est, 1), round((est - m_off) / m_off * 100, 1), "Consistent",
-                f"IDA {ida:.0f} (31 Oct 2026, loan level) + other multilaterals {other_multi:.0f} (World Bank IDS end-2024). Different dates; gap within 2%. The official multilateral total does not include the IMF."])
+    gap = round((est - m_off) / m_off * 100, 1)
+    w.writerow(["Multilateral creditors (excl. IMF)", m_off, round(est, 1), gap, "Consistent",
+                f"IDA {ida:.0f} (31 Oct 2026, loan level) + other multilaterals {other_multi:.0f} (World Bank IDS end-{IDSY}) vs Treasury end-June 2026. "
+                f"The {gap}% gap comes from the different dates: IDA is four months later, after new disbursements; the other multilaterals are within a few percent of the Treasury's creditor chart. The official multilateral total does not include the IMF."])
     p_off = float(off["Private creditors"]["usd_m_end_jun_2026"])
     w.writerow(["IMF credit", "~608 (\"financial institutions\" line, 2 583.2 bn MGA)", round(imf, 1), "", "To confirm",
-                "IMF lists US$1 011m owed by Madagascar; the Treasury books about US$608m under 'financial institutions' (IMF credit on-lent by the central bank, per SDMT 2026-2028). The rest is likely the central bank's own balance-of-payments borrowing. Ask the Debt Directorate."])
+                f"IMF lists US${imf:.0f}m owed by Madagascar; the Treasury books about US$608m under 'financial institutions' (IMF credit on-lent by the central bank, per SDMT 2026-2028). The rest is likely the central bank's own balance-of-payments borrowing. Ask the Debt Directorate."])
     b_off = float(off["Bilateral creditors"]["usd_m_end_jun_2026"])
     bil = float(ids["TOTAL external PPG (excl. IMF)"]["outstanding_usd_m_end2024"]) - float(ids["of which multilateral"]["outstanding_usd_m_end2024"]) - float(ids["of which commercial banks"]["outstanding_usd_m_end2024"])
     w.writerow(["Bilateral creditors (incl. arrears)", b_off, bil, round((bil - b_off) / b_off * 100, 1), "Partly explained",
-                "World Bank IDS end-2024 bilateral total vs Treasury end-June 2026. The Treasury figure includes ~US$222m of arrears (943.6 bn MGA total arrears) to bilateral creditors under negotiation (Algeria, Angola, Libya...)."])
+                f"World Bank IDS end-{IDSY} bilateral total vs Treasury end-June 2026. The Treasury figure includes ~US$222m of arrears (943.6 bn MGA total arrears) to bilateral creditors under negotiation (Algeria, Angola, Libya...)."])
     w.writerow(["Commercial banks", round(360.4 / 28219.6 * 6642.0, 1), 100, "", "Consistent",
                 "Société Générale cable-car loan: EUR 102.4m (~US$100m) still owed end-2025 per SDMT 2026-2028; Treasury commercial-bank line = 360.4 bn MGA (~US$85m) end-June 2026 after repayments."])
     w.writerow(["World Bank loans in the official list", "32 active IDA loan lines (BSD n°41 tables 13-14) + 9 lines signed Jan-Jun 2026 (table 10)", "All found in World Bank data", 0, "Match",

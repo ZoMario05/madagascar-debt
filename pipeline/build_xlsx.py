@@ -4,6 +4,11 @@ from openpyxl.styles import Font, PatternFill, Alignment
 from openpyxl.utils import get_column_letter
 
 OUT_DIR, XLSX = sys.argv[1], sys.argv[2]
+import os, json
+RAW_DIR = os.path.join(os.path.dirname(sys.argv[3]))  # data/raw
+IDSY = json.load(open(os.path.join(RAW_DIR, "asof.json"))).get("ids", "2024-12-31")[:4]
+IDS_TOTAL = next(int(float(r["outstanding_usd_m_end2024"])) for r in csv.DictReader(open(os.path.join(RAW_DIR, "wb_ids_creditors.csv")))
+                 if r["creditor"].startswith("TOTAL external PPG"))
 F = "Arial"
 H = Font(name=F, bold=True, color="FFFFFF"); HF = PatternFill("solid", fgColor="0F5132")
 N = Font(name=F, size=10); B = Font(name=F, bold=True, size=10); BLUE = Font(name=F, size=10, color="0000FF")
@@ -35,12 +40,12 @@ lines = [
     ("Other lenders (AfDB, EIB, IFAD, OPEC Fund, BADEA, France, Japan, China, Korea, Gulf funds, Belgium, Société Générale): 65 active loans from the Treasury's official project list (BSD n°41), amount = US$ allocation as published. Outstanding per loan is not published; older, fully disbursed loans are still to add.", False),
     ("Three China loans (2007 hotel, 2018 Tsarasaotra-Ivato road, 2020 telecom) and AfDB PRIRTEM II come from AidData / AfDB press releases (confidence Medium).", False),
     ("IDA sectors are assigned by keyword from project names and must be reviewed; 6 are marked 'Other / to classify'.", False),
-    ("IDA totals (Oct 2026) are higher than World Bank IDS (end-2024) because of new disbursements in 2025–26 and different valuation dates.", False),
+    (f"IDA totals (Oct 2026) are higher than World Bank IDS (end-{IDSY}) because of new disbursements since then and different valuation dates.", False),
     ("", False),
     ("Sources", True),
     ("https://financesone.worldbank.org/ida-statement-of-credits,-grants-and-guarantees-latest-available-snapshot/DS00001", False),
     ("https://www.imf.org/external/np/fin/tad/exfin2.aspx?memberKey1=620&date1key=2099-12-31", False),
-    ("https://api.worldbank.org/v2/sources/6/country/MDG/series/DT.DOD.DPPG.CD/counterpart-area/all/time/YR2024?format=json", False),
+    (f"https://api.worldbank.org/v2/sources/6/country/MDG/series/DT.DOD.DPPG.CD/counterpart-area/all/time/YR{IDSY}?format=json", False),
     ("https://china.aiddata.org (project pages linked per loan)", False),
     ("http://www.tresorpublic.mg/?page_id=214&content=temp&type=bsd (Bulletin Statistique de la Dette n°41, June 2026; SDMT 2026-2028)", False),
 ]
@@ -108,8 +113,8 @@ for i, r in enumerate(cov[1:], 2):
             c = ws.cell(row=i, column=j, value=v)
         c.font = N
 end = len(cov)
-ws.cell(row=end + 2, column=1, value="Official external PPG debt excl. IMF, end-2024 (US$m)").font = B
-c = ws.cell(row=end + 2, column=2, value=4901); c.font = BLUE
+ws.cell(row=end + 2, column=1, value=f"Official external PPG debt excl. IMF, end-{IDSY} (US$m)").font = B
+c = ws.cell(row=end + 2, column=2, value=IDS_TOTAL); c.font = BLUE
 ws.cell(row=end + 3, column=1, value="Share of that total held by creditors with at least one loan in the database").font = B
 c = ws.cell(row=end + 3, column=2, value=f'=SUMIFS(B2:B{end},C2:C{end},">0")/B{end+2}'); c.number_format = "0.0%"
 ws.cell(row=end + 4, column=1, value="Source: World Bank International Debt Statistics, DT.DOD.DPPG.CD (updated 5 Nov 2026)").font = Font(name=F, italic=True, size=9)
